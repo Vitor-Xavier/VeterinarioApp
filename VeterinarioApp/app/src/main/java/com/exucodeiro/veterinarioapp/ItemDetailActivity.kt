@@ -1,6 +1,7 @@
 package com.exucodeiro.veterinarioapp
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -21,11 +22,15 @@ class ItemDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_detail)
 
+        //tst.setBackgroundColor((Color.parseColor("#80000000")))
+
         imageBack.loadUrl("http://decoclinic.com/wp-content/uploads/2016/11/camara2-Tartessos.jpg")
+
+        imageIcon.loadUrl("https://cdn2.iconfinder.com/data/icons/medicine-4-1/512/vet-512.png")
 
         imageMap.loadUrl("https://snazzy-maps-cdn.azureedge.net/assets/1243-xxxxxxxxxxx.png?v=20170626083204")
 
-        imageAtivo.loadUrl("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/LACMTA_Circle_Green_Line.svg/1000px-LACMTA_Circle_Green_Line.svg.png")
+        //imageAtivo.loadUrl("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/LACMTA_Circle_Green_Line.svg/1000px-LACMTA_Circle_Green_Line.svg.png")
     }
 
     fun ImageView.loadUrl(url: String) {

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.exucodeiro.veterinarioapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -37,6 +37,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.exucodeiro.veterinarioapp.ItemListActivity" />
         </activity>
+        <activity android:name=".ConsultaActivity" />
+        <activity
+            android:name=".UsuarioDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CadastroProfissionalActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ProfissionalDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

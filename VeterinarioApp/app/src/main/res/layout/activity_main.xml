@@ -7,14 +7,20 @@
     android:layout_height="match_parent"
     tools:context="com.exucodeiro.veterinarioapp.MainActivity">
 
-    <SearchView
-        android:id="@+id/searchProfissionais"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabsProfissional"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:tabGravity="fill"
+        app:tabTextColor="@color/colorPrimary"
+        app:tabSelectedTextColor="@color/colorPrimaryDark"
+        app:tabIndicatorColor="@color/colorPrimaryDark"
+        app:tabMode="fixed"/>
 
-    <ListView
-        android:id="@+id/listProfissionais"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

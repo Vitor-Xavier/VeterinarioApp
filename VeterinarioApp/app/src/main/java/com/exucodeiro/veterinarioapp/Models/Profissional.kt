@@ -8,7 +8,7 @@ data class Profissional (val profissionalId: Int,
                          val sobrenome: String,
                          val imagem: String,
                          val crv: String,
-                         val endereco: Endereco,
+                         val endereco: Endereco?,
                          val contatos: List<Contato>,
                          val servicos: List<Servico>,
                          val ativo: Boolean)
