@@ -10,10 +10,6 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profissional_map.*
 
-
-/**
- * A simple [Fragment] subclass.
- */
 class ProfissionalMapFragment : Fragment() {
 
 
@@ -26,7 +22,7 @@ class ProfissionalMapFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        imageMap.loadUrl("https://i-cdn.phonearena.com/images/articles/220901-image/Here-is-how-the-start-screen-of-Google-Maps-looks-like.jpg")
+        //imageMap.loadUrl("https://i-cdn.phonearena.com/images/articles/220901-image/Here-is-how-the-start-screen-of-Google-Maps-looks-like.jpg")
     }
 
     fun ImageView.loadUrl(url: String) {

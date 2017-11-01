@@ -11,7 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:parentActivityName=".ItemListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.exucodeiro.veterinarioapp.ItemListActivity" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,14 +29,17 @@
         <activity
             android:name=".UsuarioDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".CadastroProfissionalActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CadastroProfissionalActivity"/>
         <activity
             android:name=".ProfissionalDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SobreActivity" />
-        <activity android:name=".CadastroEnderecoActivity"></activity>
+        <activity android:name=".CadastroEnderecoActivity" />
+        <activity
+            android:name=".ItemListActivity"
+            android:label="@string/title_item_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".CadastroUsuarioActivity"></activity>
     </application>
 
 </manifest>

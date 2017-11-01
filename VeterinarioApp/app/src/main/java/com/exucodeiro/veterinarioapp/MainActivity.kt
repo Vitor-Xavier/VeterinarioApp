@@ -5,10 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.exucodeiro.veterinarioapp.Models.*
 import com.exucodeiro.veterinarioapp.Util.MainPageAdapter
-import com.exucodeiro.veterinarioapp.Util.ProfissionalAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,9 +15,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        title = "Profissionais"
+
         val pageAdapter = MainPageAdapter(supportFragmentManager, this)
         viewPager.adapter = pageAdapter
         tabsProfissional.setupWithViewPager(viewPager)
+
+        //tabsProfissional.getTabAt(0)?.setIcon(R.mipmap.ic_healing_black_24dp)
+        //tabsProfissional.getTabAt(1)?.setIcon(R.mipmap.ic_explore_black_24dp)
+
+        setSupportActionBar(detail_toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -27,22 +35,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.itemConsultas) {
-            val it = Intent(this, ConsultaActivity::class.java)
-            startActivity(it)
-        }
-        if (item?.itemId == R.id.itemUsuario) {
-            val it = Intent(this, UsuarioDetailActivity::class.java)
-            startActivity(it)
-        }
-        if (item?.itemId == R.id.itemCadastro) {
-            val it = Intent(this, CadastroProfissionalActivity::class.java)
-            startActivity(it)
-        }
-        if (item?.itemId == R.id.itemSobre) {
-            val it = Intent(this, SobreActivity::class.java)
-            //val it = Intent(this, ItemListActivity::class.java)
-            startActivity(it)
+        when (item?.itemId) {
+            android.R.id.home -> {
+                if (intent.getStringExtra("activity") == null) {
+                    val it = Intent(this, ItemListActivity::class.java)
+                    startActivity(it)
+
+                } else
+                    navigateUpTo(Intent(this, ItemListActivity::class.java))
+            }
+            R.id.itemProfissional -> {
+                val it = Intent(this, CadastroProfissionalActivity::class.java)
+                startActivity(it)
+            }
+            R.id.itemUsuario -> {
+                val it = Intent(this, CadastroUsuarioActivity::class.java)
+                startActivity(it)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

@@ -26,7 +26,7 @@ class MainPageAdapter(fm: FragmentManager, private val context: Context) : Fragm
 
     override fun getPageTitle(position: Int): CharSequence? {
         when(position) {
-            0 -> return "Profissionais"
+            0 -> return "Lista"
             1 -> return "Mapa"
             else -> return null
         }
