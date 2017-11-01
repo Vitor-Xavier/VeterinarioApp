@@ -7,16 +7,17 @@
     <ImageView
         android:id="@+id/imageAnimal"
         android:layout_margin="10dp"
-        android:layout_weight="0.7"
+        android:adjustViewBounds="true"
+        android:layout_weight="0.75"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_margin="10dp"
         android:orientation="vertical"
-        android:layout_weight="0.3"
+        android:layout_weight="0.25"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/textNome"
@@ -42,8 +43,6 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
-
-
 
     </LinearLayout>
 

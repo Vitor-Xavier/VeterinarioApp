@@ -11,8 +11,6 @@ import com.exucodeiro.veterinarioapp.Util.ProfissionalAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private var adapter: ProfissionalAdapter? = null
-    private var profissionais: ArrayList<Profissional> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +32,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(it)
         }
         if (item?.itemId == R.id.itemUsuario) {
-            //val it = Intent(this, UsuarioDetailActivity::class.java)
-            val it = Intent(this, ProfissionalDetailActivity::class.java)
+            val it = Intent(this, UsuarioDetailActivity::class.java)
             startActivity(it)
         }
         if (item?.itemId == R.id.itemCadastro) {
             val it = Intent(this, CadastroProfissionalActivity::class.java)
+            startActivity(it)
+        }
+        if (item?.itemId == R.id.itemSobre) {
+            val it = Intent(this, SobreActivity::class.java)
+            //val it = Intent(this, ItemListActivity::class.java)
             startActivity(it)
         }
         return super.onOptionsItemSelected(item)

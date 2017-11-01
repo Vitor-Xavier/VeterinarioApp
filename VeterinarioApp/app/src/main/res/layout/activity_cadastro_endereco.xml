@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.exucodeiro.veterinarioapp.CadastroProfissionalActivity">
+    tools:context="com.exucodeiro.veterinarioapp.CadastroEnderecoActivity">
 
     <ScrollView
         android:layout_weight="0.95"
@@ -17,20 +17,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imageBackground"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_margin="16dp"
                 android:layout_width="match_parent"
-                android:adjustViewBounds="true"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imageIcone"
-                android:background="#FFFFFF"
-                android:adjustViewBounds="true"
-                android:layout_marginTop="-50dp"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp" />
+                <ImageView
+                    android:id="@+id/imageIcone"
+                    android:layout_margin="8dp"
+                    android:background="#FFFFFF"
+                    android:adjustViewBounds="true"
+                    android:layout_gravity="center"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+
+                <TextView
+                    android:layout_margin="12dp"
+                    android:text="Nome da pessoa"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
@@ -40,7 +50,6 @@
                 android:layout_height="match_parent">
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/input_layout_nome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -49,12 +58,11 @@
                         android:layout_marginBottom="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Nome" />
+                        android:hint="Logradouro" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/input_layout_sobrenome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -63,12 +71,11 @@
                         android:layout_marginBottom="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Sobrenome" />
+                        android:hint="Complemento" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/input_layout_crv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -77,7 +84,46 @@
                         android:layout_marginBottom="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="CRV" />
+                        android:hint="Número" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/inputCEP"
+                        android:layout_marginBottom="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="CEP" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/inputCidade"
+                        android:layout_marginBottom="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Cidade" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/inputEstado"
+                        android:layout_marginBottom="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Estado" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -88,7 +134,6 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/buttonProximo"
         android:text="Próximo"
         android:layout_margin="10dp"
         android:background="#0000"

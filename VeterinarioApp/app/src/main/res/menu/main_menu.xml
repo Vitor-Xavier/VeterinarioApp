@@ -3,4 +3,5 @@
     <item android:id="@+id/itemConsultas" android:title="Consultas"/>
     <item android:id="@+id/itemUsuario" android:title="Usuario"/>
     <item android:id="@+id/itemCadastro" android:title="Cadastro"/>
+    <item android:id="@+id/itemSobre" android:title="Sobre"/>
 </menu>
