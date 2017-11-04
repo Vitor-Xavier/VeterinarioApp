@@ -7,14 +7,14 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
-import com.exucodeiro.veterinarioapp.Models.Animal
-import com.exucodeiro.veterinarioapp.Models.TipoAnimal
+import com.exucodeiro.veterinarioapp.Models.*
 import com.exucodeiro.veterinarioapp.Util.AnimalAdaper
 import com.exucodeiro.veterinarioapp.Util.UsuarioPageAdapter
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_usuario_detail.*
 import kotlinx.android.synthetic.main.custom_tab.view.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class UsuarioDetailActivity : AppCompatActivity() {
 
@@ -24,7 +24,9 @@ class UsuarioDetailActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val pageAdapter = UsuarioPageAdapter(supportFragmentManager, this)
+        val user = Usuario(1, "Nome", "usuário", "https://cdn2.iconfinder.com/data/icons/medicine-4-1/512/vet-512.png", Endereco(1, "Rua teste 01", 100, "Bloco 2", "Jardim Algo", "1234585", "Ribeirão Preto", "SP", -21.89, -47.23), ArrayList<Contato>())
+
+        val pageAdapter = UsuarioPageAdapter(supportFragmentManager, this, user)
         viewPager.adapter = pageAdapter
         tabsUsuario.setupWithViewPager(viewPager)
 
@@ -41,7 +43,7 @@ class UsuarioDetailActivity : AppCompatActivity() {
         //tabsUsuario.getTabAt(1)?.setIcon(R.mipmap.ic_pets_black_24dp)
         tabsUsuario.getTabAt(1)?.customView = tab2
 
-        imageIcon.loadUrl("https://cdn2.iconfinder.com/data/icons/medicine-4-1/512/vet-512.png")
+        imageIcon.loadUrl(user.imagem)
 
         imageBack.loadUrl("https://i.ytimg.com/vi/hdxKJsTvvxQ/maxresdefault.jpg")
     }
@@ -49,7 +51,7 @@ class UsuarioDetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) =
             when (item.itemId) {
                 android.R.id.home -> {
-                    val it = Intent(this, ItemListActivity::class.java)
+                    //val it = Intent(this, ItemListActivity::class.java)
                     //startActivity(it)
                     navigateUpTo(Intent(this, ItemListActivity::class.java))
                 }
@@ -57,7 +59,7 @@ class UsuarioDetailActivity : AppCompatActivity() {
             }
 
     fun ImageView.loadUrl(url: String) {
-        if (url != null && !url.equals(""))
+        if (!url.equals(""))
             Picasso.with(context).load(url).into(this)
     }
 

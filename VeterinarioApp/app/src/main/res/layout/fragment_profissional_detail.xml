@@ -18,6 +18,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/textDescricao"
             android:text="Clínica com mais de .. anos de mercaod, oferecendo o melhor serviço para você e seu pet querido como banho, tosa."
             android:layout_margin="8dp"
             android:layout_width="match_parent"
@@ -31,6 +32,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/textServicos"
             android:text="Banho, Tosa, Operações, Serviço1, Serviço2, Serviço3, Serviço4"
             android:layout_margin="8dp"
             android:layout_width="match_parent"
@@ -44,6 +46,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/textContatos"
             android:text="991000000, veterianario@mail.com"
             android:layout_margin="8dp"
             android:layout_width="match_parent"

@@ -1,9 +1,11 @@
 package com.exucodeiro.veterinarioapp.Util
 
 import android.content.Context
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import com.exucodeiro.veterinarioapp.Models.Profissional
 import com.exucodeiro.veterinarioapp.ProfissionalListFragment
 import com.exucodeiro.veterinarioapp.ProfissionalMapFragment
 
@@ -14,8 +16,14 @@ class MainPageAdapter(fm: FragmentManager, private val context: Context) : Fragm
 
     override fun getItem(position: Int): Fragment {
         when (position) {
-            0 -> return ProfissionalListFragment()
-            1 -> return ProfissionalMapFragment()
+            0 -> {
+                val fragment = ProfissionalListFragment()
+                return fragment
+            }
+            1 -> {
+                val fragment = ProfissionalMapFragment()
+                return fragment
+            }
         }
         return ProfissionalListFragment()
     }

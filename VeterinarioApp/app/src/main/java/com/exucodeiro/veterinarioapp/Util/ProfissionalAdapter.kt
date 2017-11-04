@@ -21,9 +21,9 @@ data class ProfissionalAdapter(var profissionais:List<Profissional>, var activit
 
         view.textNome.text = profissionais[p0].nome + " " + profissionais.get(p0).sobrenome
         view.textEndereco.text = profissionais[p0].endereco.toString()
-        view.imageProfissional.loadUrl(profissionais[p0].imagem)
+        view.imageProfissional.loadUrl(profissionais[p0].icone)
 
-        if(profissionais[p0].ativo)
+        //if(profissionais[p0].ativo)
             view.imageAtivo.loadUrl("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/LACMTA_Circle_Green_Line.svg/1000px-LACMTA_Circle_Green_Line.svg.png")
         return view
     }

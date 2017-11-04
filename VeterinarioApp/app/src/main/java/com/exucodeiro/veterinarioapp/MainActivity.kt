@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.exucodeiro.veterinarioapp.Services.ProfissionalService
 import com.exucodeiro.veterinarioapp.Util.MainPageAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
@@ -15,6 +16,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setSupportActionBar(detail_toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         title = "Profissionais"
 
         val pageAdapter = MainPageAdapter(supportFragmentManager, this)
@@ -23,10 +27,6 @@ class MainActivity : AppCompatActivity() {
 
         //tabsProfissional.getTabAt(0)?.setIcon(R.mipmap.ic_healing_black_24dp)
         //tabsProfissional.getTabAt(1)?.setIcon(R.mipmap.ic_explore_black_24dp)
-
-        setSupportActionBar(detail_toolbar)
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

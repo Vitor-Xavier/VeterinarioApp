@@ -32,16 +32,16 @@ class AnimalListFragment : Fragment() {
     }
 
     fun loadData() {
-        val a1 = Animal(1, "Sr. Ruffus", Calendar.getInstance(), "https://static-cdn.jtvnw.net/jtv_user_pictures/hsdogdog-profile_image-5550ade194780dfc-300x300.jpeg", TipoAnimal(1, "Cachorro"), null)
+        val a1 = Animal(1, "Sr. Ruffus", Calendar.getInstance(), "https://static-cdn.jtvnw.net/jtv_user_pictures/hsdogdog-profile_image-5550ade194780dfc-300x300.jpeg", TipoAnimal(1, "Cachorro"), 0, null)
         animais.add(a1)
 
-        val a2 = Animal(1, "Sr. Ruffus", Calendar.getInstance(), "https://static-cdn.jtvnw.net/jtv_user_pictures/hsdogdog-profile_image-5550ade194780dfc-300x300.jpeg", TipoAnimal(1, "Cachorro"), null)
+        val a2 = Animal(1, "Sr. Ruffus", Calendar.getInstance(), "https://static-cdn.jtvnw.net/jtv_user_pictures/hsdogdog-profile_image-5550ade194780dfc-300x300.jpeg", TipoAnimal(1, "Cachorro"), 0, null)
         animais.add(a2)
 
-        val a3 = Animal(1, "Sr. Ruffus", Calendar.getInstance(), "https://static-cdn.jtvnw.net/jtv_user_pictures/hsdogdog-profile_image-5550ade194780dfc-300x300.jpeg", TipoAnimal(1, "Cachorro"), null)
+        val a3 = Animal(1, "Sr. Ruffus", Calendar.getInstance(), "https://static-cdn.jtvnw.net/jtv_user_pictures/hsdogdog-profile_image-5550ade194780dfc-300x300.jpeg", TipoAnimal(1, "Cachorro"), 0, null)
         animais.add(a3)
 
-        val a4 = Animal(1, "Sr. Ruffus", Calendar.getInstance(), "https://static-cdn.jtvnw.net/jtv_user_pictures/hsdogdog-profile_image-5550ade194780dfc-300x300.jpeg", TipoAnimal(1, "Cachorro"), null)
+        val a4 = Animal(1, "Sr. Ruffus", Calendar.getInstance(), "https://static-cdn.jtvnw.net/jtv_user_pictures/hsdogdog-profile_image-5550ade194780dfc-300x300.jpeg", TipoAnimal(1, "Cachorro"), 0, null)
         animais.add(a4)
     }
 }

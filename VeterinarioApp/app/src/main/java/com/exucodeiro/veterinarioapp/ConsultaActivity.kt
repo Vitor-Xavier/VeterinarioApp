@@ -38,6 +38,10 @@ class ConsultaActivity : AppCompatActivity() {
             }
 
     fun loadData() {
-        consultas.add(Consulta(1, Calendar.getInstance(), "vai acontecer algo", Animal(1, "", null, "http://pm1.narvii.com/6436/e8e8ab1d82401ddceb169d7d4af167ae753c5735_128.jpg", null, null), Profissional(1, "", "", "https://lh3.googleusercontent.com/-j3PTDPzjqOI/AAAAAAAAAAI/AAAAAAAACpo/S7gaeyPCbzU/s128-c0x00000000-cc-rp-mo-ba2/photo.jpg", "123456", null, ArrayList<Contato>(), ArrayList<Servico>(), true)))
+        consultas.add(Consulta(1, Calendar.getInstance(), "vai acontecer algo", Animal(1, "", null, "http://pm1.narvii.com/6436/e8e8ab1d82401ddceb169d7d4af167ae753c5735_128.jpg", null, 0, null), Profissional(1, "", "", "https://lh3.googleusercontent.com/-j3PTDPzjqOI/AAAAAAAAAAI/AAAAAAAACpo/S7gaeyPCbzU/s128-c0x00000000-cc-rp-mo-ba2/photo.jpg", "", "123456", 0, null, ArrayList<Contato>(), ArrayList<Servico>())))
+
+        consultas.add(Consulta(1, Calendar.getInstance(), "vai acontecer algo", Animal(1, "", null, "http://pm1.narvii.com/6436/e8e8ab1d82401ddceb169d7d4af167ae753c5735_128.jpg", null, 0, null), Profissional(1, "", "", "https://lh3.googleusercontent.com/-j3PTDPzjqOI/AAAAAAAAAAI/AAAAAAAACpo/S7gaeyPCbzU/s128-c0x00000000-cc-rp-mo-ba2/photo.jpg", "", "123456", 0, null, ArrayList<Contato>(), ArrayList<Servico>())))
+
+        consultas.add(Consulta(1, Calendar.getInstance(), "vai acontecer algo", Animal(1, "", null, "http://pm1.narvii.com/6436/e8e8ab1d82401ddceb169d7d4af167ae753c5735_128.jpg", null, 0, null), Profissional(1, "", "", "https://lh3.googleusercontent.com/-j3PTDPzjqOI/AAAAAAAAAAI/AAAAAAAACpo/S7gaeyPCbzU/s128-c0x00000000-cc-rp-mo-ba2/photo.jpg", "", "123456", 0, null, ArrayList<Contato>(), ArrayList<Servico>())))
     }
 }

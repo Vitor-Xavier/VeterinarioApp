@@ -38,6 +38,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/textNome"
                 android:layout_margin="10dp"
                 android:text="Veterinario Nome"
                 android:textSize="22dp"

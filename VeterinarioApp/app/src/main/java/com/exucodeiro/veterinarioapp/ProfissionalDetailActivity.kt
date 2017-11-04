@@ -3,6 +3,7 @@ package com.exucodeiro.veterinarioapp
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import com.exucodeiro.veterinarioapp.Models.Profissional
 import com.exucodeiro.veterinarioapp.Util.ProfissionalPageAdapter
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profissional_detail.*
@@ -13,13 +14,15 @@ class ProfissionalDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profissional_detail)
 
-        val pageAdapter = ProfissionalPageAdapter(supportFragmentManager, this)
+        val profissional = (intent.getSerializableExtra("profissional") as Profissional)
+
+        val pageAdapter = ProfissionalPageAdapter(supportFragmentManager, this, profissional)
         viewPager.adapter = pageAdapter
         tabsProfissional.setupWithViewPager(viewPager)
 
-        imageBack.loadUrl("http://decoclinic.com/wp-content/uploads/2016/11/camara2-Tartessos.jpg")
-
-        imageIcon.loadUrl("https://cdn2.iconfinder.com/data/icons/medicine-4-1/512/vet-512.png")
+        textNome.text = profissional.nome + " " + profissional.sobrenome
+        imageBack.loadUrl(profissional.imagem)
+        imageIcon.loadUrl(profissional.icone)
     }
 
     fun ImageView.loadUrl(url: String) {

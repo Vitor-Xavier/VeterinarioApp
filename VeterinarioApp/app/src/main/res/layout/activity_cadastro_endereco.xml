@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/inputNome"
+                        android:id="@+id/inputLogradouro"
                         android:layout_marginBottom="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -67,7 +67,20 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/inputSobrenome"
+                        android:id="@+id/inputNumero"
+                        android:layout_marginBottom="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Número" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/inputComplemento"
                         android:layout_marginBottom="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -80,11 +93,11 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/inputCRV"
+                        android:id="@+id/inputBairro"
                         android:layout_marginBottom="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Número" />
+                        android:hint="CEP" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -134,6 +147,7 @@
     </ScrollView>
 
     <Button
+        android:id="@+id/buttonProximo"
         android:text="Próximo"
         android:layout_margin="10dp"
         android:background="#0000"
