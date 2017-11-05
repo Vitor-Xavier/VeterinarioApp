@@ -52,6 +52,10 @@ class MainActivity : AppCompatActivity() {
                 val it = Intent(this, CadastroUsuarioActivity::class.java)
                 startActivity(it)
             }
+            R.id.itemLogin -> {
+                val it = Intent(this, LoginActivity::class.java)
+                startActivity(it)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
