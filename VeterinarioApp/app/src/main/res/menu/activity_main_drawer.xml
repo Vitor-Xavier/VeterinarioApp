@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_inicio"
+            android:icon="@mipmap/ic_home_black_24dp"
+            android:title="Inicio" />
+        <item
+            android:id="@+id/nav_perfil"
+            android:icon="@mipmap/ic_person_black_24dp"
+            android:title="Perfil" />
+        <item
+            android:id="@+id/nav_agenda"
+            android:icon="@mipmap/ic_assignment_black_24dp"
+            android:title="Agenda" />
+    </group>
+
+    <item android:title="Sobre o Aplicativo">
+        <menu>
+            <item
+                android:id="@+id/nav_info"
+                android:icon="@mipmap/ic_extension_black_24dp"
+                android:title="Informações" />
+                <!--Addicon here   />-->
+        </menu>
+    </item>
+
+</menu>
