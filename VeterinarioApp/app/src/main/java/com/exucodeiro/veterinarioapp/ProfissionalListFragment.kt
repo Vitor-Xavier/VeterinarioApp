@@ -15,11 +15,6 @@ import com.exucodeiro.veterinarioapp.Util.ProfissionalAdapter
 import kotlinx.android.synthetic.main.fragment_profissional_list.*
 import org.jetbrains.anko.async
 import org.jetbrains.anko.uiThread
-import java.net.URL
-import kotlin.concurrent.thread
-
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 
 class ProfissionalListFragment : Fragment() {
     private var adapter: ProfissionalAdapter? = null

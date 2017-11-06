@@ -18,33 +18,19 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:parentActivityName=".ItemListActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.exucodeiro.veterinarioapp.ItemListActivity" />
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ConsultaActivity" />
-        <activity
-            android:name=".UsuarioDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CadastroProfissionalActivity" />
         <activity
             android:name=".ProfissionalDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SobreActivity" />
         <activity android:name=".CadastroEnderecoActivity" />
-        <activity
-            android:name=".ItemListActivity"
-            android:label="@string/title_item_list"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CadastroUsuarioActivity" />
+        <activity android:name=".CadastroProfissionalActivity" />
         <activity android:name=".LoginActivity"></activity>
     </application>
 

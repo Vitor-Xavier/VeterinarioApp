@@ -17,9 +17,9 @@ class CadastroProfissionalActivity : AppCompatActivity() {
         setContentView(R.layout.activity_cadastro_profissional)
         title = "Profissional"
 
-        imageBackground.loadUrl("http://decoclinic.com/wp-content/uploads/2016/11/camara2-Tartessos.jpg")
+        //imageBackground.loadUrl("http://decoclinic.com/wp-content/uploads/2016/11/camara2-Tartessos.jpg")
 
-        imageIcone.loadUrl("http://www.kibbypark.com/wp-content/uploads/2015/08/wellness-icon.png")
+        //imageIcone.loadUrl("http://www.kibbypark.com/wp-content/uploads/2015/08/wellness-icon.png")
 
         buttonProximo.setOnClickListener {
             val it = Intent(this, CadastroEnderecoActivity::class.java)

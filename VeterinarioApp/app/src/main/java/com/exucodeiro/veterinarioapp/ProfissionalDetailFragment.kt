@@ -30,4 +30,12 @@ class ProfissionalDetailFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
+     fun newInstance(profissional: Profissional) : ProfissionalDetailFragment {
+        val fragment = ProfissionalDetailFragment()
+        val bundle = Bundle()
+        bundle.putSerializable("profissional",  profissional)
+        fragment.arguments = bundle
+        return fragment
+    }
+
 }
