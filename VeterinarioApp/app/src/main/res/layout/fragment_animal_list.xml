@@ -7,6 +7,14 @@
     <ListView
         android:id="@+id/listAnimais"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_margin="12dp"
+        android:src="@mipmap/ic_add_white_24dp"
+        android:background="@color/colorPrimary"
+        android:layout_gravity="bottom|end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </FrameLayout>

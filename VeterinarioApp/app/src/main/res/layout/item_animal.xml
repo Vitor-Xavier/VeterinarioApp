@@ -4,18 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageAnimal"
         android:layout_margin="10dp"
-        android:adjustViewBounds="true"
-        android:layout_weight="0.75"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="72dp"
+        android:layout_height="72dp" />
 
     <LinearLayout
         android:layout_margin="10dp"
         android:orientation="vertical"
-        android:layout_weight="0.25"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

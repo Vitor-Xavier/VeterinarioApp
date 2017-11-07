@@ -7,17 +7,12 @@ import android.view.*
 import com.exucodeiro.veterinarioapp.Util.MainPageAdapter
 import kotlinx.android.synthetic.main.fragment_profissional.*
 import android.view.MenuInflater
-import kotlinx.android.synthetic.main.toolbar.*
-
 
 class ProfissionalFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         setHasOptionsMenu(true)
-        activity.toolbar.title = "Profissional"
-        //toolbar.inflateMenu(R.menu.main_menu)
 
         return inflater!!.inflate(R.layout.fragment_profissional, container, false)
     }

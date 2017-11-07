@@ -19,7 +19,7 @@ data class ProfissionalAdapter(var profissionais:List<Profissional>, var activit
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
         val view: View = View.inflate(activity, R.layout.item_profissional,null)
 
-        view.textNome.text = profissionais[p0].nome + " " + profissionais.get(p0).sobrenome
+        view.textNome.text = "${profissionais[p0].nome} ${profissionais.get(p0).sobrenome}"
         view.textEndereco.text = profissionais[p0].endereco.toString()
         view.imageProfissional.loadUrl(profissionais[p0].icone)
 
@@ -29,7 +29,7 @@ data class ProfissionalAdapter(var profissionais:List<Profissional>, var activit
     }
 
     fun ImageView.loadUrl(url: String) {
-        if (url != null && !url.equals(""))
+        if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }
 

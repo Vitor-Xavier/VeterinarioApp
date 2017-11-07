@@ -7,24 +7,23 @@
         <item
             android:id="@+id/nav_inicio"
             android:icon="@mipmap/ic_home_black_24dp"
-            android:title="Inicio" />
+            android:title="@string/inicio" />
         <item
             android:id="@+id/nav_perfil"
             android:icon="@mipmap/ic_person_black_24dp"
-            android:title="Perfil" />
+            android:title="@string/perfil" />
         <item
             android:id="@+id/nav_agenda"
             android:icon="@mipmap/ic_assignment_black_24dp"
-            android:title="Agenda" />
+            android:title="@string/agenda" />
     </group>
 
-    <item android:title="Sobre o Aplicativo">
+    <item android:title="@string/sobre">
         <menu>
             <item
                 android:id="@+id/nav_info"
                 android:icon="@mipmap/ic_extension_black_24dp"
-                android:title="Informações" />
-                <!--Addicon here   />-->
+                android:title="@string/info" />
         </menu>
     </item>
 

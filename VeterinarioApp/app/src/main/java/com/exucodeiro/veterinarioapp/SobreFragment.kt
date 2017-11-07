@@ -15,16 +15,15 @@ class SobreFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater!!.inflate(R.layout.fragment_sobre, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        activity.title = "Sobre"
+        activity.title = getString(R.string.info)
 
         sobreList.add(Sobre ("Kotlin\nAndroid Studio 3.0", R.mipmap.ic_build_black_24dp))
         sobreList.add(Sobre ("Exu Codeiro", R.mipmap.ic_group_work_black_24dp))
-        sobreList.add(Sobre ("Pìcasso", R.mipmap.ic_extension_black_24dp))
+        sobreList.add(Sobre ("Pìcasso, Circle ImageView, Fuel, Jackson", R.mipmap.ic_extension_black_24dp))
         sobreList.add(Sobre ("https://github.com/Vitor-Xavier/VeterinarioApp", R.mipmap.ic_code_black_24dp))
         sobreList.add(Sobre ("https://github.com/Vitor-Xavier/VeterinarioAPI", R.mipmap.ic_code_black_24dp))
         adapter = SobreAdapter(sobreList, activity)
@@ -33,4 +32,4 @@ class SobreFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
-}// Required empty public constructor
+}

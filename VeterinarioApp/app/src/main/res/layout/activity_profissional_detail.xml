@@ -29,13 +29,12 @@
             android:layout_width="match_parent"
             android:layout_height="110dp">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_margin="10dp"
                 android:id="@+id/imageIcon"
-                android:minHeight="100dp"
-                android:adjustViewBounds="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_gravity="center_vertical"
+                android:layout_width="92dp"
+                android:layout_height="92dp" />
 
             <TextView
                 android:id="@+id/textNome"

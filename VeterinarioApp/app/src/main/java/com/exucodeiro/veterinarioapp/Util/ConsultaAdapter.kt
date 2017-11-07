@@ -20,9 +20,9 @@ data class ConsultaAdapter(var consultas:List<Consulta>, var activity: Activity)
         val view: View = View.inflate(activity, R.layout.item_consulta,null)
 
         view.textData.text = consultas[p0].getData()
-        view.textEndereco.text = "Avenida de teste principal, 12432\nRibeirão Preto - São Paulo"
-        //view.textEndereco.text = consultas[p0].profissional.endereco.toString()
-        view.imageProfissional.loadUrl(consultas[p0].profissional.imagem)
+        view.textProfissional.text = "${consultas[p0].profissional.nome} ${consultas[p0].profissional.sobrenome}"
+        view.textAnimal.text = consultas[p0].animal.nome
+        view.imageProfissional.loadUrl(consultas[p0].profissional.icone)
         view.imageAnimal.loadUrl(consultas[p0].animal.imagem)
 
         return view

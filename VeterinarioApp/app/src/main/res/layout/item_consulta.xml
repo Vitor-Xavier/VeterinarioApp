@@ -12,21 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageProfissional"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:maxHeight="64dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageAnimal"
             android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:maxHeight="64dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="64dp"
+            android:layout_height="64dp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageProfissional"
+            android:layout_weight="1"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_marginTop="32dp"
             android:layout_marginLeft="-32dp"/>
 
@@ -44,12 +40,17 @@
             android:id="@+id/textData"
             android:textStyle="bold"
             android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textProfissional"
             android:layout_margin="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/textEndereco"
+            android:id="@+id/textAnimal"
             android:layout_marginLeft="6dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

@@ -21,4 +21,19 @@
     </string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="inicio">Início</string>
+    <string name="agenda">Agenda</string>
+    <string name="perfil">Perfil</string>
+    <string name="info">Informações</string>
+    <string name="sobre">Sobre o aplicativo</string>
+    <string name="lista">Lista</string>
+    <string name="mapa">Mapa</string>
+    <string name="detalhes">Detalhes</string>
+    <string name="animais">Pets</string>
+    <string name="profissionais">Profissionais</string>
+    <string name="usuario">Usuário</string>
+    <string name="consultas">Consultas</string>
+    <string name="equipe">Exu Codeiro Team</string>
+
 </resources>

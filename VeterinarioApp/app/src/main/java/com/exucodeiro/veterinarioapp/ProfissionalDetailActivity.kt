@@ -20,7 +20,7 @@ class ProfissionalDetailActivity : AppCompatActivity() {
         viewPager.adapter = pageAdapter
         tabsProfissional.setupWithViewPager(viewPager)
 
-        textNome.text = profissional.nome + " " + profissional.sobrenome
+        textNome.text = "${profissional.nome} ${profissional.sobrenome}"
         imageBack.loadUrl(profissional.imagem)
         imageIcon.loadUrl(profissional.icone)
     }

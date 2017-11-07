@@ -15,9 +15,7 @@ class ProfissionalDetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val rootView = inflater!!.inflate(R.layout.fragment_profissional_detail, container, false)
-
-        return rootView
+        return inflater!!.inflate(R.layout.fragment_profissional_detail, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -24,7 +24,7 @@ data class AnimalAdaper(var animais:List<Animal>, var activity: Activity) : Base
         view.textTipo.text = animais[p0].tipoAnimal?.tipo
 
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
-        val formated = dateFormat.format(animais[p0].dataNascimento?.getTime()).toString()
+        val formated = dateFormat.format(animais[p0].dataNascimento?.time).toString()
         view.textData.text = formated
 
         view.imageAnimal.loadUrl(animais[p0].imagem)

@@ -9,6 +9,7 @@ data class Animal (val animalId: Int,
                    val nome: String,
                    val dataNascimento: Calendar?,
                    val imagem: String,
-                   val tipoAnimal: TipoAnimal?,
+                   val tipoAnimalId: Int,
+                   val tipoAnimal: TipoAnimal,
                    val usuarioId: Int,
                    val dono: Usuario?)

@@ -23,10 +23,9 @@
                 android:adjustViewBounds="true"
                 android:layout_height="wrap_content" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageIcone"
                 android:background="#FFFFFF"
-                android:adjustViewBounds="true"
                 android:layout_marginTop="-50dp"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"

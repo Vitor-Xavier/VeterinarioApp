@@ -42,7 +42,7 @@ dependencies {
     compile "org.jetbrains.anko:anko-common:0.8.3"
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.0"
-
+    compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.github.kittinunf.fuel:fuel-android:1.10.0'
     compile 'com.github.kittinunf.fuel:fuel-gson:1.10.0'
 
