@@ -14,4 +14,5 @@ data class Profissional (val profissionalId: Int,
                          val enderecoId: Int,
                          var endereco: Endereco?,
                          val contatos: List<Contato>?,
-                         val servicos: List<Servico>) : Serializable
+                         val servicos: List<Servico>,
+                         val online: Boolean) : Serializable

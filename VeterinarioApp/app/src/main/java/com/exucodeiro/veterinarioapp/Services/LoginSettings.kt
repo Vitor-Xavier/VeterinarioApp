@@ -15,7 +15,7 @@ class LoginSettings(context: Context) {
                     preferences.getInt("login_id", 0),
                     preferences.getString("username", ""),
                     preferences.getString("password", ""),
-                    preferences.getString("login_type", ""))
+                    preferences.getString("login_type", "Usuario"))
         set(value) {
             preferences.edit().putInt("login_id", value.id).apply()
             preferences.edit().putString("username", value.username).apply()

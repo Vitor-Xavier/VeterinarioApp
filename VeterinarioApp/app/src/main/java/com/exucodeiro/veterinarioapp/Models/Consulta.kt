@@ -8,7 +8,9 @@ import java.util.*
 data class Consulta (val consultaId: Int,
                      val data: Calendar,
                      val descricao: String,
+                     val animalId: Int,
                      val animal: Animal,
+                     val profissionalId: Int,
                      val profissional: Profissional) {
 
     fun getData(): String {

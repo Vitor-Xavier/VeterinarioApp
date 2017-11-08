@@ -48,7 +48,7 @@ class UsuarioFragment : Fragment() {
         //tabsUsuario.getTabAt(1)?.setIcon(R.mipmap.ic_pets_black_24dp)
         tabsUsuario.getTabAt(1)?.customView = tab2
 
-        imageBack.loadUrl("https://i.ytimg.com/vi/hdxKJsTvvxQ/maxresdefault.jpg")
+        imageBack.loadUrl(R.mipmap.usuario_background)
 
         super.onActivityCreated(savedInstanceState)
     }
@@ -56,6 +56,11 @@ class UsuarioFragment : Fragment() {
     fun ImageView.loadUrl(url: String) {
         if (!url.equals(""))
             Picasso.with(context).load(url).into(this)
+    }
+
+    fun ImageView.loadUrl(draw: Int) {
+        if (!draw.equals(""))
+            Picasso.with(context).load(draw).into(this)
     }
 
     fun loadData() {

@@ -26,8 +26,8 @@ class ProfissionalService {
         val (request, response, result) = "Profissional/$latitude/$longitude/".httpGet().responseString()
         val (data, error) = result
         if (error == null) {
-                val mapper = jacksonObjectMapper()
-                profissionais.addAll(mapper.readValue<List<Profissional>>(data ?: ""))
+            val mapper = jacksonObjectMapper()
+            profissionais.addAll(mapper.readValue<List<Profissional>>(data ?: ""))
         }
 
         return profissionais

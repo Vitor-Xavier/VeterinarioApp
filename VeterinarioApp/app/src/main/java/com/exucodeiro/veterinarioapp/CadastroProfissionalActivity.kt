@@ -32,7 +32,8 @@ class CadastroProfissionalActivity : AppCompatActivity() {
                     0,
                     null,
                     ArrayList<Contato>(),
-                    ArrayList<Servico>())
+                    ArrayList<Servico>(),
+                    false)
             it.putExtra("profissional", profissional)
             startActivity(it)
         }

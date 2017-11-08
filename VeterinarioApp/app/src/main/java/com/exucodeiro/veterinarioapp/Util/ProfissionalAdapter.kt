@@ -23,14 +23,19 @@ data class ProfissionalAdapter(var profissionais:List<Profissional>, var activit
         view.textEndereco.text = profissionais[p0].endereco.toString()
         view.imageProfissional.loadUrl(profissionais[p0].icone)
 
-        //if(profissionais[p0].ativo)
-            view.imageAtivo.loadUrl("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/LACMTA_Circle_Green_Line.svg/1000px-LACMTA_Circle_Green_Line.svg.png")
+        if(profissionais[p0].online)
+            view.imageAtivo.loadUrl(R.mipmap.online_icon)
         return view
     }
 
     fun ImageView.loadUrl(url: String) {
         if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
+    }
+
+    fun ImageView.loadUrl(draw: Int) {
+        if (draw != null)
+            Picasso.with(context).load(draw).into(this)
     }
 
     override fun getItem(p0: Int): Any {
