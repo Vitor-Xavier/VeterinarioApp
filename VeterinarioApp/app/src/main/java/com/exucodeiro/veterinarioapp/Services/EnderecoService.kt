@@ -11,11 +11,15 @@ import com.github.kittinunf.fuel.core.FuelManager
  */
 class EnderecoService {
 
+    init {
+        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
+        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+    }
+
     fun atualizaEnderecoProfissional(profissionalId: Int, endereco: Endereco) : Boolean {
         val mapper = jacksonObjectMapper()
         var res = false
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
-        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+
         Fuel.put("Endereco/$profissionalId").body(mapper.writeValueAsString(endereco)).response { request, response, result ->
             val (data, error) = result
             res = (error == null)
@@ -26,8 +30,7 @@ class EnderecoService {
     fun atualizaEnderecoUsuario(usuarioId: Int, endereco: Endereco) : Boolean {
         val mapper = jacksonObjectMapper()
         var res = false
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
-        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+
         Fuel.put("Endereco/Usuario/$usuarioId").body(mapper.writeValueAsString(endereco)).response { request, response, result ->
             val (data, error) = result
             res = (error == null)

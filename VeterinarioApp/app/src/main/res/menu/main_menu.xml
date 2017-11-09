@@ -2,5 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/itemUsuario" android:title="Usuario"/>
     <item android:id="@+id/itemProfissional" android:title="Profissional"/>
+    <item android:id="@+id/itemAnimal" android:title="Animal"/>
     <item android:id="@+id/itemLogin" android:title="Login"/>
 </menu>

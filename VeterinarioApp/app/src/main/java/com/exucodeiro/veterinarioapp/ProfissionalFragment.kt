@@ -40,6 +40,10 @@ class ProfissionalFragment : Fragment() {
                 val it = Intent(context, CadastroUsuarioActivity::class.java)
                 startActivity(it)
             }
+            R.id.itemAnimal -> {
+                val it = Intent(context, MapsActivity::class.java)
+                startActivity(it)
+            }
             R.id.itemLogin -> {
                 val it = Intent(context, LoginActivity::class.java)
                 startActivity(it)

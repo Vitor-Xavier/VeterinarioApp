@@ -1,5 +1,7 @@
 package com.exucodeiro.veterinarioapp.Models
 
+import com.fasterxml.jackson.annotation.JsonFormat
+import java.io.Serializable
 import java.util.*
 
 /**
@@ -7,9 +9,10 @@ import java.util.*
  */
 data class Animal (val animalId: Int,
                    val nome: String,
-                   val dataNascimento: Calendar?,
+                   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+                   val dataNascimento: Date?,
                    val imagem: String,
                    val tipoAnimalId: Int,
                    val tipoAnimal: TipoAnimal,
                    val usuarioId: Int,
-                   val dono: Usuario?)
+                   val dono: Usuario?) : Serializable

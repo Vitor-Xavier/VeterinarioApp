@@ -20,9 +20,14 @@ import java.net.URL
  */
 class ProfissionalService {
 
+    init {
+        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
+        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+    }
+
     fun getProfissionais(latitude: Double, longitude: Double) : List<Profissional> {
         val profissionais: ArrayList<Profissional> = ArrayList()
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
+
         val (request, response, result) = "Profissional/$latitude/$longitude/".httpGet().responseString()
         val (data, error) = result
         if (error == null) {
@@ -36,8 +41,7 @@ class ProfissionalService {
     fun postProfissional(profissional: Profissional) : Boolean {
         val mapper = jacksonObjectMapper()
         var res = false
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
-        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+
         Fuel.post("Profissional").body(mapper.writeValueAsString(profissional)).response { request, response, result ->
             val (data, error) = result
             res = (error == null)
@@ -47,8 +51,7 @@ class ProfissionalService {
 
     fun inativaProfissional(profissionalId: Int) : Boolean {
         var res = false
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
-        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+
         Fuel.delete("Profissional/$profissionalId").response { request, response, result ->
             val (data, error) = result
             res = (error == null)
@@ -59,8 +62,7 @@ class ProfissionalService {
     fun adicionaContato(profissionalId: Int, contato: Contato) : Boolean {
         val mapper = jacksonObjectMapper()
         var res = false
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
-        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+
         Fuel.post("Profissional/Contato/$profissionalId").body(mapper.writeValueAsString(contato)).response { request, response, result ->
             val (data, error) = result
             res = (error == null)

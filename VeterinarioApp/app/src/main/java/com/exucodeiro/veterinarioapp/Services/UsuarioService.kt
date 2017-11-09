@@ -10,9 +10,14 @@ import com.github.kittinunf.fuel.httpGet
 
 class UsuarioService {
 
+    init {
+        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
+        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+    }
+
     fun getUsuario(usuarioId: Int) : Usuario {
         var usuario = Usuario(0, "Usuário", "Convidado", "https://cdn2.iconfinder.com/data/icons/medicine-4-1/512/vet-512.png", null, ArrayList<Contato>())
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
+
         val (request, response, result) = "Usuario/$usuarioId".httpGet().responseString()
 
         val (data, error) = result
@@ -29,8 +34,7 @@ class UsuarioService {
     fun adicionaUsuario(usuario: Usuario) : Boolean {
         val mapper = jacksonObjectMapper()
         var res = false
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
-        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+
         Fuel.post("Usuario").body(mapper.writeValueAsString(usuario)).response { request, response, result ->
             val (data, error) = result
             res = (error == null)
@@ -41,8 +45,7 @@ class UsuarioService {
     fun atualizaUsuario(usuario: Usuario) : Boolean {
         val mapper = jacksonObjectMapper()
         var res = false
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
-        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+
         Fuel.put("Usuario").body(mapper.writeValueAsString(usuario)).response { request, response, result ->
             val (data, error) = result
             res = (error == null)
@@ -52,8 +55,7 @@ class UsuarioService {
 
     fun inativaUsuario(usuarioId: Int) : Boolean {
         var res = false
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
-        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+
         Fuel.delete("Usuario/$usuarioId").response { request, response, result ->
             val (data, error) = result
             res = (error == null)
@@ -64,8 +66,7 @@ class UsuarioService {
     fun adicionaContato(usuarioId: Int, contato: Contato) : Boolean {
         val mapper = jacksonObjectMapper()
         var res = false
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
-        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+
         Fuel.post("Usuario/Contato/$usuarioId").body(mapper.writeValueAsString(contato)).response { request, response, result ->
             val (data, error) = result
             res = (error == null)

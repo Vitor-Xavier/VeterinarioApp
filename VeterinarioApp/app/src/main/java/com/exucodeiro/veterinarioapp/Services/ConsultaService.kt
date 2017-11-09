@@ -10,6 +10,7 @@ class ConsultaService {
 
     init {
         FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
+        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
     }
 
     fun getConsultasUsuario(usuarioId: Int) : List<Consulta> {

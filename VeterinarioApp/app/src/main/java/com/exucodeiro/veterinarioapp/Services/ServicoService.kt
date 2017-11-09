@@ -12,9 +12,14 @@ import com.github.kittinunf.fuel.httpGet
  */
 class ServicoService {
 
+    init {
+        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
+        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+    }
+
     fun getServicos() : List<Servico> {
         val servicos: ArrayList<Servico> = ArrayList()
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
+
         val (request, response, result) = "Servico".httpGet().responseString()
         val (data, error) = result
         if (error == null) {
@@ -28,8 +33,7 @@ class ServicoService {
     fun adicionaServico(servico: Servico) : Boolean {
         val mapper = jacksonObjectMapper()
         var res = false
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
-        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+
         Fuel.post("Servico").body(mapper.writeValueAsString(servico)).response { request, response, result ->
             val (data, error) = result
             res = (error == null)
@@ -40,8 +44,7 @@ class ServicoService {
     fun atualizaServico(servico: Servico) : Boolean {
         val mapper = jacksonObjectMapper()
         var res = false
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
-        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+
         Fuel.put("Servico").body(mapper.writeValueAsString(servico)).response { request, response, result ->
             val (data, error) = result
             res = (error == null)
@@ -51,8 +54,7 @@ class ServicoService {
 
     fun associaServico(profissionalId: Int, servicoId: Int) : Boolean {
         var res = false
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
-        FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
+
         Fuel.post("Servico/$profissionalId/$servicoId").response { request, response, result ->
             val (data, error) = result
             res = (error == null)

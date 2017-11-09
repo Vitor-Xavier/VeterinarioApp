@@ -11,6 +11,7 @@
         android:layout_height="match_parent"/>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabNovo"
         android:layout_margin="12dp"
         android:src="@mipmap/ic_add_white_24dp"
         app:backgroundTint="@color/colorPrimary"
