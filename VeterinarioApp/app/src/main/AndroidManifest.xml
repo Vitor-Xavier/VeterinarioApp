@@ -21,7 +21,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,6 +31,7 @@
         </activity>
         <activity
             android:name=".ProfissionalDetailActivity"
+<<<<<<< HEAD
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CadastroEnderecoActivity" />
         <activity android:name=".CadastroUsuarioActivity" />
@@ -51,6 +53,18 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
+=======
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CadastroEnderecoActivity"
+                    android:screenOrientation="portrait"/>
+        <activity android:name=".CadastroUsuarioActivity"
+                    android:screenOrientation="portrait"/>
+        <activity android:name=".CadastroProfissionalActivity"
+                    android:screenOrientation="portrait"/>
+        <activity android:name=".LoginActivity"
+                    android:screenOrientation="portrait"/>
+>>>>>>> 557f0d87e9754b229bdd91439dd4c310b84a6908
     </application>
 
 </manifest>
