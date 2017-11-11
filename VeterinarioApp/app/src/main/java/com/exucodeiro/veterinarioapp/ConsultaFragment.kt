@@ -1,5 +1,6 @@
 package com.exucodeiro.veterinarioapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -29,6 +30,13 @@ class ConsultaFragment : Fragment() {
         loadData()
         adapter = ConsultaAdapter(consultas, activity)
         listConsultas.adapter = adapter
+
+        listConsultas.setOnItemClickListener { adapterView, view, i, l ->
+            val consulta = (adapter as ConsultaAdapter).getItem(i) as Consulta
+            val it = Intent(activity, ConsultaDetailActivity::class.java)
+            it.putExtra("consulta", consulta)
+            startActivity(it)
+        }
 
         super.onActivityCreated(savedInstanceState)
     }

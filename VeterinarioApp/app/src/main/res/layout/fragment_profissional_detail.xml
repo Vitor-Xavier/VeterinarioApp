@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.exucodeiro.veterinarioapp.ProfissionalDetailFragment">
 
     <LinearLayout
@@ -53,5 +54,14 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabConsulta"
+        android:layout_margin="12dp"
+        android:layout_gravity="bottom|end"
+        android:src="@mipmap/ic_assignment_white_24dp"
+        app:backgroundTint="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </FrameLayout>

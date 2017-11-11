@@ -1,5 +1,6 @@
 package com.exucodeiro.veterinarioapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.TextUtils
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_profissional_detail.*
 
 
 class ProfissionalDetailFragment : Fragment() {
+    var profissional: Profissional? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -19,13 +21,19 @@ class ProfissionalDetailFragment : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        val profissional = arguments.getSerializable("profissional") as Profissional
+        profissional = arguments.getSerializable("profissional") as Profissional
 
-        textDescricao.text = profissional.nome
-        textContatos.text = TextUtils.join(", ", profissional.contatos)
-        textServicos.text = TextUtils.join(", ", profissional.servicos)
+        textDescricao.text = profissional?.nome
+        textContatos.text = TextUtils.join(", ", profissional?.contatos)
+        textServicos.text = TextUtils.join(", ", profissional?.servicos)
 
         super.onActivityCreated(savedInstanceState)
+
+        fabConsulta.setOnClickListener {
+            val it = Intent(context, CadastroConsultaActivity::class.java)
+            it.putExtra("profissional", profissional)
+            startActivity(it)
+        }
     }
 
      fun newInstance(profissional: Profissional) : ProfissionalDetailFragment {

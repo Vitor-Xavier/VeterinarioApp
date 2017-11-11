@@ -10,7 +10,7 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -21,8 +21,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,15 +46,24 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".CadastroEnderecoActivity"
-                    android:screenOrientation="portrait"/>
-        <activity android:name=".CadastroUsuarioActivity"
-                    android:screenOrientation="portrait"/>
-        <activity android:name=".CadastroProfissionalActivity"
-                    android:screenOrientation="portrait"/>
-        <activity android:name=".LoginActivity"
-                    android:screenOrientation="portrait"/>
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".CadastroEnderecoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CadastroAnimalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CadastroUsuarioActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CadastroProfissionalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ConsultaDetailActivity" />
+        <activity android:name=".CadastroConsultaActivity"></activity>
     </application>
 
 </manifest>

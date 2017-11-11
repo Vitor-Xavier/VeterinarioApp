@@ -19,7 +19,7 @@ data class ConsultaAdapter(var consultas:List<Consulta>, var activity: Activity)
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
         val view: View = View.inflate(activity, R.layout.item_consulta,null)
 
-        view.textData.text = consultas[p0].getData()
+        view.textData.text = consultas[p0].getDataFormatada()
         view.textProfissional.text = "${consultas[p0].profissional.nome} ${consultas[p0].profissional.sobrenome}"
         view.textAnimal.text = consultas[p0].animal.nome
         view.imageProfissional.loadUrl(consultas[p0].profissional.icone)

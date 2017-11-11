@@ -24,17 +24,18 @@
             android:layout_height="wrap_content" />
 
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textTipo"
-                android:layout_marginLeft="6dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/imageTipoAnimal"
+                android:layout_width="32dp"
+                android:layout_height="32dp" />
 
             <TextView
                 android:id="@+id/textData"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

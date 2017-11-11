@@ -1,44 +1,25 @@
 package com.exucodeiro.veterinarioapp.Models
 
+import com.fasterxml.jackson.annotation.JsonFormat
+import java.io.Serializable
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
  * Created by vitor on 23/10/2017.
  */
 data class Consulta (val consultaId: Int,
-                     val data: Calendar,
+                     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", locale = "pt_BR")
+                     val data: Date,
                      val descricao: String,
                      val animalId: Int,
                      val animal: Animal,
                      val profissionalId: Int,
-                     val profissional: Profissional) {
+                     val profissional: Profissional) : Serializable {
 
-    fun getData(): String {
-        var diaSemana = ""
-        when (data.get(Calendar.DAY_OF_WEEK)) {
-            1 -> diaSemana = "Domingo"
-            2 -> diaSemana = "Segunda-feira"
-            3 -> diaSemana = "Terça-feira"
-            4 -> diaSemana = "Quarta-feira"
-            5 -> diaSemana = "Quinta-feira"
-            6 -> diaSemana = "Sexta-feira"
-            7 -> diaSemana = "Sábado"
-        }
-        var mes = ""
-        when (data.get(Calendar.MONTH)) {
-            1 -> mes = "janeiro"
-            2 -> mes = "fevereiro"
-            3 -> mes = "março"
-            4 -> mes = "abril"
-            5 -> mes = "maio"
-            6 -> mes = "junho"
-            7 -> mes = "julho"
-            8 -> mes = "agosto"
-            9 -> mes = "setembro"
-            10 -> mes = "outubro"
-            11 -> mes = "novembro"
-            12 -> mes = "dezembro"
-        }
-        return "$diaSemana, " + data.get(Calendar.DAY_OF_MONTH) + " de $mes de " + data.get(Calendar.YEAR)
+    fun getDataFormatada(): String {
+        val local = Locale("pt", "BR")
+        val df = SimpleDateFormat("EEEE',' dd 'de' MMMM 'de' yyyy 'as' HH:mm", local)
+        return df.format(data)
     }
 }

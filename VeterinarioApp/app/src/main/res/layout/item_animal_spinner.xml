@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -11,19 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageIcone"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageAnimal"
             android:layout_gravity="center_vertical"
             android:layout_width="32dp"
             android:layout_height="32dp" />
 
         <TextView
-            android:id="@+id/textTipo"
+            android:id="@+id/textNome"
             android:layout_marginLeft="16dp"
             android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
 
     </LinearLayout>
 

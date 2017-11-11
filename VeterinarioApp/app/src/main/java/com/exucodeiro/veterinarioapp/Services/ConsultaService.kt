@@ -3,6 +3,7 @@ package com.exucodeiro.veterinarioapp.Services
 import com.exucodeiro.veterinarioapp.Models.Consulta
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpGet
 
@@ -20,6 +21,12 @@ class ConsultaService {
         val (data, error) = result
         if (error == null) {
             val mapper = jacksonObjectMapper()
+            try {
+                val t = mapper.readValue<List<Consulta>>(data ?: "")
+                val tst = "a"
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             consultas.addAll(mapper.readValue<List<Consulta>>(data ?: ""))
         }
 
@@ -37,6 +44,29 @@ class ConsultaService {
         }
 
         return consultas
+    }
+
+    fun adicionaConsulta(consulta: Consulta) : Boolean {
+        val mapper = jacksonObjectMapper()
+        var res = false
+        val tst = mapper.writeValueAsString(consulta)
+        Fuel.post("Consulta").body(mapper.writeValueAsString(consulta)).response { request, response, result ->
+            val (data, error) = result
+            res = (error == null)
+        }
+        return res
+    }
+
+    fun alteraConsulta(consulta: Consulta?) : Boolean {
+        val mapper = jacksonObjectMapper()
+        var res = false
+
+        val tst = mapper.writeValueAsString(consulta)
+        Fuel.put("Consulta").body(mapper.writeValueAsString(consulta)).response { request, response, result ->
+            val (data, error) = result
+            res = (error == null)
+        }
+        return res
     }
 
 }
