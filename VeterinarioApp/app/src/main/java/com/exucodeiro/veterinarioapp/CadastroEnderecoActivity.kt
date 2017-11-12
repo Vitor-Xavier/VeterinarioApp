@@ -19,7 +19,7 @@ class CadastroEnderecoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_cadastro_endereco)
         title = "Endereço"
 
-        imageIcone.loadUrl("http://www.kibbypark.com/wp-content/uploads/2015/08/wellness-icon.png")
+        //imageIcone.loadUrl("http://www.kibbypark.com/wp-content/uploads/2015/08/wellness-icon.png")
 
         cadastro = intent.getSerializableExtra("profissional") as Profissional
 

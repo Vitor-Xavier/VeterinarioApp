@@ -1,9 +1,12 @@
 package com.exucodeiro.veterinarioapp
 
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.provider.MediaStore
 import android.widget.ImageView
 import com.exucodeiro.veterinarioapp.Models.Animal
 import com.exucodeiro.veterinarioapp.Models.Contato
@@ -86,6 +89,10 @@ class CadastroAnimalActivity : AppCompatActivity() {
             val handler = Handler()
             handler.postDelayed({ finish() }, 1500)
         }
+
+        imageIcone.setOnClickListener {
+            selectImageInAlbum()
+        }
     }
 
     fun salvaAnimal(animal: Animal) {
@@ -113,4 +120,38 @@ class CadastroAnimalActivity : AppCompatActivity() {
         if (url != null)
             Picasso.with(context).load(url).into(this)
     }
+
+    fun selectImageInAlbum() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        if (intent.resolveActivity(packageManager) != null) {
+            val tst = startActivityForResult(intent, REQUEST_SELECT_IMAGE_IN_ALBUM)
+            val s = "s"
+        }
+        val t = "t"
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode === Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_SELECT_IMAGE_IN_ALBUM -> imageIcone.loadUrl(data?.data.toString())
+            }
+        } else {
+            toast("Não foi possível identificar a imagem selecionada.")
+        }
+    }
+
+    fun takePhoto() {
+        val intent1 = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (intent1.resolveActivity(packageManager) != null) {
+            startActivityForResult(intent1, REQUEST_TAKE_PHOTO)
+        }
+    }
+    companion object {
+        private val REQUEST_TAKE_PHOTO = 0
+        private val REQUEST_SELECT_IMAGE_IN_ALBUM = 1
+    }
+
 }

@@ -5,72 +5,82 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrimary"
     tools:context="com.exucodeiro.veterinarioapp.CadastroAnimalActivity">
 
-    <ScrollView
-        android:layout_weight="0.95"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageIcone"
+        android:src="@mipmap/animal_default"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="32dp"
+        android:layout_width="112dp"
+        android:layout_height="112dp" />
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_margin="32dp"
+            android:background="#FFF"
+            android:layout_marginBottom="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageIcone"
-                android:layout_marginBottom="12dp"
-                android:layout_width="92dp"
-                android:layout_height="92dp" />
-
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
+                android:layout_weight="0.95"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
-                <EditText
-                    android:id="@+id/inputNome"
-                    android:layout_marginBottom="15dp"
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/inputNome"
+                        android:layout_marginBottom="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nome" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/inputDataNasc"
+                        android:layout_marginBottom="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:hint="Data de nascimento" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <Spinner
+                    android:id="@+id/spinnerTipoAnimal"
+                    android:layout_marginBottom="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nome" />
+                    android:tooltipText="Tipo de Animal"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/inputDataNasc"
-                    android:layout_marginBottom="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="date"
-                    android:hint="Data de nascimento" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <Spinner
-                android:id="@+id/spinnerTipoAnimal"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:tooltipText="Tipo de Animal"/>
+            <Button
+                android:id="@+id/buttonConcluir"
+                android:text="Concluir"
+                android:layout_margin="8dp"
+                android:layout_weight="0.05"
+                android:background="#0000"
+                android:textColor="@color/colorPrimary"
+                android:layout_gravity="end|bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
-
-    </ScrollView>
-
-    <Button
-        android:id="@+id/buttonConcluir"
-        android:text="Concluir"
-        android:layout_margin="10dp"
-        android:background="#0000"
-        android:textColor="@color/colorPrimary"
-        android:layout_weight="0.05"
-        android:layout_gravity="end|bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>
