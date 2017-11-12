@@ -36,9 +36,7 @@ class CadastroEnderecoActivity : AppCompatActivity() {
                     0.0)
             cadastro?.endereco = endereco
 
-            if(profissionalService.postProfissional(cadastro as Profissional))
-                toast("Registrado")
-            else
+            if(!profissionalService.postProfissional(cadastro as Profissional))
                 toast("Erro")
         }
     }

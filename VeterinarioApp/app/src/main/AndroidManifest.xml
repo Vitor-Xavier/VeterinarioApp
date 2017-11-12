@@ -56,9 +56,16 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".ConsultaDetailActivity" />
-        <activity android:name=".CadastroConsultaActivity" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ConsultaDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CadastroConsultaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".CadastroContatoActivity"
             android:screenOrientation="portrait"
