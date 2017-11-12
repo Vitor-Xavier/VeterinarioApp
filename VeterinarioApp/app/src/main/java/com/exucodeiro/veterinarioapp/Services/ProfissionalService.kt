@@ -38,6 +38,19 @@ class ProfissionalService {
         return profissionais
     }
 
+    fun getProfissional(profissionalId: Int) : Profissional? {
+        var profissional: Profissional? = null
+
+        val (request, response, result) = "Profissional/$profissionalId".httpGet().responseString()
+        val (data, error) = result
+        if (error == null) {
+            val mapper = jacksonObjectMapper()
+            profissional = mapper.readValue(data ?: "")
+        }
+
+        return profissional
+    }
+
     fun postProfissional(profissional: Profissional) : Boolean {
         val mapper = jacksonObjectMapper()
         var res = false

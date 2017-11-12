@@ -16,6 +16,10 @@
             android:id="@+id/nav_agenda"
             android:icon="@mipmap/ic_assignment_black_24dp"
             android:title="@string/consultas" />
+        <item
+            android:id="@+id/nav_sair"
+            android:icon="@mipmap/ic_exit_to_app_black_24dp"
+            android:title="@string/sair" />
     </group>
 
     <item android:title="@string/sobre">

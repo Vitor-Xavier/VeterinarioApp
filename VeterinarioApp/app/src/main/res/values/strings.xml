@@ -23,6 +23,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="inicio">Início</string>
+    <string name="sair">Sair</string>
     <string name="agenda">Agenda</string>
     <string name="perfil">Perfil</string>
     <string name="info">Informações</string>
