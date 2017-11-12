@@ -19,8 +19,6 @@ class CadastroUsuarioActivity : AppCompatActivity() {
             val it = Intent(this, CadastroEnderecoActivity::class.java)
             startActivity(it)
         }
-
-        imageIcone.loadUrl("http://www.kibbypark.com/wp-content/uploads/2015/08/wellness-icon.png")
     }
 
     fun ImageView.loadUrl(url: String) {

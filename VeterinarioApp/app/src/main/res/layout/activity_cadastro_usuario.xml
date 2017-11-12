@@ -5,12 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrimary"
     tools:context="com.exucodeiro.veterinarioapp.CadastroUsuarioActivity">
-
-    <ScrollView
-        android:layout_weight="0.95"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="vertical"
@@ -19,18 +15,21 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageIcone"
-                android:background="#FFFFFF"
-                android:layout_margin="16dp"
+                android:layout_margin="32dp"
+                android:src="@mipmap/user_default"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp" />
 
             <LinearLayout
+                android:elevation="10dp"
                 android:orientation="vertical"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
+                android:background="#FFF"
+                android:padding="12dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -58,37 +57,36 @@
 
                 </android.support.design.widget.TextInputLayout>
 
+                <LinearLayout
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/buttonConcluir"
+                        android:text="Concluir"
+                        android:background="#0000"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_gravity="start"
+                        android:layout_weight="0.5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:id="@+id/buttonProximo"
+                        android:text="Próximo"
+                        android:background="#0000"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_weight="0.5"
+                        android:layout_gravity="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
-
-    </ScrollView>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/buttonConcluir"
-                android:text="Concluir"
-                android:background="#0000"
-                android:textColor="@color/colorPrimary"
-                android:layout_gravity="start"
-                android:layout_weight="0.5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/buttonProximo"
-            android:text="Próximo"
-            android:background="#0000"
-            android:textColor="@color/colorPrimary"
-            android:layout_weight="0.5"
-            android:layout_gravity="end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
 
 </LinearLayout>

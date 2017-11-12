@@ -27,8 +27,8 @@ class ConsultaFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         activity.title = getString(R.string.consultas)
 
-        loadData()
         adapter = ConsultaAdapter(consultas, activity)
+        loadData()
         listConsultas.adapter = adapter
 
         listConsultas.setOnItemClickListener { adapterView, view, i, l ->
