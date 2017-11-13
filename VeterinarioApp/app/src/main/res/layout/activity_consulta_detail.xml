@@ -151,7 +151,7 @@
     <android.support.design.widget.FloatingActionButton
         android:layout_margin="12dp"
         android:layout_gravity="bottom|end"
-        app:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/gradient_background"
         android:src="@mipmap/ic_create_white_24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
