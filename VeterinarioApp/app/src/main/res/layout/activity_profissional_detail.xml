@@ -7,6 +7,11 @@
     android:orientation="vertical"
     tools:context="com.exucodeiro.veterinarioapp.ProfissionalDetailActivity">
 
+    <FrameLayout
+        android:id="@+id/frameLayot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:tooltipText="Teste"

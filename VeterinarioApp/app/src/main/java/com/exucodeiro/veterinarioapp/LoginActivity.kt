@@ -8,7 +8,8 @@ import com.exucodeiro.veterinarioapp.Services.LoginSettings
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.toast
 import android.content.Intent
-
+import com.exucodeiro.veterinarioapp.Services.LoginService
+import org.jetbrains.anko.async
 
 
 class LoginActivity : AppCompatActivity() {
@@ -22,11 +23,28 @@ class LoginActivity : AppCompatActivity() {
         inputSenha.setText(settings.login.senha, TextView.BufferType.EDITABLE)
 
         buttonEntrar.setOnClickListener {
-            settings.login = Login(1, inputUsuario.text.toString(), inputSenha.text.toString(), "Usuario")
+            val loginService = LoginService()
+            async {
+                val login = loginService.logar(inputUsuario.text.toString(), inputSenha.text.toString())
+                if(login != null) {
+                    settings.login = login
 
-            val it = Intent(this, MainActivity::class.java)
-            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(it)
+                    val it = Intent(baseContext, MainActivity::class.java)
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(it)
+                } else {
+                    toast("Falha ao realizar o login.")
+                }
+
+
+                // Login(1, inputUsuario.text.toString(), inputSenha.text.toString(), "Usuario")
+
+
+            }
+
+
+
+
         }
     }
 }
