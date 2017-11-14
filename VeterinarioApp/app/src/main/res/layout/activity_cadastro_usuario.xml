@@ -21,84 +21,91 @@
                 android:layout_width="112dp"
                 android:layout_height="112dp" />
 
-            <LinearLayout
-                android:elevation="10dp"
-                android:orientation="vertical"
-                android:background="#FFF"
+            <ScrollView
                 android:layout_marginBottom="32dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:layout_weight="0.95"
+                    android:elevation="10dp"
                     android:orientation="vertical"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
+                    android:background="#FFF"
+                    android:layout_marginBottom="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginRight="32dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <android.support.design.widget.TextInputLayout
+                    <LinearLayout
+                        android:layout_weight="0.95"
+                        android:orientation="vertical"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/inputNome"
+                                android:layout_marginBottom="16dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Nome" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/inputSobrenome"
+                                android:layout_marginBottom="16dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Sobrenome" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_weight="0.05"
+                        android:layout_margin="8dp"
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <EditText
-                            android:id="@+id/inputNome"
-                            android:layout_marginBottom="16dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Nome" />
+                        <Button
+                            android:id="@+id/buttonConcluir"
+                            android:text="Concluir"
+                            android:background="#0000"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_gravity="start"
+                            android:layout_weight="0.5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
-                    </android.support.design.widget.TextInputLayout>
+                        <Button
+                            android:id="@+id/buttonProximo"
+                            android:text="Próximo"
 
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                            android:background="#0000"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_weight="0.5"
+                            android:layout_gravity="end"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
-                        <EditText
-                            android:id="@+id/inputSobrenome"
-                            android:layout_marginBottom="16dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Sobrenome" />
-
-                    </android.support.design.widget.TextInputLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_weight="0.05"
-                    android:layout_margin="8dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Button
-                        android:id="@+id/buttonConcluir"
-                        android:text="Concluir"
-                        android:background="#0000"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_gravity="start"
-                        android:layout_weight="0.5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <Button
-                        android:id="@+id/buttonProximo"
-                        android:text="Próximo"
-
-                        android:background="#0000"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_weight="0.5"
-                        android:layout_gravity="end"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </ScrollView>
 
         </LinearLayout>
 
