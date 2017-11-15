@@ -64,18 +64,15 @@ class UsuarioFragment : Fragment() {
     }
 
     fun loadData() {
-        usuario = (arguments.get("usuario") as Usuario)
-        imageIcon.loadUrl(usuario.imagem)
-        textNome.text = "${usuario.nome} ${usuario.sobrenome}"
-//        val usuarioService = UsuarioService()
-//        async {
-//            usuario = usuarioService.getUsuario(1)
-//
-//            uiThread {
-//                imageIcon.loadUrl(usuario.imagem)
-//                textNome.text = "${usuario.nome} ${usuario.sobrenome}"
-//            }
-//        }
+        val usuarioService = UsuarioService()
+        async {
+            usuario = usuarioService.getUsuario(1)
+
+            uiThread {
+                imageIcon.loadUrl(usuario.imagem)
+                textNome.text = "${usuario.nome} ${usuario.sobrenome}"
+            }
+        }
     }
 
 }

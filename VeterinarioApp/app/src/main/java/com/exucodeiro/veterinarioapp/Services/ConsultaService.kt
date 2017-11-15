@@ -21,6 +21,12 @@ class ConsultaService {
         val (data, error) = result
         if (error == null) {
             val mapper = jacksonObjectMapper()
+            try {
+                val t = mapper.readValue<List<Consulta>>(data ?: "")
+                val tst = "a"
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             consultas.addAll(mapper.readValue<List<Consulta>>(data ?: ""))
         }
 

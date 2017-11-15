@@ -16,25 +16,17 @@ class ProfissionalDetailActivity : AppCompatActivity() {
 
         val profissional = (intent.getSerializableExtra("profissional") as Profissional)
 
-        val fragment = ProfissionalPageFragment()
-        val bundle = Bundle()
-        bundle.putSerializable("profissional", profissional)
-        fragment.arguments = bundle
-        supportFragmentManager.beginTransaction().replace(R.id.frameLayot, fragment).commit()
+        val pageAdapter = ProfissionalPageAdapter(supportFragmentManager, this, profissional)
+        viewPager.adapter = pageAdapter
+        tabsProfissional.setupWithViewPager(viewPager)
 
-//
-//
-//        val pageAdapter = ProfissionalPageAdapter(supportFragmentManager, this, profissional)
-//        viewPager.adapter = pageAdapter
-//        tabsProfissional.setupWithViewPager(viewPager)
-//
-//        textNome.text = "${profissional.nome} ${profissional.sobrenome}"
-//        imageBack.loadUrl(profissional.imagem)
-//        imageIcon.loadUrl(profissional.icone)
+        textNome.text = "${profissional.nome} ${profissional.sobrenome}"
+        imageBack.loadUrl(profissional.imagem)
+        imageIcon.loadUrl(profissional.icone)
     }
-//
-//    fun ImageView.loadUrl(url: String) {
-//        if (url != null && !url.equals(""))
-//            Picasso.with(context).load(url).into(this)
-//    }
+
+    fun ImageView.loadUrl(url: String) {
+        if (url != null && !url.equals(""))
+            Picasso.with(context).load(url).into(this)
+    }
 }
