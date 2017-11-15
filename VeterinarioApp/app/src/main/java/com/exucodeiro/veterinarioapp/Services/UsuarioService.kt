@@ -2,6 +2,7 @@ package com.exucodeiro.veterinarioapp.Services
 
 import com.exucodeiro.veterinarioapp.Models.Contato
 import com.exucodeiro.veterinarioapp.Models.Usuario
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.github.kittinunf.fuel.Fuel
@@ -19,13 +20,10 @@ class UsuarioService {
         var usuario = Usuario(0, "Usuário", "Convidado", "https://cdn2.iconfinder.com/data/icons/medicine-4-1/512/vet-512.png", null, ArrayList<Contato>())
 
         val (request, response, result) = "Usuario/$usuarioId".httpGet().responseString()
-
         val (data, error) = result
-        val erro1 = error
-        val data1 = data
         if (error == null) {
             val mapper = jacksonObjectMapper()
-            usuario = mapper.readValue<Usuario>(data ?: "")
+            usuario = mapper.readValue(data ?: "")
         }
 
         return usuario

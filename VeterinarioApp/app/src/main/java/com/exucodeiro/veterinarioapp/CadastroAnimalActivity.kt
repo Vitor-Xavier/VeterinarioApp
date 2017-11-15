@@ -81,13 +81,15 @@ class CadastroAnimalActivity : AppCompatActivity() {
             )
 
             val animalService = AnimalService()
-            if (animal?.animalId == 0)
-                toast(if (!animalService.adicionaAnimal(animalIn)) "Salvo" else "Não foi possível salvar")
-            else
-                toast(if (!animalService.atualizaAnimal(animalIn)) "Atualizado" else "Não foi possível atualizar")
-
-            val handler = Handler()
-            handler.postDelayed({ finish() }, 1500)
+            async {
+                if (animal?.animalId == 0)
+                    animalService.adicionaAnimal(animalIn)
+                else
+                    animalService.atualizaAnimal(animalIn)
+                finish()
+            }
+//            val handler = Handler()
+//            handler.postDelayed({ finish() }, 1500)
         }
 
         imageIcone.setOnClickListener {

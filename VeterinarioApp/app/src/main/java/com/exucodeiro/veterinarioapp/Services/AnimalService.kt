@@ -33,10 +33,13 @@ class AnimalService {
         val mapper = jacksonObjectMapper()
         var res = false
 
-        Fuel.post("Animal/${animal.usuarioId}").body(mapper.writeValueAsString(animal)).response { request, response, result ->
-            val (data, error) = result
-            res = (error != null)
-        }
+//        Fuel.post("Animal/${animal.usuarioId}").body(mapper.writeValueAsString(animal)).response { request, response, result ->
+//            val (data, error) = result
+//            res = (error != null)
+//        }
+        val (request, response, result) = "Animal/${animal.usuarioId}".httpPost().body(mapper.writeValueAsString(animal)).responseString()
+        val (data, error) = result
+        res = (error != null)
 
         return res
     }
@@ -45,10 +48,13 @@ class AnimalService {
         val mapper = jacksonObjectMapper()
         var res = false
 
-        Fuel.put("Animal/${animal.usuarioId}").body(mapper.writeValueAsString(animal)).response { request, response, result ->
-            val (data, error) = result
-            res = (error != null)
-        }
+//        Fuel.put("Animal/${animal.usuarioId}").body(mapper.writeValueAsString(animal)).response { request, response, result ->
+//            val (data, error) = result
+//            res = (error != null)
+//        }
+        val (request, response, result) = "Animal/${animal.usuarioId}".httpPut().body(mapper.writeValueAsString(animal)).responseString()
+        val (data, error) = result
+        res = (error != null)
 
         return res
     }
