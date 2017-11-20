@@ -13,6 +13,7 @@
 
         <android.support.design.widget.AppBarLayout
             android:padding="8dp"
+            android:background="@drawable/gradient_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">

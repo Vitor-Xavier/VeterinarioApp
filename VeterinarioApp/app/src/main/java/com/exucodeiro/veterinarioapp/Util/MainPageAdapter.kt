@@ -9,7 +9,10 @@ import com.exucodeiro.veterinarioapp.Models.Profissional
 import com.exucodeiro.veterinarioapp.ProfissionalListFragment
 import com.exucodeiro.veterinarioapp.ProfissionalMapFragment
 import com.exucodeiro.veterinarioapp.R
+import com.exucodeiro.veterinarioapp.Services.ProfissionalService
 import com.google.android.gms.maps.MapFragment
+import org.jetbrains.anko.async
+import java.util.ArrayList
 
 /**
  * Created by vitor on 28/10/2017.
@@ -24,6 +27,13 @@ class MainPageAdapter(fm: FragmentManager, private val context: Context) : Fragm
             }
             1 -> {
                 val fragment = ProfissionalMapFragment()
+                val bundle = Bundle()
+                val profissionalService = ProfissionalService()
+                async {
+                    val list = profissionalService.getProfissionais(-21.1767, -47.8208) as ArrayList<Profissional>
+                    bundle.putSerializable("profissionais", list)
+                }
+                fragment.arguments = bundle
                 return fragment
             }
         }

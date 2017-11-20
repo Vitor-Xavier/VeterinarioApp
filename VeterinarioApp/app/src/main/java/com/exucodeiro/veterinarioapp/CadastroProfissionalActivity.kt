@@ -1,17 +1,26 @@
 package com.exucodeiro.veterinarioapp
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ImageView
+import android.widget.Toast
 import com.exucodeiro.veterinarioapp.Models.Contato
 import com.exucodeiro.veterinarioapp.Models.Profissional
 import com.exucodeiro.veterinarioapp.Models.Servico
+import com.exucodeiro.veterinarioapp.Services.UploadService
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cadastro_profissional.*
+import org.jetbrains.anko.async
 import org.jetbrains.anko.toast
+import java.io.ByteArrayOutputStream
 
 class CadastroProfissionalActivity : AppCompatActivity() {
 
@@ -72,13 +81,60 @@ class CadastroProfissionalActivity : AppCompatActivity() {
             when (requestCode) {
                 REQUEST_SELECT_IMAGE_IN_ALBUM -> {
                     if (IMAGE_BACKGROUND == 0)
-                        imageIcone.loadUrl(data?.data.toString())
+                        performCrop(Uri.parse(data?.data?.toString()), 128, 128, 1, 1)
                     else
-                        imageBackground.loadUrl(data?.data.toString())
+                        performCrop(Uri.parse(data?.data?.toString()), 270, 480, 16, 9)
+                }
+                PIC_CROP -> {
+                    val extras = data?.extras
+                    val selectedBitmap = extras?.getParcelable<Bitmap>("data") as Bitmap
+                    val uri = getImageUri(this, selectedBitmap)
+
+                    if (IMAGE_BACKGROUND == 0)
+                        imageIcone.setImageBitmap(selectedBitmap)
+                    else
+                        imageBackground.setImageBitmap(selectedBitmap)
+                    async {
+                        val uploadService = UploadService()
+                        uploadService.enviarImagem(baseContext, uri.toString())
+                    }
                 }
             }
         } else {
             toast("Não foi possível identificar a imagem selecionada.")
+        }
+    }
+
+    fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+        return Uri.parse(path)
+    }
+
+    private fun performCrop(picUri: Uri, height: Int, width: Int, aspectX: Int, aspectY: Int) {
+        try {
+            val cropIntent = Intent("com.android.camera.action.CROP")
+            cropIntent.setDataAndType(picUri, "image/*")
+            cropIntent.putExtra("crop", true)
+            cropIntent.putExtra("aspectX", aspectX)
+            cropIntent.putExtra("aspectY", aspectY)
+            cropIntent.putExtra("outputX", width)
+            cropIntent.putExtra("outputY", height)
+            cropIntent.putExtra("return-data", true)
+            startActivityForResult(cropIntent, PIC_CROP)
+        } catch (anfe: ActivityNotFoundException) {
+            val errorMessage = "Sem suporte a ação de recorte"
+            val toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT)
+            toast.show()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            toast("Permission: "+permissions[0]+ "was "+grantResults[0])
+            selectImageInAlbum()
         }
     }
 
@@ -92,6 +148,7 @@ class CadastroProfissionalActivity : AppCompatActivity() {
         private val REQUEST_TAKE_PHOTO = 0
         private val REQUEST_SELECT_IMAGE_IN_ALBUM = 1
         private var IMAGE_BACKGROUND = 0
+        private val PIC_CROP = 2
     }
 
 }
