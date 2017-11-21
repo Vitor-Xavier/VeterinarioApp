@@ -1,5 +1,6 @@
 package com.exucodeiro.veterinarioapp
 
+import android.Manifest
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -7,9 +8,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat
 import android.widget.ImageView
 import android.widget.Toast
 import com.exucodeiro.veterinarioapp.Models.Contato
@@ -52,12 +55,25 @@ class CadastroProfissionalActivity : AppCompatActivity() {
 
         imageBackground.setOnClickListener {
             IMAGE_BACKGROUND = 1
-            selectImageInAlbum()
+            if (Build.VERSION.SDK_INT >= 23)
+                if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED)
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 12)
+                else
+                    selectImageInAlbum()
         }
 
         imageIcone.setOnClickListener {
             IMAGE_BACKGROUND = 0
-            selectImageInAlbum()
+            if (Build.VERSION.SDK_INT >= 23)
+                if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED)
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 14)
+                else if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED)
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 15)
+                else
+                    selectImageInAlbum()
         }
     }
 

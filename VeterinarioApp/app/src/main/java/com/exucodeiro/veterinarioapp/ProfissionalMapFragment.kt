@@ -16,7 +16,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.exucodeiro.veterinarioapp.Models.Profissional
 import com.exucodeiro.veterinarioapp.Services.ProfissionalService
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -25,8 +24,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_profissional_map.*
 import org.jetbrains.anko.async
+import org.jetbrains.anko.uiThread
 
 class ProfissionalMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
@@ -39,21 +38,18 @@ class ProfissionalMapFragment : Fragment(), OnMapReadyCallback {
         val rib = LatLng(-21.1767, -47.8208)
         mMap.moveCamera(CameraUpdateFactory.newLatLng(rib))
 
-//        val profissionais = arguments.getSerializable("profissionais") as ArrayList<Profissional>
-//
-//        for (profissional in profissionais) {
-//            val pro = LatLng(profissional.endereco?.latitude ?: -21.1767, profissional.endereco?.longitude ?: -47.8208)
-//            mMap.addMarker(MarkerOptions().position(pro).title("${profissional.nome} ${profissional.sobrenome}"))
-//        }
+        async {
+            val profissionalService = ProfissionalService()
+            val list = profissionalService.getProfissionais(-21.1767, -47.8208)
+            uiThread {
+                for (it in list) {
+                    val pro = LatLng(it.endereco?.latitude ?: -21.1767, it.endereco?.longitude ?: -47.8208)
+                    mMap.addMarker(MarkerOptions().position(pro).title("${it.nome} ${it.sobrenome}"))
+                }
+            }
 
-//        async {
-//            val profissionalService = ProfissionalService()
-//            val list = profissionalService.getProfissionais(-21.1767, -47.8208)
-//            for (it in list) {
-//                val pro = LatLng(it.endereco?.latitude ?: -21.1767, it.endereco?.longitude ?: -47.8208)
-//                mMap.addMarker(MarkerOptions().position(pro).title("${it.nome} ${it.sobrenome}"))
-//            }
-//        }
+        }
+
         mMap.moveCamera(CameraUpdateFactory.newLatLng(rib))
         mMap.animateCamera(CameraUpdateFactory.zoomTo(16.0F))
     }
@@ -61,11 +57,12 @@ class ProfissionalMapFragment : Fragment(), OnMapReadyCallback {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        locationManager = activity.getSystemService(LOCATION_SERVICE) as LocationManager?
+        locationManager = context.getSystemService(LOCATION_SERVICE) as LocationManager?
 
         try {
             // Request location updates
-            locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener)
+            locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0L, 0f, locationListener)
+
         } catch(ex: SecurityException) {
             Log.d("myTag", "Security Exception, no location available");
         }
@@ -77,14 +74,13 @@ class ProfissionalMapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-//        val mapFragment = childFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
-//        mapFragment.getMapAsync(this)
         if (Build.VERSION.SDK_INT >= 23)
             if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED)
-                ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 12)
-
+                ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 12)
+            if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED)
+                ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 13)
         return inflater!!.inflate(R.layout.fragment_profissional_map, container, false)
     }
 
@@ -101,12 +97,21 @@ class ProfissionalMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private val locationListener: LocationListener = object : LocationListener {
+
         override fun onLocationChanged(location: Location) {
-            //thetext.setText("" + location.longitude + ":" + location.latitude);
+            if (SHOW_LOCATION == 1) {
+                val lat_lng = LatLng(location.latitude, location.longitude)
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(lat_lng))
+                SHOW_LOCATION = 0
+            }
         }
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
         override fun onProviderEnabled(provider: String) {}
         override fun onProviderDisabled(provider: String) {}
+    }
+
+    companion object {
+        private var SHOW_LOCATION = 1
     }
 
 }

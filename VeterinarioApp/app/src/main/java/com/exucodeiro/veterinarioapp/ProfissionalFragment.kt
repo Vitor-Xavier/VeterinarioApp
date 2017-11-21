@@ -18,6 +18,7 @@ class ProfissionalFragment : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        activity.title = getString(R.string.profissionais)
         val pageAdapter = MainPageAdapter(childFragmentManager, context)
         viewPager.adapter = pageAdapter
         tabsProfissional.setupWithViewPager(viewPager)

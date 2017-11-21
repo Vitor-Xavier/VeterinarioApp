@@ -95,12 +95,12 @@
         </android.support.design.widget.AppBarLayout>
 
         <ScrollView
-            android:layout_margin="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
                 android:orientation="vertical"
+                android:layout_margin="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -142,6 +142,23 @@
                     android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="Localização"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:map="http://schemas.android.com/apk/res-auto"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:id="@+id/map_consulta"
+                    android:layout_margin="8dp"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    tools:context="com.exucodeiro.veterinarioapp.ProfissionalMapFragment" />
 
             </LinearLayout>
 

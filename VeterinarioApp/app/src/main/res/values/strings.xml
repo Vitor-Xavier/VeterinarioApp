@@ -3,22 +3,6 @@
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_login">Sign in</string>
-
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -32,9 +16,13 @@
     <string name="mapa">Mapa</string>
     <string name="detalhes">Detalhes</string>
     <string name="animais">Pets</string>
+    <string name="animal">Animal</string>
     <string name="profissionais">Profissionais</string>
+    <string name="profissional">Profissional</string>
     <string name="usuario">Usuário</string>
+    <string name="endereco">Endereço</string>
     <string name="consultas">Consultas</string>
+    <string name="consulta">Consulta</string>
     <string name="equipe">Exu Codeiro Team</string>
     <string name="title_activity_maps">Map</string>
 

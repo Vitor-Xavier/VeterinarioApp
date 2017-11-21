@@ -1,5 +1,6 @@
 package com.exucodeiro.veterinarioapp
 
+import android.Manifest
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -7,10 +8,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.SyncStateContract
+import android.support.v4.app.ActivityCompat
 import android.widget.ImageView
 import android.widget.Toast
 import com.exucodeiro.veterinarioapp.Services.UploadService
@@ -34,7 +37,15 @@ class CadastroUsuarioActivity : AppCompatActivity() {
         }
 
         imageIcone.setOnClickListener {
-            selectImageInAlbum()
+            if (Build.VERSION.SDK_INT >= 23)
+                if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED)
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 14)
+                else if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED)
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 15)
+                else
+                    selectImageInAlbum()
         }
     }
 
@@ -111,9 +122,9 @@ class CadastroUsuarioActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            toast("Permission: "+permissions[0]+ "was "+grantResults[0])
             selectImageInAlbum()
-        }
+        } else
+            toast("Permissão não concedida")
     }
 
     companion object {
