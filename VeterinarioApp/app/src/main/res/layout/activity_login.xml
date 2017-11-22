@@ -5,52 +5,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:background="@drawable/gradient_background"
     tools:context="com.exucodeiro.veterinarioapp.LoginActivity">
 
     <LinearLayout
-        android:layout_marginTop="-80dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:orientation="vertical"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.TextInputLayout
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:src="@mipmap/ic_launcher_foreground"
+            android:layout_margin="32dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:background="#FFF"
+            android:padding="12dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/inputUsuario"
-                android:layout_marginBottom="10dp"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Usuário" />
+                android:layout_height="wrap_content">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/inputUsuario"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Usuário" />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/inputSenha"
-                android:layout_marginBottom="15dp"
-                android:inputType="textVisiblePassword"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Senha" />
+                android:layout_height="wrap_content">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/inputSenha"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="16dp"
+                    android:inputType="textVisiblePassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Senha" />
 
-        <Button
-            android:id="@+id/buttonEntrar"
-            android:text="Entrar"
-            android:textColor="#FFF"
-            android:background="@color/colorPrimaryDark"
-            android:layout_width="match_parent"
-            android:layout_height="32dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/buttonEntrar"
+                android:text="Entrar"
+                android:textColor="#FFF"
+                android:background="@color/colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:layout_height="32dp" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
+
+
 
 </LinearLayout>

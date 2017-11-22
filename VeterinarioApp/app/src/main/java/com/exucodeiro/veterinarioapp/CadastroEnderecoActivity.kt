@@ -100,8 +100,6 @@ class CadastroEnderecoActivity : AppCompatActivity() {
                 }
             } else
                 SHOW_LOCATION = 1
-
-
         }
     }
 

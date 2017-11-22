@@ -16,6 +16,7 @@ import android.provider.SyncStateContract
 import android.support.v4.app.ActivityCompat
 import android.widget.ImageView
 import android.widget.Toast
+import com.exucodeiro.veterinarioapp.Models.Usuario
 import com.exucodeiro.veterinarioapp.Services.UploadService
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cadastro_usuario.*
@@ -24,6 +25,7 @@ import org.jetbrains.anko.toast
 import java.io.ByteArrayOutputStream
 
 class CadastroUsuarioActivity : AppCompatActivity() {
+    private var usuario: Usuario? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,10 +49,22 @@ class CadastroUsuarioActivity : AppCompatActivity() {
                 else
                     selectImageInAlbum()
         }
+
+        loadData()
+    }
+
+    fun loadData() {
+        usuario = intent.getSerializableExtra("usuario") as Usuario?
+
+        if (usuario != null) {
+            inputNome.setText(usuario?.nome)
+            inputSobrenome.setText(usuario?.sobrenome)
+            imageIcone.loadUrl(usuario?.imagem ?: "")
+        }
     }
 
     fun ImageView.loadUrl(url: String) {
-        if (url != null && !url.equals(""))
+        if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }
 

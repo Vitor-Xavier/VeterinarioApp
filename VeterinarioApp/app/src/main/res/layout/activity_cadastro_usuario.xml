@@ -50,6 +50,33 @@
                             android:layout_height="wrap_content">
 
                             <EditText
+                                android:id="@+id/inputUsername"
+                                android:layout_marginBottom="16dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Nome de usuário" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/inputPass"
+                                android:layout_marginBottom="16dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPassword"
+                                android:hint="Senha" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
                                 android:id="@+id/inputNome"
                                 android:layout_marginBottom="16dp"
                                 android:layout_width="match_parent"

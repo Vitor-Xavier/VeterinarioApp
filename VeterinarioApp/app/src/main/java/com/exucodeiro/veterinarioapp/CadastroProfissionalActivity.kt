@@ -26,15 +26,12 @@ import org.jetbrains.anko.toast
 import java.io.ByteArrayOutputStream
 
 class CadastroProfissionalActivity : AppCompatActivity() {
+    private var profissional: Profissional? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_profissional)
         title = "Profissional"
-
-        //imageBackground.loadUrl("http://decoclinic.com/wp-content/uploads/2016/11/camara2-Tartessos.jpg")
-
-        //imageIcone.loadUrl("http://www.kibbypark.com/wp-content/uploads/2015/08/wellness-icon.png")
 
         buttonProximo.setOnClickListener {
             val it = Intent(this, CadastroEnderecoActivity::class.java)
@@ -74,6 +71,21 @@ class CadastroProfissionalActivity : AppCompatActivity() {
                     ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 15)
                 else
                     selectImageInAlbum()
+        }
+
+        loadData()
+    }
+
+    fun loadData() {
+        profissional = intent.getSerializableExtra("profissional") as Profissional?
+
+        if(profissional != null) {
+            inputNome.setText(profissional?.nome)
+            inputSobrenome.setText(profissional?.sobrenome)
+            inputCRV.setText(profissional?.crv)
+
+            imageIcone.loadUrl(profissional?.icone ?: "")
+            imageBackground.loadUrl(profissional?.imagem ?: "")
         }
     }
 

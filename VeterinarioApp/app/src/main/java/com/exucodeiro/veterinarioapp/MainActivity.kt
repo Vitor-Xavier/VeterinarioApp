@@ -15,6 +15,7 @@ import com.exucodeiro.veterinarioapp.Services.LoginSettings
 import com.exucodeiro.veterinarioapp.Services.ProfissionalService
 import com.exucodeiro.veterinarioapp.Services.UsuarioService
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.async
@@ -39,6 +40,33 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportFragmentManager.beginTransaction().replace(R.id.content_view, fragment).commit()
 
         loadData()
+
+        nav_view.getHeaderView(0).buttonEditar.setOnClickListener {
+            val settings = LoginSettings(this)
+            if (settings.login.id == 0)
+                return@setOnClickListener
+            async {
+                if (settings.login.tipo == "Profissional") {
+                    val profissionalService = ProfissionalService()
+                    val profissional = profissionalService.getProfissional(settings.login.id)
+
+                    uiThread {
+                        val it = Intent(this@MainActivity, CadastroProfissionalActivity::class.java)
+                        it.putExtra("profissional", profissional)
+                        startActivity(it)
+                    }
+                } else {
+                    val usuarioService = UsuarioService()
+                    val usuario = usuarioService.getUsuario(settings.login.id)
+
+                    uiThread {
+                        val it = Intent(this@MainActivity, CadastroUsuarioActivity::class.java)
+                        it.putExtra("usuario", usuario)
+                        startActivity(it)
+                    }
+                }
+            }
+        }
     }
 
     fun loadData() {
@@ -46,7 +74,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (settings.login.id == 0) {
             nav_view.menu.removeItem(R.id.nav_perfil)
             nav_view.menu.removeItem(R.id.nav_agenda)
+            nav_view.menu.removeItem(R.id.nav_sair)
         } else {
+            nav_view.menu.removeItem(R.id.nav_login)
             if (settings.login.tipo == "Profissional") {
                 async {
                     val profissionalService = ProfissionalService()
@@ -99,13 +129,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val fragment = SobreFragment()
                 supportFragmentManager.beginTransaction().replace(R.id.content_view, fragment).commit()
             }
+            R.id.nav_login -> {
+                val it = Intent(this, LoginActivity::class.java)
+
+                finish()
+                startActivity(it)
+            }
             R.id.nav_sair -> {
                 val settings = LoginSettings(this)
                 settings.reset()
 
                 finish()
                 startActivity(intent)
-                //supportFragmentManager.beginTransaction().replace(R.id.content_view, fragment).commit()
             }
         }
 

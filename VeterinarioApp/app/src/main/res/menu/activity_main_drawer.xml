@@ -13,6 +13,10 @@
             android:icon="@mipmap/ic_person_black_24dp"
             android:title="@string/perfil" />
         <item
+            android:id="@+id/nav_login"
+            android:icon="@mipmap/ic_person_black_24dp"
+            android:title="@string/login" />
+        <item
             android:id="@+id/nav_agenda"
             android:icon="@mipmap/ic_assignment_black_24dp"
             android:title="@string/consultas" />
