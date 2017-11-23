@@ -8,27 +8,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.exucodeiro.veterinarioapp.Models.Profissional
-import com.google.android.gms.maps.GoogleMap
+import com.exucodeiro.veterinarioapp.Services.LoginSettings
 import kotlinx.android.synthetic.main.fragment_profissional_detail.*
 
-
 class ProfissionalDetailFragment : Fragment() {
-    var profissional: Profissional? = null
+    private var profissional: Profissional? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        if (arguments != null)
+            profissional = arguments.getSerializable("profissional") as Profissional
 
         return inflater!!.inflate(R.layout.fragment_profissional_detail, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        profissional = arguments.getSerializable("profissional") as Profissional
+        super.onActivityCreated(savedInstanceState)
 
         textDescricao.text = profissional?.nome
-        textContatos.text = TextUtils.join(", ", profissional?.contatos)
-        textServicos.text = TextUtils.join(", ", profissional?.servicos)
+        textContatos.text = if (profissional?.contatos?.isEmpty() != true)
+            TextUtils.join(", ", profissional?.contatos) else "Sem contatos registrados"
+        textServicos.text = if (profissional?.servicos?.isEmpty() != true)
+            TextUtils.join(", ", profissional?.servicos) else "Sem serviços registrados"
 
-        super.onActivityCreated(savedInstanceState)
+        val loginSetting = LoginSettings(context)
+        if (loginSetting.login.tipo == "Profissional")
+            fabConsulta.visibility = View.GONE
 
         fabConsulta.setOnClickListener {
             val it = Intent(context, CadastroConsultaActivity::class.java)
@@ -37,12 +42,15 @@ class ProfissionalDetailFragment : Fragment() {
         }
     }
 
-     fun newInstance(profissional: Profissional) : ProfissionalDetailFragment {
-        val fragment = ProfissionalDetailFragment()
-        val bundle = Bundle()
-        bundle.putSerializable("profissional",  profissional)
-        fragment.arguments = bundle
-        return fragment
-    }
+    companion object {
+        private val ARG_PROFISSIONAL = "profissional"
 
+        fun newInstance(profissional: Profissional): ProfissionalDetailFragment {
+            val fragment = ProfissionalDetailFragment()
+            val bundle = Bundle()
+            bundle.putSerializable(ARG_PROFISSIONAL, profissional)
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
 }

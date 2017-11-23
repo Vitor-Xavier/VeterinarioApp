@@ -31,21 +31,15 @@ class CadastroEnderecoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_endereco)
-        title = "Endereço"
-
-        //imageIcone.loadUrl("http://www.kibbypark.com/wp-content/uploads/2015/08/wellness-icon.png")
+        title = getString(R.string.endereco)
 
         loadData()
 
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager?
 
         try {
-            // Request location updates
             locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0L, 0f, locationListener)
-
-        } catch(ex: SecurityException) {
-            Log.d("myTag", "Security Exception, no location available");
-        }
+        } catch(ex: SecurityException) { }
 
         buttonProximo.setOnClickListener {
 //            val endereco = Endereco(0,
@@ -62,17 +56,17 @@ class CadastroEnderecoActivity : AppCompatActivity() {
 //
 //            if(!profissionalService.postProfissional(profissional as Profissional))
 //                toast("Erro")
-            GetEndereco()
+            getEndereco()
         }
     }
 
-    fun GetLatLng() {
+    fun getLatLng() {
         val enderecoService = EnderecoService()
         async {
             if (endereco == null)
                 loadEndereco()
 
-            endereco = enderecoService.GetLatLng(endereco as Endereco)
+            endereco = enderecoService.getLatLng(endereco as Endereco)
 
             uiThread {
                 toast("${endereco?.latitude}:${endereco?.longitude}")
@@ -81,11 +75,11 @@ class CadastroEnderecoActivity : AppCompatActivity() {
         }
     }
 
-    fun GetEndereco() {
+    private fun getEndereco() {
         val enderecoService = EnderecoService()
         async {
             if (latitude != null && longitude != null) {
-                endereco = enderecoService.GetEnderecoCompleto(latitude as Double, longitude as Double)
+                endereco = enderecoService.getEnderecoCompleto(latitude as Double, longitude as Double)
 
                 if (endereco != null) {
                     uiThread {
@@ -98,12 +92,14 @@ class CadastroEnderecoActivity : AppCompatActivity() {
                         inputEstado.setText(endereco?.estado)
                     }
                 }
-            } else
+            } else {
                 SHOW_LOCATION = 1
+                toast("Serviço de localização indisponível")
+            }
         }
     }
 
-    fun loadData() {
+    private fun loadData() {
         profissional = intent.getSerializableExtra("profissional") as Profissional
 
         textNome.text = profissional?.nome
@@ -120,7 +116,7 @@ class CadastroEnderecoActivity : AppCompatActivity() {
             loadEndereco()
     }
 
-    fun loadEndereco() {
+    private fun loadEndereco() {
         endereco = Endereco(0,
                 inputLogradouro.text.toString(),
                 Integer.parseInt(inputNumero.text.toString()),
@@ -133,8 +129,8 @@ class CadastroEnderecoActivity : AppCompatActivity() {
                 endereco?.longitude ?: 0.0)
     }
 
-    fun ImageView.loadUrl(url: String) {
-        if (url != null && !url.equals(""))
+    fun ImageView.loadUrl(url: String?) {
+        if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }
 

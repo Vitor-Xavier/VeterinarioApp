@@ -10,11 +10,7 @@ import com.exucodeiro.veterinarioapp.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_consulta.view.*
 
-/**
- * Created by vitor on 23/10/2017.
- */
-
-data class ConsultaAdapter(var consultas:List<Consulta>, var activity: Activity) : BaseAdapter() {
+data class ConsultaAdapter(private var consultas:List<Consulta>, var activity: Activity) : BaseAdapter() {
 
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
         val view: View = View.inflate(activity, R.layout.item_consulta,null)
@@ -29,7 +25,7 @@ data class ConsultaAdapter(var consultas:List<Consulta>, var activity: Activity)
     }
 
     fun ImageView.loadUrl(url: String) {
-        if (url != null && !url.equals(""))
+        if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }
 

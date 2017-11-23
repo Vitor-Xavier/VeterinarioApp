@@ -120,7 +120,6 @@
                         <Button
                             android:id="@+id/buttonProximo"
                             android:text="Próximo"
-
                             android:background="#0000"
                             android:textColor="@color/colorPrimary"
                             android:layout_weight="0.5"

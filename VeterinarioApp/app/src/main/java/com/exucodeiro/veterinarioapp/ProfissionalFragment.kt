@@ -18,12 +18,12 @@ class ProfissionalFragment : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         activity.title = getString(R.string.profissionais)
-        val pageAdapter = MainPageAdapter(childFragmentManager, context)
+
+        val pageAdapter = MainPageAdapter(childFragmentManager)
         viewPager.adapter = pageAdapter
         tabsProfissional.setupWithViewPager(viewPager)
-
-        super.onActivityCreated(savedInstanceState)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -39,10 +39,6 @@ class ProfissionalFragment : Fragment() {
             }
             R.id.itemUsuario -> {
                 val it = Intent(context, CadastroUsuarioActivity::class.java)
-                startActivity(it)
-            }
-            R.id.itemAnimal -> {
-                val it = Intent(context, MapsActivity::class.java)
                 startActivity(it)
             }
             R.id.itemLogin -> {

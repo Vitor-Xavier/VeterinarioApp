@@ -3,13 +3,9 @@ package com.exucodeiro.veterinarioapp.Services
 import com.exucodeiro.veterinarioapp.Models.TipoAnimal
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.*
 import com.github.kittinunf.fuel.core.FuelManager
-import com.github.kittinunf.fuel.httpGet
 
-/**
- * Created by vitor on 08/11/2017.
- */
 class TipoAnimalService {
 
     init {
@@ -20,7 +16,7 @@ class TipoAnimalService {
     fun getTipoAnimais() : List<TipoAnimal> {
         val tipoAnimais = ArrayList<TipoAnimal>()
 
-        val (request, response, result) = "TipoAnimal".httpGet().responseString()
+        val (_, _, result) = "TipoAnimal".httpGet().responseString()
         val (data, error) = result
         if (error == null) {
             val mapper = jacksonObjectMapper()
@@ -33,7 +29,7 @@ class TipoAnimalService {
     fun getTipoAnimal(tipoAnimalId: Int) : List<TipoAnimal> {
         val tipoAnimais = ArrayList<TipoAnimal>()
 
-        val (request, response, result) = "TipoAnimal/$tipoAnimalId".httpGet().responseString()
+        val (_, _, result) = "TipoAnimal/$tipoAnimalId".httpGet().responseString()
         val (data, error) = result
         if (error == null) {
             val mapper = jacksonObjectMapper()
@@ -45,33 +41,26 @@ class TipoAnimalService {
 
     fun adicionaTipoAnimal(tipoAnimal: TipoAnimal) : Boolean {
         val mapper = jacksonObjectMapper()
-        var res = false
 
-        Fuel.post("TipoAnimal").body(mapper.writeValueAsString(tipoAnimal)).response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        val (_, _, result) = "TipoAnimal".httpPost().body(mapper.writeValueAsString(tipoAnimal)).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
     fun atualizaTipoAnimal(tipoAnimal: TipoAnimal) : Boolean {
         val mapper = jacksonObjectMapper()
-        var res = false
 
-        Fuel.put("TipoAnimal").body(mapper.writeValueAsString(tipoAnimal)).response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        val (_, _, result) = "TipoAnimal".httpPut().body(mapper.writeValueAsString(tipoAnimal)).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
     fun inativaTipoAnimal(tipoAnimalId: Int) : Boolean {
-        var res = false
+        val (_, _, result) = "TipoAnimal/$tipoAnimalId".httpDelete().responseString()
+        val (_, error) = result
 
-        Fuel.delete("TipoAnimal/$tipoAnimalId").response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        return (error == null)
     }
 }

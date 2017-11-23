@@ -2,9 +2,9 @@ package com.exucodeiro.veterinarioapp.Services
 
 import android.content.Context
 import android.net.Uri
-import android.provider.MediaStore
-import com.github.kittinunf.fuel.Fuel
+import com.exucodeiro.veterinarioapp.Util.ImageUtils
 import com.github.kittinunf.fuel.core.FuelManager
+import com.github.kittinunf.fuel.httpPost
 import java.io.File
 import java.io.FileInputStream
 
@@ -19,37 +19,17 @@ class UploadService {
     }
 
     fun enviarImagem(context: Context, path: String) : Boolean {
-        val file = File(getRealPathFromURI(context, Uri.parse(path)))
+        val file = File(ImageUtils.getRealPathFromURI(context, Uri.parse(path)))
         val bytesArray = ByteArray(file.length().toInt())
 
         val fis = FileInputStream(file)
         fis.read(bytesArray) //read file into bytes[]
         fis.close()
-        try {
-            var res = false
-            Fuel.post("Upload").body(bytesArray)
-                .response { request, response, result ->
-                    val (data, error) = result
-                    res = (error == null)
-                }
-            return res
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return false
+
+        val (_, _, result) = "Upload".httpPost().body(bytesArray).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
-    private fun getRealPathFromURI(context: Context, contentURI: Uri): String {
-        val result: String
-        val cursor = context.contentResolver.query(contentURI, null, null, null, null)
-        if (cursor == null) {
-            result = contentURI.path
-        } else {
-            cursor!!.moveToFirst()
-            val idx = cursor!!.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
-            result = cursor!!.getString(idx)
-            cursor!!.close()
-        }
-        return result
-    }
 }

@@ -9,25 +9,20 @@ import com.exucodeiro.veterinarioapp.Models.Animal
 import com.exucodeiro.veterinarioapp.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_animal_spinner.view.*
-import java.text.SimpleDateFormat
 
-/**
- * Created by vitor on 10/11/2017.
- */
-class AnimalSpinnerAdapter(var animais:List<Animal>, var activity: Activity) : BaseAdapter() {
+class AnimalSpinnerAdapter(private var animais:List<Animal>, var activity: Activity) : BaseAdapter() {
 
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
         val view: View = View.inflate(activity, R.layout.item_animal_spinner,null)
 
         view.textNome.text = animais[p0].nome
-
         view.imageAnimal.loadUrl(animais[p0].imagem)
 
         return view
     }
 
-    fun ImageView.loadUrl(url: String) {
-        if (url != null && !url.equals(""))
+    fun ImageView.loadUrl(url: String?) {
+        if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }
 

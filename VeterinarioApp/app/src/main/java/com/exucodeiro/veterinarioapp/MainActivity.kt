@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun loadData() {
+    private fun loadData() {
         val settings = LoginSettings(this)
         if (settings.login.id == 0) {
             nav_view.menu.removeItem(R.id.nav_perfil)
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                     uiThread {
                         nav_view.getHeaderView(0).textNome.text = profissional?.nome
-                        nav_view.getHeaderView(0).textView.text = "Profissional"
+                        nav_view.getHeaderView(0).textView.text = getString(R.string.profissional)
 
                         nav_view.getHeaderView(0).imageView.loadUrl(profissional?.icone ?: "")
                     }
@@ -95,18 +95,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val usuario = usuarioService.getUsuario(settings.login.id)
 
                     uiThread {
-                        nav_view.getHeaderView(0).textNome.text = usuario?.nome
-                        nav_view.getHeaderView(0).textView.text = "Usuário"
+                        nav_view.getHeaderView(0).textNome.text = usuario.nome
+                        nav_view.getHeaderView(0).textView.text = getString(R.string.usuario)
 
-                        nav_view.getHeaderView(0).imageView.loadUrl(usuario?.imagem)
+                        nav_view.getHeaderView(0).imageView.loadUrl(usuario.imagem)
                     }
                 }
             }
         }
     }
 
-    fun ImageView.loadUrl(url: String) {
-        if (url != null && !url.equals(""))
+    fun ImageView.loadUrl(url: String?) {
+        if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }
 
@@ -118,8 +118,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager.beginTransaction().replace(R.id.content_view, fragment).commit()
             }
             R.id.nav_perfil -> {
-                val fragment = UsuarioFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.content_view, fragment).commit()
+                val loginSettings = LoginSettings(this)
+                if (loginSettings.login.tipo == "Profissional") {
+                    val profissionalService = ProfissionalService()
+
+                    async {
+                        val profissional = profissionalService.getProfissional(loginSettings.login.id)
+
+                        if (profissional != null) {
+                            uiThread {
+                                val fragment = ProfissionalPerfilFragment.newInstance(profissional)
+                                supportFragmentManager.beginTransaction().replace(R.id.content_view, fragment).commit()
+                            }
+                        }
+                    }
+
+                } else if (loginSettings.login.tipo == "Usuario") {
+                    val fragment = UsuarioFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.content_view, fragment).commit()
+                }
             }
             R.id.nav_agenda -> {
                 val fragment = ConsultaFragment()

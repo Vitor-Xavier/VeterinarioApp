@@ -6,9 +6,6 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpGet
 
-/**
- * Created by vitor on 12/11/2017.
- */
 class LoginService {
 
     init {
@@ -17,15 +14,13 @@ class LoginService {
     }
 
     fun logar(nomeUsuario: String, senha: String) : Login? {
-        var login: Login? = null
-
-        val (request, response, result) = "Login/$nomeUsuario/$senha".httpGet().responseString()
+        val (_, _, result) = "Login/$nomeUsuario/$senha".httpGet().responseString()
         val (data, error) = result
-        if (error == null) {
-            val mapper = jacksonObjectMapper()
-            login = mapper.readValue(data ?: "")
-        }
 
-        return login
+        val mapper = jacksonObjectMapper()
+        when (error == null) {
+            true -> return mapper.readValue(data ?: "")
+            false -> return null
+        }
     }
 }

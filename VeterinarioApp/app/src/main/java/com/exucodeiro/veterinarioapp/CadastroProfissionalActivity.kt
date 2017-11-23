@@ -3,7 +3,6 @@ package com.exucodeiro.veterinarioapp
 import android.Manifest
 import android.app.Activity
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -15,15 +14,13 @@ import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.widget.ImageView
 import android.widget.Toast
-import com.exucodeiro.veterinarioapp.Models.Contato
 import com.exucodeiro.veterinarioapp.Models.Profissional
-import com.exucodeiro.veterinarioapp.Models.Servico
 import com.exucodeiro.veterinarioapp.Services.UploadService
+import com.exucodeiro.veterinarioapp.Util.ImageUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cadastro_profissional.*
 import org.jetbrains.anko.async
 import org.jetbrains.anko.toast
-import java.io.ByteArrayOutputStream
 
 class CadastroProfissionalActivity : AppCompatActivity() {
     private var profissional: Profissional? = null
@@ -31,7 +28,7 @@ class CadastroProfissionalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_profissional)
-        title = "Profissional"
+        title = getString(R.string.profissional)
 
         buttonProximo.setOnClickListener {
             val it = Intent(this, CadastroEnderecoActivity::class.java)
@@ -43,8 +40,8 @@ class CadastroProfissionalActivity : AppCompatActivity() {
                     inputCRV.text.toString(),
                     0,
                     null,
-                    ArrayList<Contato>(),
-                    ArrayList<Servico>(),
+                    ArrayList(),
+                    ArrayList(),
                     false)
             it.putExtra("profissional", profissional)
             startActivity(it)
@@ -76,7 +73,7 @@ class CadastroProfissionalActivity : AppCompatActivity() {
         loadData()
     }
 
-    fun loadData() {
+    private fun loadData() {
         profissional = intent.getSerializableExtra("profissional") as Profissional?
 
         if(profissional != null) {
@@ -84,17 +81,17 @@ class CadastroProfissionalActivity : AppCompatActivity() {
             inputSobrenome.setText(profissional?.sobrenome)
             inputCRV.setText(profissional?.crv)
 
-            imageIcone.loadUrl(profissional?.icone ?: "")
-            imageBackground.loadUrl(profissional?.imagem ?: "")
+            imageIcone.loadUrl(profissional?.icone)
+            imageBackground.loadUrl(profissional?.imagem)
         }
     }
 
-    fun ImageView.loadUrl(url: String) {
-        if (url != null && !url.equals(""))
+    fun ImageView.loadUrl(url: String?) {
+        if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }
 
-    fun selectImageInAlbum() {
+    private fun selectImageInAlbum() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         if (intent.resolveActivity(packageManager) != null) {
@@ -116,7 +113,7 @@ class CadastroProfissionalActivity : AppCompatActivity() {
                 PIC_CROP -> {
                     val extras = data?.extras
                     val selectedBitmap = extras?.getParcelable<Bitmap>("data") as Bitmap
-                    val uri = getImageUri(this, selectedBitmap)
+                    val uri = ImageUtils.getImageUri(this, selectedBitmap)
 
                     if (IMAGE_BACKGROUND == 0)
                         imageIcone.setImageBitmap(selectedBitmap)
@@ -131,13 +128,6 @@ class CadastroProfissionalActivity : AppCompatActivity() {
         } else {
             toast("Não foi possível identificar a imagem selecionada.")
         }
-    }
-
-    fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
-        return Uri.parse(path)
     }
 
     private fun performCrop(picUri: Uri, height: Int, width: Int, aspectX: Int, aspectY: Int) {

@@ -18,16 +18,16 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class CadastroConsultaActivity : AppCompatActivity() {
-    var profissional: Profissional? = null
-    val animais = ArrayList<Animal>()
-    var adapter: AnimalSpinnerAdapter? = null
-    var settings: LoginSettings? = null
-    var consulta: Consulta? = null
+    private var profissional: Profissional? = null
+    private val animais = ArrayList<Animal>()
+    private lateinit var adapter: AnimalSpinnerAdapter
+    private var settings: LoginSettings? = null
+    private var consulta: Consulta? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_consulta)
-        title = "Consulta"
+        title = getString(R.string.consulta)
 
         adapter = AnimalSpinnerAdapter(animais, this)
         loadData()
@@ -40,14 +40,13 @@ class CadastroConsultaActivity : AppCompatActivity() {
         }
     }
 
-    fun loadData() {
+    private fun loadData() {
         async {
             val animalService = AnimalService()
-
-            animais.addAll(animalService.getAnimal(settings?.login?.id ?: 1))
+            animais.addAll(animalService.getAnimais(settings?.login?.id ?: 1))
 
             uiThread {
-                adapter?.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
             }
         }
 
@@ -64,8 +63,8 @@ class CadastroConsultaActivity : AppCompatActivity() {
             editDate.setText(df.format(consulta?.data))
             editHora.setText(hr.format(consulta?.data))
 
-            val animal = adapter?.getById(consulta?.animal?.animalId ?: 0)
-            spinnerAnimal.setSelection(animal ?: 1)
+            val animal = adapter.getById(consulta?.animal?.animalId ?: 0)
+            spinnerAnimal.setSelection(animal)
         }
 
         profissional = intent.getSerializableExtra("profissional") as Profissional
@@ -76,28 +75,28 @@ class CadastroConsultaActivity : AppCompatActivity() {
         imageProfissional.loadUrl(profissional?.imagem ?: "")
     }
 
-    fun salvarConsulta() {
+    private fun salvarConsulta() {
         val consultaService = ConsultaService()
 
-        if (consulta != null && consulta?.consultaId != 0) {
-            consultaService.alteraConsulta(consulta)
-        } else {
-            val local = Locale("pt", "BR")
-            val df = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", local)
-            val cal = Calendar.getInstance()
-            val tst = "${editDate.text.toString()} ${editHora.text.toString()}"
-            val date = df.parse("${editDate.text.toString()} ${editHora.text.toString()}")
+        async {
+            if (consulta != null && consulta?.consultaId != 0) {
+                consultaService.alteraConsulta(consulta)
+            } else {
+                val local = Locale("pt", "BR")
+                val df = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", local)
+                val date = df.parse("${editDate.text.toString()} ${editHora.text.toString()}")
 
-            val animal = adapter?.getItem(spinnerAnimal.selectedItemPosition) as Animal
+                val animal = adapter.getItem(spinnerAnimal.selectedItemPosition) as Animal
 
-            consulta = Consulta(0, date, editDescricao.text.toString(), animal.animalId, animal, profissional?.profissionalId ?: 0, profissional as Profissional)
+                consulta = Consulta(0, date, editDescricao.text.toString(), animal.animalId, animal, profissional?.profissionalId ?: 0, profissional as Profissional)
 
-            consultaService.adicionaConsulta(consulta as Consulta)
+                consultaService.adicionaConsulta(consulta as Consulta)
+            }
         }
     }
 
-    fun ImageView.loadUrl(url: String) {
-        if (url != null && !url.equals(""))
+    fun ImageView.loadUrl(url: String?) {
+        if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }
 }

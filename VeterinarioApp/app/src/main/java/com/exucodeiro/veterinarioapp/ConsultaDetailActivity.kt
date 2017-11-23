@@ -31,11 +31,10 @@ class ConsultaDetailActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        val proMarker = LatLng(consulta.profissional?.endereco?.latitude ?: -21.1767, consulta.profissional?.endereco?.longitude ?: -47.8208)
+        val proMarker = LatLng(consulta.profissional.endereco?.latitude ?: -21.1767, consulta.profissional.endereco?.longitude ?: -47.8208)
 
-        mMap.addMarker(MarkerOptions().position(proMarker).title("${consulta.profissional?.nome} ${consulta.profissional?.sobrenome}"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(proMarker))
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16.0F))
+        mMap.addMarker(MarkerOptions().position(proMarker).title("${consulta.profissional.nome} ${consulta.profissional.sobrenome}"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(proMarker,14.5F))
     }
 
     fun loadData() {
@@ -55,8 +54,8 @@ class ConsultaDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         textEndereco.text = consulta.profissional.endereco.toString()
     }
 
-    fun ImageView.loadUrl(url: String) {
-        if (url != null && !url.equals(""))
+    fun ImageView.loadUrl(url: String?) {
+        if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }
 

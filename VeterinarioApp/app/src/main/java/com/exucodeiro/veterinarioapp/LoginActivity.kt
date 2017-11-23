@@ -3,7 +3,6 @@ package com.exucodeiro.veterinarioapp
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import com.exucodeiro.veterinarioapp.Models.Login
 import com.exucodeiro.veterinarioapp.Services.LoginSettings
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.toast

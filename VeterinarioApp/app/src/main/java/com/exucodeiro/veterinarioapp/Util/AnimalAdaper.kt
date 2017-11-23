@@ -11,11 +11,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_animal.view.*
 import java.text.SimpleDateFormat
 
-/**
- * Created by vitor on 23/10/2017.
- */
-
-data class AnimalAdaper(var animais:List<Animal>, var activity: Activity) : BaseAdapter() {
+data class AnimalAdaper(private var animais:List<Animal>, var activity: Activity) : BaseAdapter() {
 
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
         val view: View = View.inflate(activity, R.layout.item_animal,null)
@@ -26,14 +22,14 @@ data class AnimalAdaper(var animais:List<Animal>, var activity: Activity) : Base
         val formated = dateFormat.format(animais[p0].dataNascimento?.time).toString()
         view.textData.text = formated
 
-        view.imageTipoAnimal.loadUrl(animais[p0].tipoAnimal?.icone)
+        view.imageTipoAnimal.loadUrl(animais[p0].tipoAnimal.icone)
         view.imageAnimal.loadUrl(animais[p0].imagem)
 
         return view
     }
 
-    fun ImageView.loadUrl(url: String) {
-        if (url != null && !url.equals(""))
+    fun ImageView.loadUrl(url: String?) {
+        if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }
 

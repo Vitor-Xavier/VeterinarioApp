@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
 import android.widget.AdapterView
-import android.widget.Toast
 import com.exucodeiro.veterinarioapp.Models.Animal
 import com.exucodeiro.veterinarioapp.Models.TipoAnimal
 import com.exucodeiro.veterinarioapp.Models.Usuario
@@ -18,13 +17,16 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class AnimalListFragment : Fragment() {
-    private var adapter: AnimalAdaper? = null
+    private lateinit var adapter: AnimalAdaper
     private var animais: ArrayList<Animal> = ArrayList()
     private var usuario: Usuario? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        usuario = arguments.getSerializable("usuario") as Usuario
+        if (arguments != null)
+            usuario = arguments.getSerializable("usuario") as Usuario
+
+        adapter = AnimalAdaper(animais, activity)
 
         return inflater!!.inflate(R.layout.fragment_animal_list, container, false)
     }
@@ -37,8 +39,6 @@ class AnimalListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
-        adapter = AnimalAdaper(animais, activity)
         listAnimais.adapter = adapter
         listAnimais.setOnCreateContextMenuListener(this)
 
@@ -58,9 +58,9 @@ class AnimalListFragment : Fragment() {
     override fun onContextItemSelected(item: MenuItem?): Boolean {
         var t = item?.menuInfo as AdapterView.AdapterContextMenuInfo
 
-        val animal = adapter?.getItem(t.position) as Animal
+        val animal = adapter.getItem(t.position) as Animal
 
-        when (item?.itemId) {
+        when (item.itemId) {
             1 -> {
                 val it = Intent(context, CadastroAnimalActivity::class.java)
                 it.putExtra("animal", animal)
@@ -74,7 +74,7 @@ class AnimalListFragment : Fragment() {
         return super.onContextItemSelected(item)
     }
 
-    fun inativaAnimal(usuarioId: Int, animalId: Int) {
+    private fun inativaAnimal(usuarioId: Int, animalId: Int) {
         async {
             val animalService = AnimalService()
             animalService.inativaAnimal(usuarioId, animalId)
@@ -83,15 +83,28 @@ class AnimalListFragment : Fragment() {
 
     }
 
-    fun loadData() {
+    private fun loadData() {
         val animalService = AnimalService()
         async {
             animais.clear()
-            animais.addAll(animalService.getAnimal(usuario?.usuarioId ?: 0))
+            animais.addAll(animalService.getAnimais(usuario?.usuarioId ?: 0))
 
             uiThread {
-                adapter?.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
             }
         }
     }
+
+    companion object {
+        private val ARG_USUARIO = "usuario"
+
+        fun newInstance(usuario: Usuario): AnimalListFragment {
+            val fragment = AnimalListFragment()
+            val bundle = Bundle()
+            bundle.putSerializable(ARG_USUARIO, usuario)
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
+
 }

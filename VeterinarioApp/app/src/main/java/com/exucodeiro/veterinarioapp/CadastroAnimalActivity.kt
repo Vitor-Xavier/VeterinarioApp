@@ -6,7 +6,6 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.provider.MediaStore
 import android.widget.ImageView
 import com.exucodeiro.veterinarioapp.Models.Animal
@@ -25,31 +24,25 @@ import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 import kotlin.collections.ArrayList
 import android.widget.Toast
 import android.content.ActivityNotFoundException
 import android.net.Uri
 import android.graphics.Bitmap
-import android.R.attr.data
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
-import android.support.v4.app.NotificationCompat.getExtras
-import android.provider.MediaStore.Images
 import android.support.v4.app.ActivityCompat
-import java.io.ByteArrayOutputStream
-
+import com.exucodeiro.veterinarioapp.Util.ImageUtils
 
 class CadastroAnimalActivity : AppCompatActivity() {
-    var adapter: TipoAnimalAdapter? = null
+    private lateinit var adapter: TipoAnimalAdapter
     private val tipos = ArrayList<TipoAnimal>()
-    var animal: Animal? = null
+    private var animal: Animal? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_animal)
-        title = "Animal"
+        title = getString(R.string.animal)
 
         adapter = TipoAnimalAdapter(tipos, this)
         loadData()
@@ -61,7 +54,7 @@ class CadastroAnimalActivity : AppCompatActivity() {
             val df = SimpleDateFormat("dd/MM/yyyy")
             inputDataNasc.setText(df.format(animal?.dataNascimento))
             imageIcone.loadUrl(animal?.imagem ?: "https://i.imgur.com/ckJhIUz.png")
-            spinnerTipoAnimal.setSelection((adapter as TipoAnimalAdapter).getById(animal?.tipoAnimalId ?: 0))
+            spinnerTipoAnimal.setSelection(adapter.getById(animal?.tipoAnimalId ?: 0))
         } else
             imageIcone.loadUrl("https://i.imgur.com/ckJhIUz.png")
 
@@ -72,7 +65,7 @@ class CadastroAnimalActivity : AppCompatActivity() {
             val day = c.get(Calendar.DAY_OF_MONTH)
 
 
-            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 inputDataNasc.setText("$dayOfMonth/$monthOfYear/$year")
             }, year, month, day)
             dpd.show()
@@ -83,7 +76,7 @@ class CadastroAnimalActivity : AppCompatActivity() {
 
             val settings = LoginSettings(this)
 
-            val tipoAnimal = (adapter as TipoAnimalAdapter).getItem(spinnerTipoAnimal.selectedItemPosition) as TipoAnimal
+            val tipoAnimal = adapter.getItem(spinnerTipoAnimal.selectedItemPosition) as TipoAnimal
 
             val animalIn = Animal(animal?.animalId ?: 0,
                     inputNome.text.toString(),
@@ -95,14 +88,7 @@ class CadastroAnimalActivity : AppCompatActivity() {
                     Usuario(settings.login.id, "", "", "", null, ArrayList<Contato>())
             )
 
-            val animalService = AnimalService()
-            if (animal?.animalId == 0)
-                toast(if (!animalService.adicionaAnimal(animalIn)) "Salvo" else "Não foi possível salvar")
-            else
-                toast(if (!animalService.atualizaAnimal(animalIn)) "Atualizado" else "Não foi possível atualizar")
-
-            val handler = Handler()
-            handler.postDelayed({ finish() }, 1500)
+            salvaAnimal(animalIn)
         }
 
         imageIcone.setOnClickListener {
@@ -118,33 +104,38 @@ class CadastroAnimalActivity : AppCompatActivity() {
         }
     }
 
-    fun salvaAnimal(animal: Animal) {
+    private fun salvaAnimal(animal: Animal) {
         async {
             val animalService = AnimalService()
-            if (animal?.animalId == 0)
+            if (animal.animalId == 0)
                 animalService.adicionaAnimal(animal)
             else
                 animalService.atualizaAnimal(animal)
+            finish()
         }
     }
 
-    fun loadData() {
+    private fun loadData() {
         val tipoAnimalService = TipoAnimalService()
         async {
             tipos.addAll(tipoAnimalService.getTipoAnimais())
 
             uiThread {
-                adapter?.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
             }
         }
     }
 
-    fun ImageView.loadUrl(url: String) {
-        if (url != null)
+    fun ImageView.loadUrl(url: String?) {
+        if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }
 
-    fun selectImageInAlbum() {
+    fun ImageView.loadUrl(url: Int) {
+        Picasso.with(context).load(url).into(this)
+    }
+
+    private fun selectImageInAlbum() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         if (intent.resolveActivity(packageManager) != null) {
@@ -163,7 +154,7 @@ class CadastroAnimalActivity : AppCompatActivity() {
                 PIC_CROP -> {
                     val extras = data?.extras
                     val selectedBitmap = extras?.getParcelable<Bitmap>("data") as Bitmap
-                    val uri = getImageUri(this, selectedBitmap)
+                    val uri = ImageUtils.getImageUri(this, selectedBitmap)
                     imageIcone.setImageBitmap(selectedBitmap)
 
                     val uploadService = UploadService()
@@ -177,18 +168,11 @@ class CadastroAnimalActivity : AppCompatActivity() {
         }
     }
 
-    fun takePhoto() {
+    private fun takePhoto() {
         val intent1 = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent1.resolveActivity(packageManager) != null) {
             startActivityForResult(intent1, REQUEST_TAKE_PHOTO)
         }
-    }
-
-    fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
-        return Uri.parse(path)
     }
 
     private fun performCrop(picUri: Uri) {

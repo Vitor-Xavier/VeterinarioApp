@@ -3,9 +3,10 @@ package com.exucodeiro.veterinarioapp.Services
 import com.exucodeiro.veterinarioapp.Models.Consulta
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpGet
+import com.github.kittinunf.fuel.httpPost
+import com.github.kittinunf.fuel.httpPut
 
 class ConsultaService {
 
@@ -17,16 +18,10 @@ class ConsultaService {
     fun getConsultasUsuario(usuarioId: Int) : List<Consulta> {
         val consultas: ArrayList<Consulta> = ArrayList()
 
-        val (request, response, result) = "Consulta/usuario/$usuarioId".httpGet().responseString()
+        val (_, _, result) = "Consulta/Usuario/$usuarioId".httpGet().responseString()
         val (data, error) = result
         if (error == null) {
             val mapper = jacksonObjectMapper()
-            try {
-                val t = mapper.readValue<List<Consulta>>(data ?: "")
-                val tst = "a"
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
             consultas.addAll(mapper.readValue<List<Consulta>>(data ?: ""))
         }
 
@@ -36,7 +31,7 @@ class ConsultaService {
     fun getConsultasProfissional(profissionalId: Int) : List<Consulta> {
         val consultas: ArrayList<Consulta> = ArrayList()
 
-        val (request, response, result) = "Consulta/profissional/$profissionalId".httpGet().responseString()
+        val (_, _, result) = "Consulta/Profissional/$profissionalId".httpGet().responseString()
         val (data, error) = result
         if (error == null) {
             val mapper = jacksonObjectMapper()
@@ -48,25 +43,20 @@ class ConsultaService {
 
     fun adicionaConsulta(consulta: Consulta) : Boolean {
         val mapper = jacksonObjectMapper()
-        var res = false
-        val tst = mapper.writeValueAsString(consulta)
-        Fuel.post("Consulta").body(mapper.writeValueAsString(consulta)).response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+
+        val (_, _, result) = "Consulta".httpPost().body(mapper.writeValueAsString(consulta)).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
     fun alteraConsulta(consulta: Consulta?) : Boolean {
         val mapper = jacksonObjectMapper()
-        var res = false
 
-        val tst = mapper.writeValueAsString(consulta)
-        Fuel.put("Consulta").body(mapper.writeValueAsString(consulta)).response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        val (_, _, result) = "Consulta".httpPut().body(mapper.writeValueAsString(consulta)).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
 }

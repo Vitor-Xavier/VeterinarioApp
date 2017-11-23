@@ -3,7 +3,6 @@ package com.exucodeiro.veterinarioapp
 import android.Manifest
 import android.app.Activity
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -12,30 +11,47 @@ import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.SyncStateContract
 import android.support.v4.app.ActivityCompat
 import android.widget.ImageView
 import android.widget.Toast
 import com.exucodeiro.veterinarioapp.Models.Usuario
 import com.exucodeiro.veterinarioapp.Services.UploadService
+import com.exucodeiro.veterinarioapp.Services.UsuarioService
+import com.exucodeiro.veterinarioapp.Util.ImageUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cadastro_usuario.*
 import org.jetbrains.anko.async
 import org.jetbrains.anko.toast
-import java.io.ByteArrayOutputStream
 
 class CadastroUsuarioActivity : AppCompatActivity() {
     private var usuario: Usuario? = null
+    private var imageUrl: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_usuario)
 
-        title = "Usuário"
+        title = getString(R.string.usuario)
 
         buttonProximo.setOnClickListener {
-            val it = Intent(this, CadastroEnderecoActivity::class.java)
-            startActivity(it)
+            //val it = Intent(this, CadastroEnderecoActivity::class.java)
+            //startActivity(it)
+        }
+
+        buttonConcluir.setOnClickListener {
+            val usuarioService = UsuarioService()
+            async {
+                if(usuario == null || usuario?.usuarioId == 0) {
+                    loadUsuario()
+                    usuarioService.adicionaUsuario(usuario as Usuario)
+                } else
+                    usuarioService.atualizaUsuario(usuario as Usuario)
+
+                val it = Intent(this@CadastroUsuarioActivity, MainActivity::class.java)
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(it)
+            }
+
         }
 
         imageIcone.setOnClickListener {
@@ -53,22 +69,32 @@ class CadastroUsuarioActivity : AppCompatActivity() {
         loadData()
     }
 
-    fun loadData() {
+    private fun loadData() {
         usuario = intent.getSerializableExtra("usuario") as Usuario?
 
         if (usuario != null) {
             inputNome.setText(usuario?.nome)
             inputSobrenome.setText(usuario?.sobrenome)
             imageIcone.loadUrl(usuario?.imagem ?: "")
-        }
+        } else
+            loadUsuario()
     }
 
-    fun ImageView.loadUrl(url: String) {
+    private fun loadUsuario() {
+        usuario = Usuario(0,
+                inputNome.text.toString(),
+                inputSobrenome.text.toString(),
+                imageUrl,
+                null,
+                ArrayList())
+    }
+
+    fun ImageView.loadUrl(url: String?) {
         if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }
 
-    fun selectImageInAlbum() {
+    private fun selectImageInAlbum() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         if (intent.resolveActivity(packageManager) != null) {
@@ -87,32 +113,24 @@ class CadastroUsuarioActivity : AppCompatActivity() {
                 PIC_CROP -> {
                     val extras = data?.extras
                     val selectedBitmap = extras?.getParcelable<Bitmap>("data") as Bitmap
-                    val uri = getImageUri(this, selectedBitmap)
+                    val uri = ImageUtils.getImageUri(this, selectedBitmap)
                     imageIcone.setImageBitmap(selectedBitmap)
 
                     val uploadService = UploadService()
                     async {
                         uploadService.enviarImagem(baseContext, uri.toString()) //data?.data?.toString() ?: ""
+                        imageUrl = uri.toString()
                     }
                 }
             }
-        } else {
-            toast("Não foi possível identificar a imagem selecionada.")
         }
     }
 
-    fun takePhoto() {
+    private fun takePhoto() {
         val intent1 = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent1.resolveActivity(packageManager) != null) {
             startActivityForResult(intent1, REQUEST_TAKE_PHOTO)
         }
-    }
-
-    fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
-        return Uri.parse(path)
     }
 
     private fun performCrop(picUri: Uri) {

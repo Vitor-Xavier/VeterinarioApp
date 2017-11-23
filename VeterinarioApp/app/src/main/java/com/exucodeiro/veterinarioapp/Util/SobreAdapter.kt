@@ -10,16 +10,12 @@ import com.exucodeiro.veterinarioapp.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_sobre.view.*
 
-/**
- * Created by vitor on 28/10/2017.
- */
-class SobreAdapter(var sobreList:List<Sobre>, var activity: Activity) : BaseAdapter() {
+class SobreAdapter(private var sobreList:List<Sobre>, var activity: Activity) : BaseAdapter() {
 
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
         val view: View = View.inflate(activity, R.layout.item_sobre,null)
 
         view.textDetail.text = sobreList[p0].texto
-
         view.imageIcone.loadUrl(sobreList[p0].icone)
 
         return view

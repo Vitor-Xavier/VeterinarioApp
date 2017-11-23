@@ -16,6 +16,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import com.exucodeiro.veterinarioapp.Services.ProfissionalService
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -24,34 +25,42 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_profissional_map.*
 import org.jetbrains.anko.async
 import org.jetbrains.anko.uiThread
 
 class ProfissionalMapFragment : Fragment(), OnMapReadyCallback {
-    private lateinit var mMap: GoogleMap
+    private var mMap: GoogleMap? = null
     private var locationManager : LocationManager? = null
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val rib = LatLng(-21.1767, -47.8208)
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(rib))
+        try {
+            mMap?.isMyLocationEnabled = true
+            locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0L, 0f, locationListener)
+        } catch(ex: SecurityException) {
+            toast("Serviço de localização indiponível")
+        }
 
+        val rib = LatLng(-21.1767, -47.8208)
+        mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(rib,14.5F))
+
+        loadData()
+    }
+
+    fun loadData() {
+        val profissionalService = ProfissionalService()
         async {
-            val profissionalService = ProfissionalService()
-            val list = profissionalService.getProfissionais(-21.1767, -47.8208)
+            val profissionais = profissionalService.getProfissionais(-21.1767, -47.8208)
             uiThread {
-                for (it in list) {
-                    val pro = LatLng(it.endereco?.latitude ?: -21.1767, it.endereco?.longitude ?: -47.8208)
-                    mMap.addMarker(MarkerOptions().position(pro).title("${it.nome} ${it.sobrenome}"))
+                for (profissional in profissionais) {
+                    val pro = LatLng(profissional.endereco?.latitude ?: -21.1767, profissional.endereco?.longitude ?: -47.8208)
+                    mMap?.addMarker(MarkerOptions().position(pro).title("${profissional.nome} ${profissional.sobrenome}"))
                 }
             }
 
         }
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(rib))
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16.0F))
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -59,17 +68,17 @@ class ProfissionalMapFragment : Fragment(), OnMapReadyCallback {
 
         locationManager = context.getSystemService(LOCATION_SERVICE) as LocationManager?
 
-        try {
-            // Request location updates
-            locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0L, 0f, locationListener)
-
-        } catch(ex: SecurityException) {
-            Log.d("myTag", "Security Exception, no location available");
-        }
-
         val mapFragment = childFragmentManager
                 .findFragmentById(R.id.map_view) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        fabLocalizacao.setOnClickListener {
+            SHOW_LOCATION = 4
+        }
+    }
+
+    private fun toast(text: String) {
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -84,8 +93,8 @@ class ProfissionalMapFragment : Fragment(), OnMapReadyCallback {
         return inflater!!.inflate(R.layout.fragment_profissional_map, container, false)
     }
 
-    fun ImageView.loadUrl(url: String) {
-        if (url != null && !url.equals(""))
+    fun ImageView.loadUrl(url: String?) {
+        if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }
 
@@ -99,10 +108,11 @@ class ProfissionalMapFragment : Fragment(), OnMapReadyCallback {
     private val locationListener: LocationListener = object : LocationListener {
 
         override fun onLocationChanged(location: Location) {
-            if (SHOW_LOCATION == 1) {
-                val lat_lng = LatLng(location.latitude, location.longitude)
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(lat_lng))
-                SHOW_LOCATION = 0
+            if (SHOW_LOCATION > 0 && mMap != null) {
+                SHOW_LOCATION--
+
+                val latLng = LatLng(location.latitude, location.longitude)
+                mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,14.5F))
             }
         }
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
@@ -111,7 +121,7 @@ class ProfissionalMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     companion object {
-        private var SHOW_LOCATION = 1
+        private var SHOW_LOCATION = 7
     }
 
 }

@@ -3,13 +3,11 @@ package com.exucodeiro.veterinarioapp.Services
 import com.exucodeiro.veterinarioapp.Models.Servico
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpGet
+import com.github.kittinunf.fuel.httpPost
+import com.github.kittinunf.fuel.httpPut
 
-/**
- * Created by vitor on 03/11/2017.
- */
 class ServicoService {
 
     init {
@@ -20,7 +18,7 @@ class ServicoService {
     fun getServicos() : List<Servico> {
         val servicos: ArrayList<Servico> = ArrayList()
 
-        val (request, response, result) = "Servico".httpGet().responseString()
+        val (_, _, result) = "Servico".httpGet().responseString()
         val (data, error) = result
         if (error == null) {
             val mapper = jacksonObjectMapper()
@@ -32,33 +30,26 @@ class ServicoService {
 
     fun adicionaServico(servico: Servico) : Boolean {
         val mapper = jacksonObjectMapper()
-        var res = false
 
-        Fuel.post("Servico").body(mapper.writeValueAsString(servico)).response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        val (_, _, result) = "Servico".httpPost().body(mapper.writeValueAsString(servico)).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
     fun atualizaServico(servico: Servico) : Boolean {
         val mapper = jacksonObjectMapper()
-        var res = false
 
-        Fuel.put("Servico").body(mapper.writeValueAsString(servico)).response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        val (_, _, result) = "Servico".httpPut().body(mapper.writeValueAsString(servico)).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
     fun associaServico(profissionalId: Int, servicoId: Int) : Boolean {
-        var res = false
+        val (_, _, result) = "Servico/$profissionalId/$servicoId".httpPost().responseString()
+        val (_, error) = result
 
-        Fuel.post("Servico/$profissionalId/$servicoId").response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        return (error == null)
     }
 }

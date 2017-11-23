@@ -4,9 +4,8 @@ import com.exucodeiro.veterinarioapp.Models.Contato
 import com.exucodeiro.veterinarioapp.Models.Usuario
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.*
 import com.github.kittinunf.fuel.core.FuelManager
-import com.github.kittinunf.fuel.httpGet
 
 class UsuarioService {
 
@@ -18,14 +17,12 @@ class UsuarioService {
     fun getUsuario(usuarioId: Int) : Usuario {
         var usuario = Usuario(0, "Usuário", "Convidado", "https://cdn2.iconfinder.com/data/icons/medicine-4-1/512/vet-512.png", null, ArrayList<Contato>())
 
-        val (request, response, result) = "Usuario/$usuarioId".httpGet().responseString()
+        val (_, _, result) = "Usuario/$usuarioId".httpGet().responseString()
 
         val (data, error) = result
-        val erro1 = error
-        val data1 = data
         if (error == null) {
             val mapper = jacksonObjectMapper()
-            usuario = mapper.readValue<Usuario>(data ?: "")
+            usuario = mapper.readValue(data ?: "")
         }
 
         return usuario
@@ -33,45 +30,36 @@ class UsuarioService {
 
     fun adicionaUsuario(usuario: Usuario) : Boolean {
         val mapper = jacksonObjectMapper()
-        var res = false
 
-        Fuel.post("Usuario").body(mapper.writeValueAsString(usuario)).response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        val (_, _, result) = "Usuario".httpPost().body(mapper.writeValueAsString(usuario)).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
     fun atualizaUsuario(usuario: Usuario) : Boolean {
         val mapper = jacksonObjectMapper()
-        var res = false
 
-        Fuel.put("Usuario").body(mapper.writeValueAsString(usuario)).response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        val (_, _, result) = "Usuario".httpPut().body(mapper.writeValueAsString(usuario)).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
     fun inativaUsuario(usuarioId: Int) : Boolean {
-        var res = false
+        val (_, _, result) = "Usuario/$usuarioId".httpDelete().responseString()
+        val (_, error) = result
 
-        Fuel.delete("Usuario/$usuarioId").response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        return (error == null)
     }
 
     fun adicionaContato(usuarioId: Int, contato: Contato) : Boolean {
         val mapper = jacksonObjectMapper()
-        var res = false
 
-        Fuel.post("Usuario/Contato/$usuarioId").body(mapper.writeValueAsString(contato)).response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        val (_, _, result) = "Usuario/Contato/$usuarioId".httpPost().body(mapper.writeValueAsString(contato)).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
 }

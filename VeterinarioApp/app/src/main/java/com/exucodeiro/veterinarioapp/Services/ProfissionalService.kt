@@ -4,20 +4,11 @@ import com.exucodeiro.veterinarioapp.Models.Contato
 import com.exucodeiro.veterinarioapp.Models.Profissional
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
-import com.github.kittinunf.fuel.gson.GsonDeserializer
+import com.github.kittinunf.fuel.httpDelete
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
-import com.github.kittinunf.result.Result
-import com.github.kittinunf.result.getAs
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.net.URL
 
-/**
- * Created by vitor on 03/11/2017.
- */
 class ProfissionalService {
 
     init {
@@ -28,7 +19,7 @@ class ProfissionalService {
     fun getProfissionais(latitude: Double, longitude: Double) : List<Profissional> {
         val profissionais: ArrayList<Profissional> = ArrayList()
 
-        val (request, response, result) = "Profissional/$latitude/$longitude/".httpGet().responseString()
+        val (_, _, result) = "Profissional/$latitude/$longitude/".httpGet().responseString()
         val (data, error) = result
         if (error == null) {
             val mapper = jacksonObjectMapper()
@@ -39,48 +30,39 @@ class ProfissionalService {
     }
 
     fun getProfissional(profissionalId: Int) : Profissional? {
-        var profissional: Profissional? = null
-
-        val (request, response, result) = "Profissional/$profissionalId".httpGet().responseString()
+        val (_, _, result) = "Profissional/$profissionalId".httpGet().responseString()
         val (data, error) = result
-        if (error == null) {
-            val mapper = jacksonObjectMapper()
-            profissional = mapper.readValue(data ?: "")
-        }
 
-        return profissional
+        val mapper = jacksonObjectMapper()
+        when (error == null) {
+            true -> return mapper.readValue(data ?: "")
+            false -> return null
+        }
     }
 
     fun postProfissional(profissional: Profissional) : Boolean {
         val mapper = jacksonObjectMapper()
-        var res = false
 
-        Fuel.post("Profissional").body(mapper.writeValueAsString(profissional)).response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        val (_, _, result) = "Profissional".httpPost().body(mapper.writeValueAsString(profissional)).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
     fun inativaProfissional(profissionalId: Int) : Boolean {
-        var res = false
+        val (_, _, result) = "Profissional/$profissionalId".httpDelete().responseString()
+        val (_, error) = result
 
-        Fuel.delete("Profissional/$profissionalId").response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        return (error == null)
     }
 
     fun adicionaContato(profissionalId: Int, contato: Contato) : Boolean {
         val mapper = jacksonObjectMapper()
-        var res = false
 
-        Fuel.post("Profissional/Contato/$profissionalId").body(mapper.writeValueAsString(contato)).response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        val (_, _, result) = "Profissional/Contato/$profissionalId".httpPost().body(mapper.writeValueAsString(contato)).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
 }

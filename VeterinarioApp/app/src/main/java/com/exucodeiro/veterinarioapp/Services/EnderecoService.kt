@@ -1,17 +1,13 @@
 package com.exucodeiro.veterinarioapp.Services
 
 import com.exucodeiro.veterinarioapp.Models.Endereco
-import com.exucodeiro.veterinarioapp.Models.Usuario
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
+import com.github.kittinunf.fuel.httpPut
 
-/**
- * Created by vitor on 03/11/2017.
- */
 class EnderecoService {
 
     init {
@@ -21,27 +17,23 @@ class EnderecoService {
 
     fun atualizaEnderecoProfissional(profissionalId: Int, endereco: Endereco) : Boolean {
         val mapper = jacksonObjectMapper()
-        var res = false
 
-        Fuel.put("Endereco/$profissionalId").body(mapper.writeValueAsString(endereco)).response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        val (_, _, result) = "Endereco/$profissionalId".httpPut().body(mapper.writeValueAsString(endereco)).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
     fun atualizaEnderecoUsuario(usuarioId: Int, endereco: Endereco) : Boolean {
         val mapper = jacksonObjectMapper()
-        var res = false
 
-        Fuel.put("Endereco/Usuario/$usuarioId").body(mapper.writeValueAsString(endereco)).response { request, response, result ->
-            val (data, error) = result
-            res = (error == null)
-        }
-        return res
+        val (_, _, result) = "Endereco/Usuario/$usuarioId".httpPut().body(mapper.writeValueAsString(endereco)).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
-    fun GetLatLng(endereco: Endereco) : Endereco? {
+    fun getLatLng(endereco: Endereco) : Endereco? {
         val mapper = jacksonObjectMapper()
 
         val (_, _, result) = "Endereco/LatLng".httpPost().body(mapper.writeValueAsString(endereco)).responseString()
@@ -53,7 +45,7 @@ class EnderecoService {
         }
     }
 
-    fun GetEnderecoCompleto(latitude: Double, longitude: Double) : Endereco? {
+    fun getEnderecoCompleto(latitude: Double, longitude: Double) : Endereco? {
         val mapper = jacksonObjectMapper()
 
         val (_, _, result) = "Endereco/Completo/$latitude/$longitude/".httpGet().responseString()

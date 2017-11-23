@@ -7,8 +7,8 @@ import com.exucodeiro.veterinarioapp.Models.Login
  * Created by vitor on 05/11/2017.
  */
 class LoginSettings(context: Context) {
-    val FILE_NAME = "com.exucodeiro.preferences"
-    val preferences = context.getSharedPreferences(FILE_NAME, 0)
+    private val FILE_NAME = "com.exucodeiro.preferences"
+    private val preferences = context.getSharedPreferences(FILE_NAME, 0)
 
     var login: Login
         get() = Login(

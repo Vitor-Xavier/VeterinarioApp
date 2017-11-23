@@ -17,29 +17,30 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profissional_address.*
 
 class ProfissionalAddressFragment : Fragment(), OnMapReadyCallback {
-    var profissional: Profissional? = null
+    private var profissional: Profissional? = null
     private lateinit var mMap: GoogleMap
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        val proMarker = LatLng(profissional?.endereco?.latitude ?: -21.1767, profissional?.endereco?.longitude ?: -47.8208)
+        if (profissional != null) {
+            val proMarker = LatLng(profissional?.endereco?.latitude ?: -21.1767, profissional?.endereco?.longitude ?: -47.8208)
 
-        mMap.addMarker(MarkerOptions().position(proMarker).title("${profissional?.nome} ${profissional?.sobrenome}"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(proMarker))
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16.0F))
+            mMap.addMarker(MarkerOptions().position(proMarker).title("${profissional?.nome} ${profissional?.sobrenome}"))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(proMarker,16.0F))
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        if (arguments != null)
+            profissional = arguments.getSerializable("profissional") as Profissional
 
         return inflater!!.inflate(R.layout.fragment_profissional_address, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        profissional = arguments.getSerializable("profissional") as Profissional
 
         textEndereco.text = profissional?.endereco.toString()
 
@@ -48,9 +49,20 @@ class ProfissionalAddressFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
     }
 
-    fun ImageView.loadUrl(url: String) {
-        if (url != null && !url.equals(""))
+    fun ImageView.loadUrl(url: String?) {
+        if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }
 
+    companion object {
+        private val ARG_PROFISSIONAL = "profissional"
+
+        fun newInstance(profissional: Profissional): ProfissionalAddressFragment {
+            val fragment = ProfissionalAddressFragment()
+            val bundle = Bundle()
+            bundle.putSerializable(ARG_PROFISSIONAL, profissional)
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
 }
