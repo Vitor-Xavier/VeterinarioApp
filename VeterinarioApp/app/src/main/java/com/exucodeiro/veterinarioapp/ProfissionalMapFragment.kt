@@ -38,7 +38,7 @@ class ProfissionalMapFragment : Fragment(), OnMapReadyCallback {
 
         try {
             mMap?.isMyLocationEnabled = true
-            locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0L, 0f, locationListener)
+            locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100L, 1000f, locationListener)
         } catch(ex: SecurityException) {
             toast("Serviço de localização indiponível")
         }
@@ -71,10 +71,6 @@ class ProfissionalMapFragment : Fragment(), OnMapReadyCallback {
         val mapFragment = childFragmentManager
                 .findFragmentById(R.id.map_view) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-        fabLocalizacao.setOnClickListener {
-            SHOW_LOCATION = 4
-        }
     }
 
     private fun toast(text: String) {
@@ -108,20 +104,14 @@ class ProfissionalMapFragment : Fragment(), OnMapReadyCallback {
     private val locationListener: LocationListener = object : LocationListener {
 
         override fun onLocationChanged(location: Location) {
-            if (SHOW_LOCATION > 0 && mMap != null) {
-                SHOW_LOCATION--
-
-                val latLng = LatLng(location.latitude, location.longitude)
-                mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,14.5F))
-            }
+            val latLng = LatLng(location.latitude, location.longitude)
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14.5F)
+            mMap?.animateCamera(cameraUpdate)
+            locationManager?.removeUpdates(this)
         }
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
         override fun onProviderEnabled(provider: String) {}
         override fun onProviderDisabled(provider: String) {}
-    }
-
-    companion object {
-        private var SHOW_LOCATION = 7
     }
 
 }
