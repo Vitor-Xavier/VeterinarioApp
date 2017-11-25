@@ -85,10 +85,10 @@ class CadastroAnimalActivity : AppCompatActivity() {
                     tipoAnimal.tipoAnimalId,
                     tipoAnimal,
                     settings.login.id,
-                    Usuario(settings.login.id, "", "", "", null, ArrayList<Contato>())
+                    Usuario(settings.login.id, "", "", "", null, ArrayList())
             )
-
             salvaAnimal(animalIn)
+
         }
 
         imageIcone.setOnClickListener {
@@ -107,11 +107,17 @@ class CadastroAnimalActivity : AppCompatActivity() {
     private fun salvaAnimal(animal: Animal) {
         async {
             val animalService = AnimalService()
-            if (animal.animalId == 0)
-                animalService.adicionaAnimal(animal)
-            else
-                animalService.atualizaAnimal(animal)
-            finish()
+            if (animal.animalId == 0) {
+                if (!animalService.adicionaAnimal(animal))
+                    toast("Não foi possível adicionar o animal")
+            } else {
+                if (!animalService.atualizaAnimal(animal))
+                    toast("Não foi possível alterar os dados do animal")
+            }
+
+            uiThread {
+                finish()
+            }
         }
     }
 
@@ -163,8 +169,6 @@ class CadastroAnimalActivity : AppCompatActivity() {
                     }
                 }
             }
-        } else {
-            toast("Não foi possível identificar a imagem selecionada.")
         }
     }
 

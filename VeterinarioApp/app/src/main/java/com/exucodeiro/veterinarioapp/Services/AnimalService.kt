@@ -32,7 +32,7 @@ class AnimalService {
         val (_, _, result) = "Animal/${animal.usuarioId}".httpPost().body(mapper.writeValueAsString(animal)).responseString()
         val (_, error) = result
 
-        return (error != null)
+        return (error == null)
     }
 
     fun atualizaAnimal(animal: Animal) : Boolean {
@@ -41,14 +41,14 @@ class AnimalService {
         val (_, _, result) = "Animal/${animal.usuarioId}".httpPut().body(mapper.writeValueAsString(animal)).responseString()
         val (_, error) = result
 
-        return (error != null)
+        return (error == null)
     }
 
     fun inativaAnimal(usuarioId: Int, animalId: Int) : Boolean {
         val (_, _, result) = "Animal/$usuarioId/$animalId".httpDelete().responseString()
         val (_, error) = result
 
-        return (error != null)
+        return (error == null)
     }
 
 }

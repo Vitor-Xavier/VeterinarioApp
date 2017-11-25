@@ -23,9 +23,11 @@
     <string name="endereco">Endereço</string>
     <string name="consultas">Consultas</string>
     <string name="consulta">Consulta</string>
+    <string name="localizacao">Localização</string>
+    <string name="descricao">Descrição</string>
+    <string name="data">Data</string>
     <string name="login">Logar</string>
     <string name="equipe">Exu Codeiro Team</string>
-    <string name="title_activity_maps">Map</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

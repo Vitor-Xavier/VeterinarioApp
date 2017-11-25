@@ -25,7 +25,17 @@ class ProfissionalDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        textDescricao.text = profissional?.nome
+        loadData()
+
+        fabConsulta.setOnClickListener {
+            val cadIntent = Intent(context, CadastroConsultaActivity::class.java)
+            cadIntent.putExtra("profissional", profissional)
+            startActivity(cadIntent)
+        }
+    }
+
+    private fun loadData() {
+        textDescricao.text = profissional?.descricao
         textContatos.text = if (profissional?.contatos?.isEmpty() != true)
             TextUtils.join(", ", profissional?.contatos) else "Sem contatos registrados"
         textServicos.text = if (profissional?.servicos?.isEmpty() != true)
@@ -34,12 +44,6 @@ class ProfissionalDetailFragment : Fragment() {
         val loginSetting = LoginSettings(context)
         if (loginSetting.login.tipo == "Profissional")
             fabConsulta.visibility = View.GONE
-
-        fabConsulta.setOnClickListener {
-            val it = Intent(context, CadastroConsultaActivity::class.java)
-            it.putExtra("profissional", profissional)
-            startActivity(it)
-        }
     }
 
     companion object {

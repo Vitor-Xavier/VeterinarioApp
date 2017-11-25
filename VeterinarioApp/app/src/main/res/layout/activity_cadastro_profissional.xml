@@ -8,133 +8,148 @@
     android:background="@drawable/gradient_background"
     tools:context="com.exucodeiro.veterinarioapp.CadastroProfissionalActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ImageView
+        android:id="@+id/imageBackground"
+        android:src="@mipmap/profissional_back_default"
+        android:layout_width="match_parent"
+        android:adjustViewBounds="true"
+        android:layout_height="wrap_content" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageIcone"
+        android:src="@mipmap/profissional_default"
+        android:layout_marginTop="-50dp"
+        android:layout_gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+    <ScrollView
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageBackground"
-            android:src="@mipmap/profissional_back_default"
-            android:layout_width="match_parent"
-            android:adjustViewBounds="true"
-            android:layout_height="wrap_content" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageIcone"
-            android:src="@mipmap/profissional_default"
-            android:layout_marginTop="-50dp"
-            android:layout_gravity="center"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
-
-        <ScrollView
-            android:layout_marginBottom="32dp"
+        <LinearLayout
+            android:elevation="10dp"
+            android:orientation="vertical"
+            android:background="#FFF"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:elevation="10dp"
+                android:layout_weight="0.95"
                 android:orientation="vertical"
-                android:background="#FFF"
                 android:layout_marginTop="16dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:layout_weight="0.95"
-                    android:orientation="vertical"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
-                    <android.support.design.widget.TextInputLayout
+                    <EditText
+                        android:id="@+id/inputUsername"
+                        android:layout_marginBottom="16dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/colorPrimary"
+                        android:hint="Nome de usuário" />
 
-                        <EditText
-                            android:id="@+id/inputUsername"
-                            android:layout_marginBottom="16dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Nome de usuário" />
+                </android.support.design.widget.TextInputLayout>
 
-                    </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <android.support.design.widget.TextInputLayout
+                    <EditText
+                        android:id="@+id/inputPass"
+                        android:layout_marginBottom="16dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:hint="Senha" />
 
-                        <EditText
-                            android:id="@+id/inputPass"
-                            android:layout_marginBottom="16dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPassword"
-                            android:hint="Senha" />
+                </android.support.design.widget.TextInputLayout>
 
-                    </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <android.support.design.widget.TextInputLayout
+                    <EditText
+                        android:id="@+id/inputNome"
+                        android:layout_marginBottom="16dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:hint="Nome" />
 
-                        <EditText
-                            android:id="@+id/inputNome"
-                            android:layout_marginBottom="16dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Nome" />
+                </android.support.design.widget.TextInputLayout>
 
-                    </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <android.support.design.widget.TextInputLayout
+                    <EditText
+                        android:id="@+id/inputSobrenome"
+                        android:layout_marginBottom="16dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:hint="Sobrenome" />
 
-                        <EditText
-                            android:id="@+id/inputSobrenome"
-                            android:layout_marginBottom="16dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Sobrenome" />
+                </android.support.design.widget.TextInputLayout>
 
-                    </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <android.support.design.widget.TextInputLayout
+                    <EditText
+                        android:id="@+id/inputCRV"
+                        android:layout_marginBottom="16dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:hint="CRV" />
 
-                        <EditText
-                            android:id="@+id/inputCRV"
-                            android:layout_marginBottom="16dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="CRV" />
+                </android.support.design.widget.TextInputLayout>
 
-                    </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                </LinearLayout>
+                    <EditText
+                        android:id="@+id/inputDescricao"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:overScrollMode="always"
+                        android:scrollbarStyle="insideInset"
+                        android:scrollbars="vertical"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:scrollHorizontally="false"
+                        android:gravity="top|start"
+                        android:background="#00000000"
+                        android:lines="4"
+                        android:hint="@string/descricao"/>
 
-                <Button
-                    android:id="@+id/buttonProximo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|bottom"
-                    android:layout_margin="8dp"
-                    android:layout_weight="0.05"
-                    android:background="#0000"
-                    android:text="Próximo"
-                    android:textColor="@color/colorPrimary" />
+                </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
-        </ScrollView>
+            <Button
+                android:id="@+id/buttonProximo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="8dp"
+                android:layout_weight="0.05"
+                android:background="#0000"
+                android:text="Próximo"
+                android:textColor="@color/colorPrimary" />
 
-    </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

@@ -88,7 +88,7 @@ class CadastroConsultaActivity : AppCompatActivity() {
 
                 val animal = adapter.getItem(spinnerAnimal.selectedItemPosition) as Animal
 
-                consulta = Consulta(0, date, editDescricao.text.toString(), animal.animalId, animal, profissional?.profissionalId ?: 0, profissional as Profissional)
+                consulta = Consulta(0, date, editDescricao.text.toString(), animal.animalId, animal, Consulta.AGUARDANDO, profissional?.profissionalId ?: 0, profissional as Profissional)
 
                 consultaService.adicionaConsulta(consulta as Consulta)
             }

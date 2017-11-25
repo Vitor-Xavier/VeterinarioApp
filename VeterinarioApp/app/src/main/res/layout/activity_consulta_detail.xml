@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,8 +29,7 @@
 
                 <LinearLayout
                     android:orientation="vertical"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginLeft="8dp"
+                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -44,7 +42,7 @@
 
                     <TextView
                         android:id="@+id/textDono"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginStart="4dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
@@ -65,8 +63,7 @@
 
                 <LinearLayout
                     android:orientation="vertical"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -79,7 +76,7 @@
 
                     <TextView
                         android:id="@+id/textProfissionalDescricao"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginEnd="4dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
@@ -102,11 +99,11 @@
                 android:orientation="vertical"
                 android:layout_margin="16dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:text="Data"
-                    android:textSize="22dp"
+                    android:text="@string/data"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -118,8 +115,8 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:text="Descrição"
-                    android:textSize="22dp"
+                    android:text="@string/descricao"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -131,8 +128,8 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:text="Endereço"
-                    android:textSize="22dp"
+                    android:text="@string/endereco"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -144,14 +141,14 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:text="Localização"
-                    android:textSize="22dp"
+                    android:text="@string/localizacao"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:map="http://schemas.android.com/apk/res-auto"
+                <fragment
+                    xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:tools="http://schemas.android.com/tools"
                     android:id="@+id/map_consulta"
                     android:layout_margin="8dp"
@@ -166,12 +163,36 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_margin="12dp"
+    <LinearLayout
+        android:id="@+id/layoutConsulta"
+        android:visibility="gone"
+        android:background="#BF000000"
+        android:orientation="horizontal"
+        android:padding="16dp"
         android:layout_gravity="bottom|end"
-        android:background="@drawable/gradient_background"
-        android:src="@mipmap/ic_create_white_24dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/buttonAceitar"
+            android:text="Aceitar"
+            android:textColor="#FFF"
+            android:background="#1cb841"
+            android:layout_weight="0.5"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/buttonRejeitar"
+            android:text="Rejeitar"
+            android:textColor="#FFF"
+            android:background="#ca3c3c"
+            android:layout_weight="0.5"
+            android:layout_marginStart="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </FrameLayout>

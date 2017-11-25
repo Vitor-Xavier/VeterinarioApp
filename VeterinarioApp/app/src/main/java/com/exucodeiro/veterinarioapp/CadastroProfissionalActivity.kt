@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
+import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import com.exucodeiro.veterinarioapp.Models.Profissional
@@ -21,8 +23,16 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cadastro_profissional.*
 import org.jetbrains.anko.async
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
 
-class CadastroProfissionalActivity : AppCompatActivity() {
+class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeListener {
+    override fun onFocusChange(p0: View?, p1: Boolean) {
+        (p0 as EditText)
+        if (p0.text.toString().trim() == "" && !p1) {
+            p0.error = "Texto inválido"
+        }
+    }
+
     private var profissional: Profissional? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,11 +40,21 @@ class CadastroProfissionalActivity : AppCompatActivity() {
         setContentView(R.layout.activity_cadastro_profissional)
         title = getString(R.string.profissional)
 
+        inputNome.onFocusChangeListener = this
+        inputSobrenome.onFocusChangeListener = this
+        inputUsername.onFocusChangeListener = this
+        inputPass.onFocusChangeListener = this
+        inputDescricao.onFocusChangeListener = this
+
         buttonProximo.setOnClickListener {
+            if (!validate())
+                return@setOnClickListener
+
             val it = Intent(this, CadastroEnderecoActivity::class.java)
             val profissional = Profissional(0,
                     inputNome.text.toString(),
                     inputSobrenome.text.toString(),
+                    inputDescricao.text.toString(),
                     "http://decoclinic.com/wp-content/uploads/2016/11/camara2-Tartessos.jpg",
                     "http://www.kibbypark.com/wp-content/uploads/2015/08/wellness-icon.png",
                     inputCRV.text.toString(),
@@ -73,6 +93,30 @@ class CadastroProfissionalActivity : AppCompatActivity() {
         loadData()
     }
 
+    private fun validate() : Boolean {
+        if (inputUsername.text.toString().trim() == "") {
+            inputUsername.requestFocus()
+            return false
+        }
+        if (inputPass.text.toString().trim() == "") {
+            inputPass.requestFocus()
+            return false
+        }
+        if (inputNome.text.toString().trim() == "") {
+            inputNome.requestFocus()
+            return false
+        }
+        if (inputSobrenome.text.toString().trim() == "") {
+            inputSobrenome.requestFocus()
+            return false
+        }
+        if (inputDescricao.text.toString().trim() == "") {
+            inputDescricao.requestFocus()
+            return false
+        }
+        return true
+    }
+
     private fun loadData() {
         profissional = intent.getSerializableExtra("profissional") as Profissional?
 
@@ -80,6 +124,7 @@ class CadastroProfissionalActivity : AppCompatActivity() {
             inputNome.setText(profissional?.nome)
             inputSobrenome.setText(profissional?.sobrenome)
             inputCRV.setText(profissional?.crv)
+            inputDescricao.setText(profissional?.descricao)
 
             imageIcone.loadUrl(profissional?.icone)
             imageBackground.loadUrl(profissional?.imagem)
@@ -156,7 +201,7 @@ class CadastroProfissionalActivity : AppCompatActivity() {
         }
     }
 
-    fun takePhoto() {
+    private fun takePhoto() {
         val intent1 = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent1.resolveActivity(packageManager) != null) {
             startActivityForResult(intent1, REQUEST_TAKE_PHOTO)

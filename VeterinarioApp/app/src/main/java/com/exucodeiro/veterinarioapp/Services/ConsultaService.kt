@@ -59,4 +59,11 @@ class ConsultaService {
         return (error == null)
     }
 
+    fun requisicaoConsulta(consultaId: Int, status: Int) : Boolean {
+        val (_, _, result) = "Consulta/Requisicao/$consultaId/$status".httpPut().responseString()
+        val (_, error) = result
+
+        return (error == null)
+    }
+
 }

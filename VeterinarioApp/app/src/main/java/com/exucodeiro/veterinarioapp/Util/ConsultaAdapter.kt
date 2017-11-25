@@ -21,12 +21,23 @@ data class ConsultaAdapter(private var consultas:List<Consulta>, var activity: A
         view.imageProfissional.loadUrl(consultas[p0].profissional.icone)
         view.imageAnimal.loadUrl(consultas[p0].animal.imagem)
 
+        when (consultas[p0].status) {
+            0 -> view.imageStatus.loadUrl(R.mipmap.ic_event_black_24dp)
+            1 -> view.imageStatus.loadUrl(R.mipmap.ic_event_available_black_24dp)
+            2 -> view.imageStatus.loadUrl(R.mipmap.ic_event_busy_black_24dp)
+            3 -> view.imageStatus.loadUrl(R.mipmap.ic_event_note_black_24dp)
+        }
+
         return view
     }
 
     fun ImageView.loadUrl(url: String) {
         if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
+    }
+
+    fun ImageView.loadUrl(draw: Int) {
+        Picasso.with(context).load(draw).into(this)
     }
 
     override fun getItem(p0: Int): Any {
