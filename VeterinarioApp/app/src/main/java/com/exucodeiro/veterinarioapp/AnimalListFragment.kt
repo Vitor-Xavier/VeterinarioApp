@@ -43,9 +43,9 @@ class AnimalListFragment : Fragment() {
         listAnimais.setOnCreateContextMenuListener(this)
 
         fabNovo.setOnClickListener {
-            val it = Intent(activity, CadastroAnimalActivity::class.java)
-            it.putExtra("animal", Animal(0, "", Date(), "", 1, TipoAnimal(1, "", ""), 1, Usuario(1, "", "", "", null, ArrayList())))
-            startActivity(it)
+            val intAnim = Intent(activity, CadastroAnimalActivity::class.java)
+            intAnim.putExtra("animal", Animal(0, "", Date(), "", 1, TipoAnimal(1, "", ""), 1, Usuario(1, "", "", "", null, ArrayList())))
+            startActivity(intAnim)
         }
     }
 

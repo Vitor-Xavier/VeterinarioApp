@@ -50,7 +50,7 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
             if (!validate())
                 return@setOnClickListener
 
-            val it = Intent(this, CadastroEnderecoActivity::class.java)
+            val intCadEnd = Intent(this, CadastroEnderecoActivity::class.java)
             val profissional = Profissional(0,
                     inputNome.text.toString(),
                     inputSobrenome.text.toString(),
@@ -63,8 +63,8 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
                     ArrayList(),
                     ArrayList(),
                     false)
-            it.putExtra("profissional", profissional)
-            startActivity(it)
+            intCadEnd.putExtra("profissional", profissional)
+            startActivity(intCadEnd)
         }
 
         imageBackground.setOnClickListener {
@@ -147,7 +147,7 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode === Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_SELECT_IMAGE_IN_ALBUM -> {
                     if (IMAGE_BACKGROUND == 0)
