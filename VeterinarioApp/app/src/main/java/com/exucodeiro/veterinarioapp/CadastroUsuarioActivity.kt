@@ -47,9 +47,9 @@ class CadastroUsuarioActivity : AppCompatActivity() {
                 } else
                     usuarioService.atualizaUsuario(usuario as Usuario)
 
-                val it = Intent(this@CadastroUsuarioActivity, MainActivity::class.java)
-                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(it)
+                val intCadUsr = Intent(this@CadastroUsuarioActivity, MainActivity::class.java)
+                intCadUsr.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intCadUsr)
             }
 
         }
@@ -105,7 +105,7 @@ class CadastroUsuarioActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode === Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_SELECT_IMAGE_IN_ALBUM -> {
                     performCrop(Uri.parse(data?.data?.toString()))

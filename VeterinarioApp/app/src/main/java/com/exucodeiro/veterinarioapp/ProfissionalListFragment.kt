@@ -44,7 +44,7 @@ class ProfissionalListFragment : Fragment() {
             profissionais.addAll(profissionalService.getProfissionais(-21.1767, -47.8208))
 
             uiThread {
-                adapter?.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
             }
         }
     }

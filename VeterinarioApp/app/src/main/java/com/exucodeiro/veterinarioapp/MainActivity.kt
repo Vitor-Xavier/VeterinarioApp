@@ -51,18 +51,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val profissional = profissionalService.getProfissional(settings.login.id)
 
                     uiThread {
-                        val it = Intent(this@MainActivity, CadastroProfissionalActivity::class.java)
-                        it.putExtra("profissional", profissional)
-                        startActivity(it)
+                        val intMain = Intent(this@MainActivity, CadastroProfissionalActivity::class.java)
+                        intMain.putExtra("profissional", profissional)
+                        startActivity(intMain)
                     }
                 } else {
                     val usuarioService = UsuarioService()
                     val usuario = usuarioService.getUsuario(settings.login.id)
 
                     uiThread {
-                        val it = Intent(this@MainActivity, CadastroUsuarioActivity::class.java)
-                        it.putExtra("usuario", usuario)
-                        startActivity(it)
+                        val intMain = Intent(this@MainActivity, CadastroUsuarioActivity::class.java)
+                        intMain.putExtra("usuario", usuario)
+                        startActivity(intMain)
                     }
                 }
             }

@@ -59,7 +59,12 @@ class CadastroAnimalActivity : AppCompatActivity() {
             val month = c.get(Calendar.MONTH)
             val day = c.get(Calendar.DAY_OF_MONTH)
 
+<<<<<<< HEAD
             val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+=======
+
+            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, _, monthOfYear, dayOfMonth ->
+>>>>>>> f4633fbac598573c9d9cddac23d352c783c13298
                 inputDataNasc.setText("$dayOfMonth/$monthOfYear/$year")
             }, year, month, day)
             dpd.show()
@@ -159,7 +164,6 @@ class CadastroAnimalActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode === Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_SELECT_IMAGE_IN_ALBUM -> {
                     performCrop(Uri.parse(data?.data?.toString()))

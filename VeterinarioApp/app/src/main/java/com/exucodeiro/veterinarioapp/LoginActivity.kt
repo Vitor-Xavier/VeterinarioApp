@@ -31,9 +31,9 @@ class LoginActivity : AppCompatActivity() {
                     settings.login = login
 
                     uiThread {
-                        val it = Intent(this@LoginActivity, MainActivity::class.java)
-                        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(it)
+                        val intLg = Intent(this@LoginActivity, MainActivity::class.java)
+                        intLg.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intLg)
                     }
                 } else
                     uiThread {
