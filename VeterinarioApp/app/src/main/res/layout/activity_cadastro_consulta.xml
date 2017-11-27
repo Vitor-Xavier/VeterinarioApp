@@ -78,7 +78,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="date"
-                    android:hint="Data"/>
+                    android:focusable="false"
+                    android:hint="@string/data"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -90,12 +91,13 @@
                     android:id="@+id/editHora"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:focusable="false"
                     android:hint="Horário"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:layout_margin="3dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -109,16 +111,14 @@
                     android:scrollbars="vertical"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:scrollHorizontally="false"
-                    android:gravity="top|left"
+                    android:gravity="top|start"
                     android:background="#00000000"
                     android:lines="4"
-                    android:hint="Descrição"/>
+                    android:hint="@string/descricao"/>
 
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
-
-
 
     </LinearLayout>
 

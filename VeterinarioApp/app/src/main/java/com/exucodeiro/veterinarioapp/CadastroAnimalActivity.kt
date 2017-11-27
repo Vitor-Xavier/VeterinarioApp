@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ImageView
 import com.exucodeiro.veterinarioapp.Models.Animal
-import com.exucodeiro.veterinarioapp.Models.Contato
 import com.exucodeiro.veterinarioapp.Models.TipoAnimal
 import com.exucodeiro.veterinarioapp.Models.Usuario
 import com.exucodeiro.veterinarioapp.Services.AnimalService
@@ -32,10 +31,11 @@ import android.graphics.Bitmap
 import android.content.pm.PackageManager
 import android.os.Build
 import android.support.v4.app.ActivityCompat
+import android.view.View
+import android.widget.EditText
 import com.exucodeiro.veterinarioapp.Util.ImageUtils
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
-class CadastroAnimalActivity : AppCompatActivity() {
+class CadastroAnimalActivity : AppCompatActivity(), View.OnFocusChangeListener {
     private lateinit var adapter: TipoAnimalAdapter
     private val tipos = ArrayList<TipoAnimal>()
     private var animal: Animal? = null
@@ -51,26 +51,28 @@ class CadastroAnimalActivity : AppCompatActivity() {
         loadData()
         spinnerTipoAnimal.adapter = adapter
 
+        inputNome.onFocusChangeListener = this
+        inputDataNasc.onFocusChangeListener = this
+
         loadAnimal()
 
         inputDataNasc.setOnClickListener {
             val c = Calendar.getInstance()
-            val year = c.get(Calendar.YEAR)
-            val month = c.get(Calendar.MONTH)
-            val day = c.get(Calendar.DAY_OF_MONTH)
+            val ano = c.get(Calendar.YEAR)
+            val mes = c.get(Calendar.MONTH)
+            val dia = c.get(Calendar.DAY_OF_MONTH)
 
-<<<<<<< HEAD
             val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-=======
-
-            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, _, monthOfYear, dayOfMonth ->
->>>>>>> f4633fbac598573c9d9cddac23d352c783c13298
                 inputDataNasc.setText("$dayOfMonth/$monthOfYear/$year")
-            }, year, month, day)
+            }, ano, mes, dia)
+            dpd.datePicker.maxDate = c.timeInMillis
             dpd.show()
         }
 
         buttonConcluir.setOnClickListener {
+            if (!validate())
+                return@setOnClickListener
+
             val df = SimpleDateFormat("dd/MM/yyyy")
 
             val settings = LoginSettings(this)
@@ -100,6 +102,26 @@ class CadastroAnimalActivity : AppCompatActivity() {
                 else
                     selectImageInAlbum()
         }
+    }
+
+    override fun onFocusChange(p0: View?, p1: Boolean) {
+        (p0 as EditText)
+        if (p0.text.toString().trim() == "" && !p1)
+            p0.error = "Conteudo inválido"
+    }
+
+    private fun validate() : Boolean {
+        if (inputNome.text.toString().trim() == "") {
+            inputNome.requestFocus()
+            inputNome.error = "Nome inválido"
+            return false
+        }
+        if (inputDataNasc.text.toString().trim() == "") {
+            inputDataNasc.requestFocus()
+            inputDataNasc.error = "Selecione uma data"
+            return false
+        }
+        return true
     }
 
     private fun loadAnimal() {
@@ -164,6 +186,7 @@ class CadastroAnimalActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_SELECT_IMAGE_IN_ALBUM -> {
                     performCrop(Uri.parse(data?.data?.toString()))
