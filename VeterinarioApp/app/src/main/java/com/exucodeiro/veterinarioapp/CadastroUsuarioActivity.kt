@@ -25,7 +25,7 @@ import org.jetbrains.anko.toast
 
 class CadastroUsuarioActivity : AppCompatActivity() {
     private var usuario: Usuario? = null
-    private var imageUrl: String = ""
+    private var imageUrl: String = "https://veterinarioblob.blob.core.windows.net/images/userDefault.png"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,10 +116,10 @@ class CadastroUsuarioActivity : AppCompatActivity() {
                     val uri = ImageUtils.getImageUri(this, selectedBitmap)
                     imageIcone.setImageBitmap(selectedBitmap)
 
-                    val uploadService = UploadService()
                     async {
-                        uploadService.enviarImagem(baseContext, uri.toString()) //data?.data?.toString() ?: ""
-                        imageUrl = uri.toString()
+                        val uploadService = UploadService()
+
+                        imageUrl = uploadService.enviarImagem(baseContext, uri.toString(), "imageUsuario") ?: imageUrl
                     }
                 }
             }

@@ -23,9 +23,11 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cadastro_profissional.*
 import org.jetbrains.anko.async
 import org.jetbrains.anko.toast
-import org.jetbrains.anko.uiThread
 
 class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeListener {
+    private var imageUrl = "http://decoclinic.com/wp-content/uploads/2016/11/camara2-Tartessos.jpg"
+    private var iconeUrl = "http://www.kibbypark.com/wp-content/uploads/2015/08/wellness-icon.png"
+
     override fun onFocusChange(p0: View?, p1: Boolean) {
         (p0 as EditText)
         if (p0.text.toString().trim() == "" && !p1) {
@@ -55,8 +57,8 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
                     inputNome.text.toString(),
                     inputSobrenome.text.toString(),
                     inputDescricao.text.toString(),
-                    "http://decoclinic.com/wp-content/uploads/2016/11/camara2-Tartessos.jpg",
-                    "http://www.kibbypark.com/wp-content/uploads/2015/08/wellness-icon.png",
+                    imageUrl,
+                    iconeUrl,
                     inputCRV.text.toString(),
                     0,
                     null,
@@ -160,13 +162,17 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
                     val selectedBitmap = extras?.getParcelable<Bitmap>("data") as Bitmap
                     val uri = ImageUtils.getImageUri(this, selectedBitmap)
 
-                    if (IMAGE_BACKGROUND == 0)
-                        imageIcone.setImageBitmap(selectedBitmap)
-                    else
-                        imageBackground.setImageBitmap(selectedBitmap)
                     async {
                         val uploadService = UploadService()
-                        uploadService.enviarImagem(baseContext, uri.toString())
+
+                        if (IMAGE_BACKGROUND == 0) {
+                            imageIcone.setImageBitmap(selectedBitmap)
+                            imageUrl = uploadService.enviarImagem(baseContext, uri.toString(), "imageBackProf") ?: imageUrl
+                        } else {
+                            imageBackground.setImageBitmap(selectedBitmap)
+                            iconeUrl = uploadService.enviarImagem(baseContext, uri.toString(), "imageIconeProf") ?: iconeUrl
+                        }
+
                     }
                 }
             }

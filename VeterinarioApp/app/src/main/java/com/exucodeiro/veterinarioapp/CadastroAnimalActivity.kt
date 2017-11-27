@@ -33,11 +33,14 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.support.v4.app.ActivityCompat
 import com.exucodeiro.veterinarioapp.Util.ImageUtils
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
 class CadastroAnimalActivity : AppCompatActivity() {
     private lateinit var adapter: TipoAnimalAdapter
     private val tipos = ArrayList<TipoAnimal>()
     private var animal: Animal? = null
+    private var imageUrl = "https://i.imgur.com/ckJhIUz.png"
+    private lateinit var filename: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,22 +51,13 @@ class CadastroAnimalActivity : AppCompatActivity() {
         loadData()
         spinnerTipoAnimal.adapter = adapter
 
-        animal = intent.getSerializableExtra("animal") as Animal
-        if (animal?.animalId != 0) {
-            inputNome.setText(animal?.nome)
-            val df = SimpleDateFormat("dd/MM/yyyy")
-            inputDataNasc.setText(df.format(animal?.dataNascimento))
-            imageIcone.loadUrl(animal?.imagem ?: "https://i.imgur.com/ckJhIUz.png")
-            spinnerTipoAnimal.setSelection(adapter.getById(animal?.tipoAnimalId ?: 0))
-        } else
-            imageIcone.loadUrl("https://i.imgur.com/ckJhIUz.png")
+        loadAnimal()
 
         inputDataNasc.setOnClickListener {
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
             val day = c.get(Calendar.DAY_OF_MONTH)
-
 
             val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 inputDataNasc.setText("$dayOfMonth/$monthOfYear/$year")
@@ -81,14 +75,13 @@ class CadastroAnimalActivity : AppCompatActivity() {
             val animalIn = Animal(animal?.animalId ?: 0,
                     inputNome.text.toString(),
                     df.parse(inputDataNasc.text.toString()),
-                    "https://i.imgur.com/ckJhIUz.png",
+                    imageUrl,
                     tipoAnimal.tipoAnimalId,
                     tipoAnimal,
                     settings.login.id,
                     Usuario(settings.login.id, "", "", "", null, ArrayList())
             )
             salvaAnimal(animalIn)
-
         }
 
         imageIcone.setOnClickListener {
@@ -102,6 +95,20 @@ class CadastroAnimalActivity : AppCompatActivity() {
                 else
                     selectImageInAlbum()
         }
+    }
+
+    private fun loadAnimal() {
+        animal = intent.getSerializableExtra("animal") as Animal
+
+        if (animal?.animalId != 0) {
+            inputNome.setText(animal?.nome)
+            val df = SimpleDateFormat("dd/MM/yyyy")
+            inputDataNasc.setText(df.format(animal?.dataNascimento))
+            imageIcone.loadUrl(animal?.imagem ?: "https://i.imgur.com/ckJhIUz.png")
+            spinnerTipoAnimal.setSelection(adapter.getById(animal?.tipoAnimalId ?: 0))
+        } else
+            imageIcone.loadUrl("https://i.imgur.com/ckJhIUz.png")
+        getImagePrefix()
     }
 
     private fun salvaAnimal(animal: Animal) {
@@ -165,7 +172,7 @@ class CadastroAnimalActivity : AppCompatActivity() {
 
                     val uploadService = UploadService()
                     async {
-                        uploadService.enviarImagem(baseContext, uri.toString()) //data?.data?.toString() ?: ""
+                        imageUrl = uploadService.enviarImagem(baseContext, uri.toString(), filename) ?: imageUrl //data?.data?.toString() ?: ""
                     }
                 }
             }
@@ -203,6 +210,15 @@ class CadastroAnimalActivity : AppCompatActivity() {
             toast("Permission: "+permissions[0]+ "was "+grantResults[0])
             selectImageInAlbum()
         }
+    }
+
+    private fun getImagePrefix() {
+        if (animal?.animalId != 0) {
+            val indice = imageUrl.lastIndexOf('/') + 1
+            val indiceFinal = imageUrl.lastIndexOf('.')
+            filename = imageUrl.substring(indice, indiceFinal)
+        } else
+            filename = java.util.UUID.randomUUID().toString()
     }
 
     companion object {
