@@ -82,12 +82,18 @@ class CadastroEnderecoActivity : AppCompatActivity() {
                     enderecoService.atualizaEnderecoProfissional(profissional?.profissionalId ?: 0, endereco as Endereco)
                 }
 
-            } else
+            } else {
+                val enderecoService = EnderecoService()
                 if (usuario?.usuarioId == 0) {
                     val enderecoService = EnderecoService()
                     usuario?.endereco = endereco
                     enderecoService.atualizaEnderecoUsuario(usuario?.usuarioId ?: 0, endereco as Endereco)
+                } else {
+                    usuario?.endereco = endereco
+                    enderecoService.atualizaEnderecoUsuario(usuario?.usuarioId ?: 0, endereco as Endereco)
                 }
+            }
+
             uiThread {
                 if (finalizar) {
                     val intentMain = Intent(this@CadastroEnderecoActivity, MainActivity::class.java)

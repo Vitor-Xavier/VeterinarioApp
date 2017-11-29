@@ -18,7 +18,7 @@ class EnderecoService {
     fun atualizaEnderecoProfissional(profissionalId: Int, endereco: Endereco) : Boolean {
         val mapper = jacksonObjectMapper()
 
-        val (_, _, result) = "Endereco/$profissionalId".httpPut().body(mapper.writeValueAsString(endereco)).responseString()
+        val (_, _, result) = "Endereco/$profissionalId".httpPost().body(mapper.writeValueAsString(endereco)).responseString()
         val (_, error) = result
 
         return (error == null)
@@ -27,7 +27,7 @@ class EnderecoService {
     fun atualizaEnderecoUsuario(usuarioId: Int, endereco: Endereco) : Boolean {
         val mapper = jacksonObjectMapper()
 
-        val (_, _, result) = "Endereco/Usuario/$usuarioId".httpPut().body(mapper.writeValueAsString(endereco)).responseString()
+        val (_, _, result) = "Endereco/Usuario/$usuarioId".httpPost().body(mapper.writeValueAsString(endereco)).responseString()
         val (_, error) = result
 
         return (error == null)
