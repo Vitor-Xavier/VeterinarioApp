@@ -12,14 +12,14 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageProfissional"
-            android:layout_margin="4dp"
+            android:layout_margin="6dp"
             android:layout_gravity="center_vertical"
-            android:layout_width="80dp"
-            android:layout_height="80dp" />
+            android:layout_width="82dp"
+            android:layout_height="82dp" />
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_margin="4dp"
+            android:layout_margin="2dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

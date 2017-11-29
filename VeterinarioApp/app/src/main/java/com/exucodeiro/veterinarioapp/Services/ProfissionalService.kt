@@ -40,13 +40,13 @@ class ProfissionalService {
         }
     }
 
-    fun postProfissional(profissional: Profissional) : Boolean {
+    fun postProfissional(profissional: Profissional) : Profissional? {
         val mapper = jacksonObjectMapper()
 
         val (_, _, result) = "Profissional".httpPost().body(mapper.writeValueAsString(profissional)).responseString()
-        val (_, error) = result
+        val (data, error) = result
 
-        return (error == null)
+        return if (error == null) mapper.readValue(data ?: "") else null
     }
 
     fun inativaProfissional(profissionalId: Int) : Boolean {

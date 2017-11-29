@@ -7,6 +7,8 @@ import java.io.Serializable
 data class Profissional (val profissionalId: Int,
                          val nome: String,
                          val sobrenome: String,
+                         val nomeUsuario: String,
+                         val senha: String,
                          val descricao: String,
                          val imagem: String,
                          val icone: String,

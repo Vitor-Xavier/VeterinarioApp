@@ -22,8 +22,7 @@ class SobreAdapter(private var sobreList:List<Sobre>, var activity: Activity) : 
     }
 
     fun ImageView.loadUrl(drawable: Int) {
-        if (drawable != null)
-            Picasso.with(context).load(drawable).into(this)
+        Picasso.with(context).load(drawable).into(this)
     }
 
     override fun getItem(p0: Int): Any {

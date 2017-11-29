@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class CadastroConsultaActivity : AppCompatActivity(), View.OnFocusChangeListener {
+
     override fun onFocusChange(p0: View?, p1: Boolean) {
         p0 as EditText
         if (p0.text.toString().trim() == "" && !p1)
@@ -64,7 +65,7 @@ class CadastroConsultaActivity : AppCompatActivity(), View.OnFocusChangeListener
             val hora = c.get(Calendar.HOUR_OF_DAY)
             val min = c.get(Calendar.MINUTE)
 
-            val tpd = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+            val tpd = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, hour, minute ->
                 editHora.setText("$hour:$minute")
             }, hora, min, true)
             tpd.show()

@@ -34,8 +34,18 @@ class CadastroUsuarioActivity : AppCompatActivity() {
         title = getString(R.string.usuario)
 
         buttonProximo.setOnClickListener {
-            //val it = Intent(this, CadastroEnderecoActivity::class.java)
-            //startActivity(it)
+            val usuarioService = UsuarioService()
+            async {
+                if (usuario == null || usuario?.usuarioId == 0) {
+                    loadUsuario()
+                    usuarioService.adicionaUsuario(usuario as Usuario)
+                } else
+                    usuarioService.atualizaUsuario(usuario as Usuario)
+
+                val intentEndereco = Intent(this@CadastroUsuarioActivity, CadastroEnderecoActivity::class.java)
+                intentEndereco.putExtra("usuario", usuario)
+                startActivity(intentEndereco)
+            }
         }
 
         buttonConcluir.setOnClickListener {
@@ -43,7 +53,7 @@ class CadastroUsuarioActivity : AppCompatActivity() {
             async {
                 if(usuario == null || usuario?.usuarioId == 0) {
                     loadUsuario()
-                    usuarioService.adicionaUsuario(usuario as Usuario)
+                    usuario = usuarioService.adicionaUsuario(usuario as Usuario)
                 } else
                     usuarioService.atualizaUsuario(usuario as Usuario)
 
@@ -84,6 +94,8 @@ class CadastroUsuarioActivity : AppCompatActivity() {
         usuario = Usuario(0,
                 inputNome.text.toString(),
                 inputSobrenome.text.toString(),
+                "",
+                "",
                 imageUrl,
                 null,
                 ArrayList())

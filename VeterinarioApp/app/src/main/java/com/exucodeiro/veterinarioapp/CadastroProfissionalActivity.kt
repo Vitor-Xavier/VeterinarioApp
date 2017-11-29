@@ -23,10 +23,13 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cadastro_profissional.*
 import org.jetbrains.anko.async
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
 
 class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeListener {
     private var imageUrl = "http://decoclinic.com/wp-content/uploads/2016/11/camara2-Tartessos.jpg"
     private var iconeUrl = "http://www.kibbypark.com/wp-content/uploads/2015/08/wellness-icon.png"
+    private lateinit var filenameImage: String
+    private lateinit var filenameIcone: String
 
     override fun onFocusChange(p0: View?, p1: Boolean) {
         (p0 as EditText)
@@ -56,6 +59,8 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
             val profissional = Profissional(0,
                     inputNome.text.toString(),
                     inputSobrenome.text.toString(),
+                    inputUsername.text.toString(),
+                    inputPass.text.toString(),
                     inputDescricao.text.toString(),
                     imageUrl,
                     iconeUrl,
@@ -75,6 +80,9 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
                 if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED)
                     ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 12)
+                else if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED)
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 15)
                 else
                     selectImageInAlbum()
         }
@@ -131,6 +139,7 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
             imageIcone.loadUrl(profissional?.icone)
             imageBackground.loadUrl(profissional?.imagem)
         }
+        getImagePrefix()
     }
 
     fun ImageView.loadUrl(url: String?) {
@@ -165,12 +174,16 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
                     async {
                         val uploadService = UploadService()
 
-                        if (IMAGE_BACKGROUND == 0) {
-                            imageIcone.setImageBitmap(selectedBitmap)
-                            imageUrl = uploadService.enviarImagem(baseContext, uri.toString(), "imageBackProf") ?: imageUrl
+                        if (IMAGE_BACKGROUND == 1) {
+                            uiThread {
+                                imageBackground.setImageBitmap(selectedBitmap)
+                            }
+                            imageUrl = uploadService.enviarImagem(baseContext, uri.toString(), filenameImage) ?: imageUrl
                         } else {
-                            imageBackground.setImageBitmap(selectedBitmap)
-                            iconeUrl = uploadService.enviarImagem(baseContext, uri.toString(), "imageIconeProf") ?: iconeUrl
+                            uiThread {
+                                imageIcone.setImageBitmap(selectedBitmap)
+                            }
+                            iconeUrl = uploadService.enviarImagem(baseContext, uri.toString(), filenameIcone) ?: iconeUrl
                         }
 
                     }
@@ -202,7 +215,6 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            toast("Permission: "+permissions[0]+ "was "+grantResults[0])
             selectImageInAlbum()
         }
     }
@@ -213,6 +225,23 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
             startActivityForResult(intent1, REQUEST_TAKE_PHOTO)
         }
     }
+
+    private fun getImagePrefix() {
+        if (profissional?.profissionalId != 0) {
+            val indice = imageUrl.lastIndexOf('/') + 1
+            val indiceFinal = imageUrl.lastIndexOf('.')
+            filenameImage = imageUrl.substring(indice, indiceFinal)
+
+            val indiceIcone = iconeUrl.lastIndexOf('/') + 1
+            val indiceFinalIcone = iconeUrl.lastIndexOf('.')
+            filenameIcone = iconeUrl.substring(indiceIcone, indiceFinalIcone)
+        } else {
+            filenameImage = java.util.UUID.randomUUID().toString()
+            filenameIcone = java.util.UUID.randomUUID().toString()
+        }
+
+    }
+
     companion object {
         private val REQUEST_TAKE_PHOTO = 0
         private val REQUEST_SELECT_IMAGE_IN_ALBUM = 1

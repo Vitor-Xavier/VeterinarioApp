@@ -31,7 +31,7 @@ data class ConsultaAdapter(private var consultas:List<Consulta>, var activity: A
         return view
     }
 
-    fun ImageView.loadUrl(url: String) {
+    fun ImageView.loadUrl(url: String?) {
         if (url != null && url != "")
             Picasso.with(context).load(url).into(this)
     }

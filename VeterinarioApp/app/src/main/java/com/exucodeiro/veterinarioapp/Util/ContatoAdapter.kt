@@ -5,18 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
-import com.exucodeiro.veterinarioapp.Models.TipoContato
+import com.exucodeiro.veterinarioapp.Models.Contato
 import com.exucodeiro.veterinarioapp.R
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_tipo_contato.view.*
+import kotlinx.android.synthetic.main.item_contato.view.*
 
-class TipoContatoAdapter(private var tipos: List<TipoContato>, var activity: Activity) : BaseAdapter() {
+data class ContatoAdapter(private var contatos:List<Contato>, var activity: Activity) : BaseAdapter() {
 
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
-        val view: View = View.inflate(activity, R.layout.item_tipo_contato,null)
+        val view: View = View.inflate(activity, R.layout.item_contato,null)
 
-        view.textTipo.text = tipos[p0].nome
-        view.imageIcone.loadUrl(tipos[p0].icone)
+        view.textContato.text = contatos[p0].texto
+        view.imageIcone.loadUrl(contatos[p0].tipoContato.icone)
 
         return view
     }
@@ -26,8 +26,12 @@ class TipoContatoAdapter(private var tipos: List<TipoContato>, var activity: Act
             Picasso.with(context).load(url).into(this)
     }
 
+    fun ImageView.loadUrl(draw: Int) {
+        Picasso.with(context).load(draw).into(this)
+    }
+
     override fun getItem(p0: Int): Any {
-        return tipos[p0]
+        return contatos[p0]
     }
 
     override fun getItemId(p0: Int): Long {
@@ -35,11 +39,7 @@ class TipoContatoAdapter(private var tipos: List<TipoContato>, var activity: Act
     }
 
     override fun getCount(): Int {
-        return tipos.size
+        return contatos.size
     }
 
-    fun getById(id: Int) : Int {
-        val tipo = tipos.find { it.tipoContatoId == id }
-        return tipos.indexOf(tipo)
-    }
 }

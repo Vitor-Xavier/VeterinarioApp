@@ -86,7 +86,7 @@ class CadastroAnimalActivity : AppCompatActivity(), View.OnFocusChangeListener {
                     tipoAnimal.tipoAnimalId,
                     tipoAnimal,
                     settings.login.id,
-                    Usuario(settings.login.id, "", "", "", null, ArrayList())
+                    Usuario(settings.login.id, "", "", "", "", "", null, ArrayList())
             )
             salvaAnimal(animalIn)
         }

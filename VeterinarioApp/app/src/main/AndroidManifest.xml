@@ -8,8 +8,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" /> <!--Permite acesso da api Geocoder-->
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
+    <!-- Permite acesso da api Geocoder -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -35,26 +36,27 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity
             android:name=".CadastroEnderecoActivity"
+            android:label="@string/endereco"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/endereco"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CadastroAnimalActivity"
+            android:label="@string/animal"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/animal"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CadastroUsuarioActivity"
+            android:label="@string/usuario"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/usuario"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CadastroProfissionalActivity"
+            android:label="@string/profissional"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/profissional"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
@@ -66,12 +68,16 @@
         <activity
             android:name=".CadastroConsultaActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CadastroContatoActivity"
+            android:label="@string/consulta"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/consulta"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ContatoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

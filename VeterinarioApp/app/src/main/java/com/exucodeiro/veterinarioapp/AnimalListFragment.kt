@@ -44,7 +44,7 @@ class AnimalListFragment : Fragment() {
 
         fabNovo.setOnClickListener {
             val intAnim = Intent(activity, CadastroAnimalActivity::class.java)
-            intAnim.putExtra("animal", Animal(0, "", Date(), "", 1, TipoAnimal(1, "", ""), 1, Usuario(1, "", "", "", null, ArrayList())))
+            intAnim.putExtra("animal", Animal(0, "", Date(), "", 1, TipoAnimal(1, "", ""), 1, Usuario(1, "", "", "", "", "", null, ArrayList())))
             startActivity(intAnim)
         }
     }
@@ -56,6 +56,8 @@ class AnimalListFragment : Fragment() {
     }
 
     override fun onContextItemSelected(item: MenuItem?): Boolean {
+        if (item?.menuInfo == null)
+            return false
         var t = item?.menuInfo as AdapterView.AdapterContextMenuInfo
 
         val animal = adapter.getItem(t.position) as Animal
@@ -80,7 +82,6 @@ class AnimalListFragment : Fragment() {
             animalService.inativaAnimal(usuarioId, animalId)
             loadData()
         }
-
     }
 
     private fun loadData() {

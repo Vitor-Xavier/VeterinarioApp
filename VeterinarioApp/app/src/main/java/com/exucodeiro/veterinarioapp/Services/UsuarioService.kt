@@ -15,7 +15,7 @@ class UsuarioService {
     }
 
     fun getUsuario(usuarioId: Int) : Usuario {
-        var usuario = Usuario(0, "Usuário", "Convidado", "https://cdn2.iconfinder.com/data/icons/medicine-4-1/512/vet-512.png", null, ArrayList<Contato>())
+        var usuario = Usuario(0, "Usuário", "Convidado", "", "", "https://cdn2.iconfinder.com/data/icons/medicine-4-1/512/vet-512.png", null, ArrayList<Contato>())
 
         val (_, _, result) = "Usuario/$usuarioId".httpGet().responseString()
 
@@ -28,13 +28,13 @@ class UsuarioService {
         return usuario
     }
 
-    fun adicionaUsuario(usuario: Usuario) : Boolean {
+    fun adicionaUsuario(usuario: Usuario) : Usuario? {
         val mapper = jacksonObjectMapper()
 
         val (_, _, result) = "Usuario".httpPost().body(mapper.writeValueAsString(usuario)).responseString()
-        val (_, error) = result
+        val (data, error) = result
 
-        return (error == null)
+        return if (error == null) mapper.readValue(data ?: "") else null
     }
 
     fun atualizaUsuario(usuario: Usuario) : Boolean {

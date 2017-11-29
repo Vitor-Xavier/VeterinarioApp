@@ -8,6 +8,9 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
+import android.view.ContextMenu
+import android.view.Menu
+import android.view.View
 import android.widget.ImageView
 import com.exucodeiro.veterinarioapp.Models.Profissional
 import com.exucodeiro.veterinarioapp.Models.Usuario
@@ -21,8 +24,9 @@ import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.async
 import org.jetbrains.anko.uiThread
 
-
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private var usuario: Usuario? = null
+    private var profissional: Profissional? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +71,39 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
         }
+
+        registerForContextMenu(nav_view.getHeaderView(0).buttonEditar)
+    }
+
+    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+        val settings = LoginSettings(this)
+        menu?.add(Menu.NONE, 1, Menu.NONE, "Endereco")
+        menu?.add(Menu.NONE, 2, Menu.NONE, "Contatos")
+        if (settings.login.tipo == "Profissional")
+            menu?.add(Menu.NONE, 3, Menu.NONE, "Servicos")
+        super.onCreateContextMenu(menu, v, menuInfo)
+    }
+
+    override fun onContextItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            1 -> {
+                val intentEndereco = Intent(this, CadastroEnderecoActivity::class.java)
+                if (profissional != null)
+                    intentEndereco.putExtra("profissional", profissional)
+                else
+                    intentEndereco.putExtra("usuario", usuario)
+                startActivity(intentEndereco)
+            }
+            2 -> {
+                val intentContato = Intent(this, ContatoActivity::class.java)
+                if (profissional != null)
+                    intentContato.putExtra("profissional", profissional)
+                else
+                    intentContato.putExtra("usuario", usuario)
+                startActivity(intentContato)
+            }
+        }
+        return super.onContextItemSelected(item)
     }
 
     private fun loadData() {
@@ -80,7 +117,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             if (settings.login.tipo == "Profissional") {
                 async {
                     val profissionalService = ProfissionalService()
-                    val profissional = profissionalService.getProfissional(settings.login.id)
+                    profissional = profissionalService.getProfissional(settings.login.id)
 
                     uiThread {
                         nav_view.getHeaderView(0).textNome.text = profissional?.nome
@@ -92,13 +129,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             } else {
                 val usuarioService = UsuarioService()
                 async {
-                    val usuario = usuarioService.getUsuario(settings.login.id)
+                    usuario = usuarioService.getUsuario(settings.login.id)
 
                     uiThread {
-                        nav_view.getHeaderView(0).textNome.text = usuario.nome
+                        nav_view.getHeaderView(0).textNome.text = usuario?.nome
                         nav_view.getHeaderView(0).textView.text = getString(R.string.usuario)
 
-                        nav_view.getHeaderView(0).imageView.loadUrl(usuario.imagem)
+                        nav_view.getHeaderView(0).imageView.loadUrl(usuario?.imagem)
                     }
                 }
             }

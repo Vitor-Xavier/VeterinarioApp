@@ -7,6 +7,8 @@ import java.io.Serializable
 data class Usuario (val usuarioId: Int,
                     val nome: String,
                     val sobrenome: String,
+                    val nomeUsuario: String,
+                    val senha: String,
                     val imagem: String,
-                    val endereco: Endereco?,
+                    var endereco: Endereco?,
                     val contatos: List<Contato>) : Serializable
