@@ -14,7 +14,7 @@ class LoginService {
     }
 
     fun logar(nomeUsuario: String, senha: String) : Login? {
-        val (_, _, result) = "Login/$nomeUsuario/$senha".httpGet().responseString()
+        val (_, _, result) = "Login/${nomeUsuario.trim()}/${senha.trim()}".httpGet().responseString()
         val (data, error) = result
 
         val mapper = jacksonObjectMapper()

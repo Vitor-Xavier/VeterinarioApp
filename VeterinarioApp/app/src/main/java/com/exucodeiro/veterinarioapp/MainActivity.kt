@@ -18,7 +18,6 @@ import com.exucodeiro.veterinarioapp.Services.LoginSettings
 import com.exucodeiro.veterinarioapp.Services.ProfissionalService
 import com.exucodeiro.veterinarioapp.Services.UsuarioService
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.async
@@ -68,6 +67,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         intMain.putExtra("usuario", usuario)
                         startActivity(intMain)
                     }
+                }
+            }
+        }
+
+        nav_view.getHeaderView(0).switchOnline.setOnCheckedChangeListener { _, b ->
+            async {
+                val profisisonalService = ProfissionalService()
+                profisisonalService.setProfissionalOnline(profissional?.profissionalId ?: 0, b)
+
+                uiThread {
+                    nav_view.setNavigationItemSelectedListener(this@MainActivity)
+                    val fragmentPro = ProfissionalFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.content_view, fragmentPro).commit()
                 }
             }
         }
@@ -130,6 +142,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         nav_view.getHeaderView(0).textView.text = getString(R.string.profissional)
 
                         nav_view.getHeaderView(0).imageView.loadUrl(profissional?.icone ?: "")
+
+                        nav_view.getHeaderView(0).switchOnline.visibility = View.VISIBLE
+                        nav_view.getHeaderView(0).switchOnline.isChecked = profissional?.online ?: false
                     }
                 }
             } else {

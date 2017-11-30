@@ -26,7 +26,7 @@ class ProfissionalFragment : Fragment() {
 
         try {
             locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-            locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 200L, 1000f, locationListener)
+            locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 200L, 1000f, locationListener)
         } catch(ex: SecurityException) {
             loadData(-21.0, -47.0)
         } catch(ex: Exception) {

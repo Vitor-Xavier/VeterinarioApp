@@ -42,6 +42,7 @@ class ProfissionalPerfilFragment : Fragment() {
                     textNome.text = "${profissional?.nome} ${profissional?.sobrenome}"
                     imageBack.loadUrl(profissional?.imagem)
                     imageIcon.loadUrl(profissional?.icone)
+                    textOnline.text = if (profissional?.online == true) "Online" else ""
                 }
             }
         }

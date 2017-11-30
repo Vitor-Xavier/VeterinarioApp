@@ -9,6 +9,7 @@ import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpDelete
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
+import com.github.kittinunf.fuel.httpPut
 
 class ProfissionalService {
 
@@ -52,6 +53,13 @@ class ProfissionalService {
 
     fun inativaProfissional(profissionalId: Int) : Boolean {
         val (_, _, result) = "Profissional/$profissionalId".httpDelete().responseString()
+        val (_, error) = result
+
+        return (error == null)
+    }
+
+    fun setProfissionalOnline(profissionalId: Int, online: Boolean) : Boolean {
+        val (_, _, result) = "Profissional/$profissionalId/$online".httpPut().responseString()
         val (_, error) = result
 
         return (error == null)
