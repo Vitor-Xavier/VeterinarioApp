@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ImageView
 import com.exucodeiro.veterinarioapp.Models.Contato
 import com.exucodeiro.veterinarioapp.Models.Profissional
 import com.exucodeiro.veterinarioapp.Models.Usuario
@@ -15,9 +16,9 @@ import com.exucodeiro.veterinarioapp.Services.ContatoService
 import com.exucodeiro.veterinarioapp.Services.ProfissionalService
 import com.exucodeiro.veterinarioapp.Services.UsuarioService
 import com.exucodeiro.veterinarioapp.Util.ContatoAdapter
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_contato.*
 import org.jetbrains.anko.async
-import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 
 class ContatoActivity : AppCompatActivity() {
@@ -29,6 +30,7 @@ class ContatoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contato)
+        textTipo.text = getString(R.string.contatos)
 
         contatoAdapter = ContatoAdapter(contatos, this)
         listContatos.adapter = contatoAdapter
@@ -61,7 +63,7 @@ class ContatoActivity : AppCompatActivity() {
     }
 
     override fun onContextItemSelected(item: MenuItem?): Boolean {
-        var t = item?.menuInfo as AdapterView.AdapterContextMenuInfo
+        val t = item?.menuInfo as AdapterView.AdapterContextMenuInfo
 
         val contato = contatoAdapter.getItem(t.position) as Contato
 
@@ -107,10 +109,17 @@ class ContatoActivity : AppCompatActivity() {
 
                 uiThread {
                     textNome.text = "${usuario?.nome} ${usuario?.sobrenome}"
+                    imageIcone.loadUrl(usuario?.imagem)
+
                     contatoAdapter.notifyDataSetChanged()
                 }
             }
         }
+    }
+
+    fun ImageView.loadUrl(url: String?) {
+        if (url != null && url != "")
+            Picasso.with(context).load(url).into(this)
     }
 
     private fun loadProfissional() {
@@ -126,6 +135,8 @@ class ContatoActivity : AppCompatActivity() {
 
                 uiThread {
                     textNome.text = "${profissional?.nome} ${profissional?.sobrenome}"
+                    imageIcone.loadUrl(profissional?.icone)
+
                     contatoAdapter.notifyDataSetChanged()
                 }
             }

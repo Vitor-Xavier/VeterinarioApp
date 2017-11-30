@@ -34,7 +34,7 @@ class ProfissionalAddressFragment : Fragment(), OnMapReadyCallback {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         if (arguments != null)
-            profissional = arguments.getSerializable("profissional") as Profissional
+            profissional = arguments.getSerializable(ARG_PROFISSIONAL) as Profissional
 
         return inflater!!.inflate(R.layout.fragment_profissional_address, container, false)
     }

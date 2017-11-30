@@ -7,17 +7,12 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import com.exucodeiro.veterinarioapp.Models.Endereco
 import com.exucodeiro.veterinarioapp.Models.Profissional
 import com.exucodeiro.veterinarioapp.Models.Usuario
 import com.exucodeiro.veterinarioapp.Services.EnderecoService
 import com.exucodeiro.veterinarioapp.Services.ProfissionalService
-import com.exucodeiro.veterinarioapp.Services.UsuarioService
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.LatLng
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cadastro_endereco.*
 import org.jetbrains.anko.async
@@ -76,7 +71,7 @@ class CadastroEnderecoActivity : AppCompatActivity() {
                 if (profissional?.profissionalId == 0) {
                     val profissionalService = ProfissionalService()
                     profissional?.endereco = endereco
-                    //profissional = profissionalService.postProfissional(profissional as Profissional)
+                    profissional = profissionalService.postProfissional(profissional as Profissional)
                 } else {
                     val enderecoService = EnderecoService()
                     enderecoService.atualizaEnderecoProfissional(profissional?.profissionalId ?: 0, endereco as Endereco)
@@ -143,10 +138,10 @@ class CadastroEnderecoActivity : AppCompatActivity() {
                         inputEstado.setText(endereco?.estado)
                     }
                 }
-            } else {
-                SHOW_LOCATION = 1
-                toast("Serviço de localização indisponível")
-            }
+            } else
+                uiThread {
+                    toast("Serviço de localização indisponível")
+                }
         }
     }
 
@@ -207,19 +202,13 @@ class CadastroEnderecoActivity : AppCompatActivity() {
     private val locationListener: LocationListener = object : LocationListener {
 
         override fun onLocationChanged(location: Location) {
-            if (SHOW_LOCATION == 1) {
-                latitude = location.latitude
-                longitude = location.longitude
-                SHOW_LOCATION = 0
-            }
+            latitude = location.latitude
+            longitude = location.longitude
+            locationManager?.removeUpdates(this)
         }
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
         override fun onProviderEnabled(provider: String) {}
         override fun onProviderDisabled(provider: String) {}
-    }
-
-    companion object {
-        private var SHOW_LOCATION = 1
     }
 
 }

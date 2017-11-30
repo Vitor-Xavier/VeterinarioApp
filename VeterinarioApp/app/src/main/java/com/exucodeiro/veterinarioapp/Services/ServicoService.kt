@@ -46,8 +46,8 @@ class ServicoService {
         return (error == null)
     }
 
-    fun associaServico(profissionalId: Int, servicoId: Int) : Boolean {
-        val (_, _, result) = "Servico/$profissionalId/$servicoId".httpPost().responseString()
+    fun inativaServico(profissionalId: Int, servicoId: Int) : Boolean {
+        val (_, _, result) = "Servico/$profissionalId/$servicoId".httpPut().responseString()
         val (_, error) = result
 
         return (error == null)

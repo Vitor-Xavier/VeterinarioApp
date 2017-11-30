@@ -2,6 +2,7 @@ package com.exucodeiro.veterinarioapp.Services
 
 import com.exucodeiro.veterinarioapp.Models.Contato
 import com.exucodeiro.veterinarioapp.Models.Profissional
+import com.exucodeiro.veterinarioapp.Models.Servico
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.github.kittinunf.fuel.core.FuelManager
@@ -51,6 +52,15 @@ class ProfissionalService {
 
     fun inativaProfissional(profissionalId: Int) : Boolean {
         val (_, _, result) = "Profissional/$profissionalId".httpDelete().responseString()
+        val (_, error) = result
+
+        return (error == null)
+    }
+
+    fun adicionaServico(profissionalId: Int, servico: Servico) : Boolean {
+        val mapper = jacksonObjectMapper()
+
+        val (_, _, result) = "Profissional/Servico/$profissionalId".httpPost().body(mapper.writeValueAsString(servico)).responseString()
         val (_, error) = result
 
         return (error == null)

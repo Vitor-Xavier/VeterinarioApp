@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         menu?.add(Menu.NONE, 1, Menu.NONE, "Endereco")
         menu?.add(Menu.NONE, 2, Menu.NONE, "Contatos")
         if (settings.login.tipo == "Profissional")
-            menu?.add(Menu.NONE, 3, Menu.NONE, "Servicos")
+            menu?.add(Menu.NONE, 3, Menu.NONE, "Serviços")
         super.onCreateContextMenu(menu, v, menuInfo)
     }
 
@@ -101,6 +101,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 else
                     intentContato.putExtra("usuario", usuario)
                 startActivity(intentContato)
+            }
+            3 -> {
+                val intentServico = Intent(this, ServicoActivity::class.java)
+                if (profissional != null)
+                    intentServico.putExtra("profissional", profissional)
+                startActivity(intentServico)
             }
         }
         return super.onContextItemSelected(item)
@@ -157,19 +163,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_perfil -> {
                 val loginSettings = LoginSettings(this)
                 if (loginSettings.login.tipo == "Profissional") {
-                    val profissionalService = ProfissionalService()
-
-                    async {
-                        val profissional = profissionalService.getProfissional(loginSettings.login.id)
-
-                        if (profissional != null) {
-                            uiThread {
-                                val fragment = ProfissionalPerfilFragment.newInstance(profissional)
-                                supportFragmentManager.beginTransaction().replace(R.id.content_view, fragment).commit()
-                            }
-                        }
-                    }
-
+                    val fragment = ProfissionalPerfilFragment.newInstance(profissional)
+                    supportFragmentManager.beginTransaction().replace(R.id.content_view, fragment).commit()
                 } else if (loginSettings.login.tipo == "Usuario") {
                     val fragment = UsuarioFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.content_view, fragment).commit()
@@ -184,10 +179,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager.beginTransaction().replace(R.id.content_view, fragment).commit()
             }
             R.id.nav_login -> {
-                val it = Intent(this, LoginActivity::class.java)
-
-                finish()
-                startActivity(it)
+                val intentLogin = Intent(this, LoginActivity::class.java)
+                startActivity(intentLogin)
             }
             R.id.nav_sair -> {
                 val settings = LoginSettings(this)

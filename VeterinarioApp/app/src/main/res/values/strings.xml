@@ -14,6 +14,8 @@
     <string name="sobre">Sobre o aplicativo</string>
     <string name="lista">Lista</string>
     <string name="mapa">Mapa</string>
+    <string name="servicos">Serviços</string>
+    <string name="contatos">Contatos</string>
     <string name="detalhes">Detalhes</string>
     <string name="animais">Pets</string>
     <string name="animal">Animal</string>
@@ -26,7 +28,7 @@
     <string name="localizacao">Localização</string>
     <string name="descricao">Descrição</string>
     <string name="data">Data</string>
-    <string name="login">Logar</string>
+    <string name="login">Entrar</string>
     <string name="equipe">Exu Codeiro Team</string>
 
     <!-- TODO: Remove or change this placeholder text -->

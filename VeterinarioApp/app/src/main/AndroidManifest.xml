@@ -77,7 +77,15 @@
         <activity
             android:name=".ContatoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CadastroServicoActivity"
+            android:label="@string/servicos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ServicoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

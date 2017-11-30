@@ -15,7 +15,7 @@ class UsuarioDetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         if (arguments != null)
-            usuario = arguments.getSerializable("usuario") as Usuario
+            usuario = arguments.getSerializable(ARG_USUARIO) as Usuario
 
         return inflater!!.inflate(R.layout.fragment_usuario_detail, container, false)
     }

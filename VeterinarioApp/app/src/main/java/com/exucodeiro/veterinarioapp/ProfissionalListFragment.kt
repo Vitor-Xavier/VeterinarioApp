@@ -1,6 +1,10 @@
 package com.exucodeiro.veterinarioapp
 
+import android.content.Context
 import android.content.Intent
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -16,12 +20,11 @@ import org.jetbrains.anko.uiThread
 class ProfissionalListFragment : Fragment() {
     private lateinit var adapter: ProfissionalAdapter
     private var profissionais: ArrayList<Profissional> = ArrayList()
-    private val profissionalService = ProfissionalService()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         adapter = ProfissionalAdapter(profissionais, activity)
-        loadData()
+        profissionais.addAll(arguments.getSerializable(ARG_PROFISSIONAL) as ArrayList<Profissional>)
 
         return inflater!!.inflate(R.layout.fragment_profissional_list, container, false)
     }
@@ -32,20 +35,21 @@ class ProfissionalListFragment : Fragment() {
         listProfissionais.adapter = adapter
 
         listProfissionais.setOnItemClickListener { _, _, position, _ ->
-            val it = Intent(context, ProfissionalDetailActivity::class.java)
-            it.putExtra("profissional", adapter.getItem(position) as Profissional)
-            startActivity(it)
+            val intentPro = Intent(context, ProfissionalDetailActivity::class.java)
+            intentPro.putExtra("profissional", adapter.getItem(position) as Profissional)
+            startActivity(intentPro)
         }
     }
 
-    fun loadData() {
-        async {
-            profissionais.clear()
-            profissionais.addAll(profissionalService.getProfissionais(-21.1767, -47.8208))
+    companion object {
+        private val ARG_PROFISSIONAL = "profissionais"
 
-            uiThread {
-                adapter.notifyDataSetChanged()
-            }
+        fun newInstance(profissionais: ArrayList<Profissional>): ProfissionalListFragment {
+            val fragment = ProfissionalListFragment()
+            val bundle = Bundle()
+            bundle.putSerializable(ARG_PROFISSIONAL, profissionais)
+            fragment.arguments = bundle
+            return fragment
         }
     }
 

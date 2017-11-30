@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import com.exucodeiro.veterinarioapp.Models.Consulta
 import com.exucodeiro.veterinarioapp.Services.ConsultaService
+import com.exucodeiro.veterinarioapp.Services.LoginSettings
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -76,7 +77,8 @@ class ConsultaDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         textDescricao.text = consulta.descricao
         textEndereco.text = consulta.profissional.endereco.toString()
 
-        if (consulta.status == Consulta.AGUARDANDO)
+        val settings = LoginSettings(this)
+        if (settings.login.tipo == "Profissional" && consulta.status == Consulta.AGUARDANDO)
             layoutConsulta.visibility = View.VISIBLE
     }
 

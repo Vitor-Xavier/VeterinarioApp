@@ -7,10 +7,13 @@ import com.exucodeiro.veterinarioapp.Services.LoginSettings
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.toast
 import android.content.Intent
+import android.view.ContextMenu
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import com.exucodeiro.veterinarioapp.Services.LoginService
 import org.jetbrains.anko.async
 import org.jetbrains.anko.uiThread
-
 
 class LoginActivity : AppCompatActivity() {
 
@@ -40,7 +43,28 @@ class LoginActivity : AppCompatActivity() {
                         toast("Não foi possível realizar o login.")
                     }
             }
-
         }
+
+        fabNovo.setOnCreateContextMenuListener(this)
+    }
+
+    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+        menu?.add(Menu.NONE, 1, Menu.NONE, "Usuário")
+        menu?.add(Menu.NONE, 2, Menu.NONE, "Profissional")
+        super.onCreateContextMenu(menu, v, menuInfo)
+    }
+
+    override fun onContextItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            1 -> {
+                val intentUsuario = Intent(this, CadastroUsuarioActivity::class.java)
+                startActivity(intentUsuario)
+            }
+            2 -> {
+                val intentPro = Intent(this, CadastroProfissionalActivity::class.java)
+                startActivity(intentPro)
+            }
+        }
+        return super.onContextItemSelected(item)
     }
 }
