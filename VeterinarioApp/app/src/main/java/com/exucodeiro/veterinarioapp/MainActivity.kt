@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         val settings = LoginSettings(this)
-        menu?.add(Menu.NONE, 1, Menu.NONE, "Endereco")
+        menu?.add(Menu.NONE, 1, Menu.NONE, "Endereço")
         menu?.add(Menu.NONE, 2, Menu.NONE, "Contatos")
         if (settings.login.tipo == "Profissional")
             menu?.add(Menu.NONE, 3, Menu.NONE, "Serviços")

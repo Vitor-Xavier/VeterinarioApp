@@ -39,6 +39,7 @@ class UsuarioService {
 
     fun atualizaUsuario(usuario: Usuario) : Boolean {
         val mapper = jacksonObjectMapper()
+        val str = mapper.writeValueAsString(usuario)
 
         val (_, _, result) = "Usuario".httpPut().body(mapper.writeValueAsString(usuario)).responseString()
         val (_, error) = result

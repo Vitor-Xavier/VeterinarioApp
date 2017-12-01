@@ -2,6 +2,8 @@ package com.exucodeiro.veterinarioapp
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import com.exucodeiro.veterinarioapp.Models.Contato
 import com.exucodeiro.veterinarioapp.Models.Profissional
@@ -17,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_cadastro_contato.*
 import org.jetbrains.anko.async
 import org.jetbrains.anko.uiThread
 
-class CadastroContatoActivity : AppCompatActivity() {
+class CadastroContatoActivity : AppCompatActivity(), View.OnFocusChangeListener {
     private lateinit var tipoAdapter: TipoContatoAdapter
     private val tiposContato = ArrayList<TipoContato>()
     private var profissional: Profissional? = null
@@ -35,8 +37,10 @@ class CadastroContatoActivity : AppCompatActivity() {
         loadData()
 
         buttonProximo.setOnClickListener {
-            fillContato()
+            if (!validate())
+                return@setOnClickListener
 
+            fillContato()
             async {
                 if (contato?.contatoId != 0) {
                     val contatoService = ContatoService()
@@ -56,6 +60,25 @@ class CadastroContatoActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onFocusChange(p0: View?, p1: Boolean) {
+        (p0 as EditText)
+        if (p0.text.toString().trim() == "" && !p1)
+            p0.error = "Conteudo inválido"
+    }
+
+    private fun validate() : Boolean {
+        if (inputTexto.text.toString().trim() == "") {
+            inputTexto.requestFocus()
+            inputTexto.error = "Informe o contato"
+            return false
+        }
+        if (spinnerTipoContato.selectedItemPosition <= 0) {
+            spinnerTipoContato.requestFocus()
+            return false
+        }
+        return true
     }
 
     private fun fillContato() {

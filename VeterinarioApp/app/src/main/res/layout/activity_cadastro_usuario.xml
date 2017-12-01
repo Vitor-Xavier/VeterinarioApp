@@ -51,10 +51,11 @@
 
                             <EditText
                                 android:id="@+id/inputUsername"
+                                android:maxLength="20"
                                 android:layout_marginBottom="16dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Nome de usuário" />
+                                android:hint="@string/username" />
 
                         </android.support.design.widget.TextInputLayout>
 
@@ -64,11 +65,12 @@
 
                             <EditText
                                 android:id="@+id/inputPass"
+                                android:maxLength="15"
                                 android:layout_marginBottom="16dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textPassword"
-                                android:hint="Senha" />
+                                android:hint="@string/pass" />
 
                         </android.support.design.widget.TextInputLayout>
 
@@ -78,10 +80,11 @@
 
                             <EditText
                                 android:id="@+id/inputNome"
+                                android:maxLength="30"
                                 android:layout_marginBottom="16dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Nome" />
+                                android:hint="@string/nome" />
 
                         </android.support.design.widget.TextInputLayout>
 
@@ -91,10 +94,11 @@
 
                             <EditText
                                 android:id="@+id/inputSobrenome"
+                                android:maxLength="30"
                                 android:layout_marginBottom="16dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Sobrenome" />
+                                android:hint="@string/sobrenome" />
 
                         </android.support.design.widget.TextInputLayout>
 
@@ -109,7 +113,7 @@
 
                         <Button
                             android:id="@+id/buttonConcluir"
-                            android:text="Concluir"
+                            android:text="@string/concluir"
                             android:background="#0000"
                             android:textColor="@color/colorPrimary"
                             android:layout_gravity="start"
@@ -119,7 +123,7 @@
 
                         <Button
                             android:id="@+id/buttonProximo"
-                            android:text="Próximo"
+                            android:text="@string/proximo"
                             android:background="#0000"
                             android:textColor="@color/colorPrimary"
                             android:layout_weight="0.5"

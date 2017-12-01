@@ -23,4 +23,16 @@ class LoginService {
             false -> return null
         }
     }
+
+    fun verificaUsuario(nomeUsuario: String) : Boolean {
+        val (_, _, result) = "Login/${nomeUsuario.trim()}".httpGet().responseString()
+        val (data, error) = result
+
+        val mapper = jacksonObjectMapper()
+        when (error == null) {
+            true -> return mapper.readValue(data ?: "")
+            false -> return false
+        }
+    }
+
 }

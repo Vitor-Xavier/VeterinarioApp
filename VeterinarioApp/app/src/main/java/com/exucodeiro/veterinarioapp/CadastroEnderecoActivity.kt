@@ -7,6 +7,8 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import com.exucodeiro.veterinarioapp.Models.Endereco
 import com.exucodeiro.veterinarioapp.Models.Profissional
@@ -19,7 +21,7 @@ import org.jetbrains.anko.async
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 
-class CadastroEnderecoActivity : AppCompatActivity() {
+class CadastroEnderecoActivity : AppCompatActivity(), View.OnFocusChangeListener {
     var profissional: Profissional? = null
     var usuario: Usuario? = null
     var endereco: Endereco? = null
@@ -49,6 +51,9 @@ class CadastroEnderecoActivity : AppCompatActivity() {
         }
 
         buttonProximo.setOnClickListener {
+            if (!validate())
+                return@setOnClickListener
+
             loadEndereco()
             if (endereco?.latitude == 0.0 || endereco?.longitude == 0.0)
                 getLatLng()
@@ -57,6 +62,9 @@ class CadastroEnderecoActivity : AppCompatActivity() {
         }
 
         buttonConcluir.setOnClickListener {
+            if (!validate())
+                return@setOnClickListener
+
             loadEndereco()
             if (endereco?.latitude == 0.0 || endereco?.longitude == 0.0)
                 getLatLng()
@@ -104,6 +112,46 @@ class CadastroEnderecoActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onFocusChange(p0: View?, p1: Boolean) {
+        (p0 as EditText)
+        if (p0.text.toString().trim() == "" && !p1)
+            p0.error = "Conteudo inválido"
+    }
+
+    private fun validate() : Boolean {
+        if (inputLogradouro.text.toString().trim() == "") {
+            inputLogradouro.requestFocus()
+            inputLogradouro.error = "Ex.: Avenida Pio XII"
+            return false
+        }
+        if (inputNumero.text.toString().trim() == "") {
+            inputNumero.requestFocus()
+            inputNumero.error = "Ex.: 1255"
+            return false
+        }
+        if (inputBairro.text.toString().trim() == "") {
+            inputBairro.requestFocus()
+            inputBairro.error = "Ex.: Vila Virgínia"
+            return false
+        }
+        if (inputCEP.text.toString().trim() == "") {
+            inputCEP.requestFocus()
+            inputCEP.error = "Ex.: 14030-250"
+            return false
+        }
+        if (inputCidade.text.toString().trim() == "") {
+            inputCidade.requestFocus()
+            inputCidade.error = "Ex.: Ribeirão Preto"
+            return false
+        }
+        if (inputEstado.text.toString().trim() == "") {
+            inputEstado.requestFocus()
+            inputEstado.error = "Ex.: São Paulo"
+            return false
+        }
+        return true
     }
 
     private fun getLatLng() {

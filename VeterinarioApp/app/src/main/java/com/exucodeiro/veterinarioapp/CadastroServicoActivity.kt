@@ -26,7 +26,7 @@ class CadastroServicoActivity : AppCompatActivity() {
         servicoAdapter = ServicoAdapter(servicos, this)
         listServicos.adapter = servicoAdapter
 
-        listServicos.setOnItemClickListener { adapterView, view, i, l ->
+        listServicos.setOnItemClickListener { _, _, i, _ ->
             async {
                 val servico = servicoAdapter.getItem(i) as Servico
                 val profissionalService = ProfissionalService()

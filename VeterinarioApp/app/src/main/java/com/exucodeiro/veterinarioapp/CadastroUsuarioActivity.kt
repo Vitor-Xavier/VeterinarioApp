@@ -12,9 +12,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
+import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import com.exucodeiro.veterinarioapp.Models.Usuario
+import com.exucodeiro.veterinarioapp.Services.LoginService
 import com.exucodeiro.veterinarioapp.Services.UploadService
 import com.exucodeiro.veterinarioapp.Services.UsuarioService
 import com.exucodeiro.veterinarioapp.Util.ImageUtils
@@ -22,8 +25,9 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cadastro_usuario.*
 import org.jetbrains.anko.async
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
 
-class CadastroUsuarioActivity : AppCompatActivity() {
+class CadastroUsuarioActivity : AppCompatActivity(), View.OnFocusChangeListener {
     private var usuario: Usuario? = null
     private var imageUrl: String = "https://veterinarioblob.blob.core.windows.net/images/userDefault.png"
 
@@ -34,8 +38,25 @@ class CadastroUsuarioActivity : AppCompatActivity() {
         title = getString(R.string.usuario)
 
         buttonProximo.setOnClickListener {
-            val usuarioService = UsuarioService()
             async {
+                if (usuario?.usuarioId == 0) {
+                    val loginService = LoginService()
+                    if (!loginService.verificaUsuario(inputUsername.text.toString())) {
+                        uiThread {
+                            inputUsername.requestFocus()
+                            inputUsername.error = "Nome de usuário indisponível"
+                        }
+                        return@async
+                    }
+                }
+                var valid = false
+                uiThread {
+                    valid = !validate()
+                }
+                if (!valid)
+                    return@async
+
+                val usuarioService = UsuarioService()
                 if (usuario == null || usuario?.usuarioId == 0) {
                     loadUsuario()
                     usuarioService.adicionaUsuario(usuario as Usuario)
@@ -49,19 +70,39 @@ class CadastroUsuarioActivity : AppCompatActivity() {
         }
 
         buttonConcluir.setOnClickListener {
-            val usuarioService = UsuarioService()
             async {
+                if (usuario?.usuarioId == 0) {
+                    val loginService = LoginService()
+                    if (!loginService.verificaUsuario(inputUsername.text.toString())) {
+                        uiThread {
+                            inputUsername.requestFocus()
+                            inputUsername.error = "Nome de usuário indisponível"
+                        }
+                        return@async
+                    }
+                }
+                var valid = false
+                uiThread {
+                    valid = validate()
+                    toast(if (valid) "true" else "false")
+                }
+                if (!valid)
+                    return@async
+
+
+                val usuarioService = UsuarioService()
                 if(usuario == null || usuario?.usuarioId == 0) {
                     loadUsuario()
                     usuario = usuarioService.adicionaUsuario(usuario as Usuario)
-                } else
+                } else {
+                    loadUsuario()
                     usuarioService.atualizaUsuario(usuario as Usuario)
+                }
 
                 val intCadUsr = Intent(this@CadastroUsuarioActivity, MainActivity::class.java)
                 intCadUsr.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intCadUsr)
             }
-
         }
 
         imageIcone.setOnClickListener {
@@ -79,23 +120,58 @@ class CadastroUsuarioActivity : AppCompatActivity() {
         loadData()
     }
 
+    override fun onFocusChange(p0: View?, p1: Boolean) {
+        (p0 as EditText)
+        if (p0.text.toString().trim() == "" && !p1)
+            p0.error = "${p0.hint} não pode estar vazio"
+    }
+
+    private fun validate() : Boolean {
+        if (inputNome.text.toString().trim() == "") {
+            inputNome.requestFocus()
+            inputNome.error = "Informe seu nome"
+            return false
+        }
+        if (inputSobrenome.text.toString().trim() == "") {
+            inputSobrenome.requestFocus()
+            inputSobrenome.error = "Informe seu sobrenome"
+            return false
+        }
+        if (inputUsername.text.toString().trim() == "") {
+            inputUsername.requestFocus()
+            inputUsername.error = "Nome de usuário inválido"
+            return false
+        }
+        if (inputPass.text.toString().trim() == "") {
+            inputPass.requestFocus()
+            inputPass.error = "Informe uma senha"
+            return false
+        }
+        return true
+    }
+
     private fun loadData() {
         usuario = intent.getSerializableExtra("usuario") as Usuario?
 
         if (usuario != null) {
             inputNome.setText(usuario?.nome)
             inputSobrenome.setText(usuario?.sobrenome)
+            if (usuario?.usuarioId != 0)
+                inputUsername.isEnabled = false
+            inputUsername.setText(usuario?.nomeUsuario)
+            inputPass.setText(usuario?.senha)
+
             imageIcone.loadUrl(usuario?.imagem ?: "")
         } else
             loadUsuario()
     }
 
     private fun loadUsuario() {
-        usuario = Usuario(0,
+        usuario = Usuario(usuario?.usuarioId ?: 0,
                 inputNome.text.toString(),
                 inputSobrenome.text.toString(),
-                "",
-                "",
+                inputUsername.text.toString(),
+                inputPass.text.toString(),
                 imageUrl,
                 null,
                 ArrayList())

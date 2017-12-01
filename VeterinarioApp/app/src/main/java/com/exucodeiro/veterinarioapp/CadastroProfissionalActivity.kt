@@ -17,6 +17,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import com.exucodeiro.veterinarioapp.Models.Profissional
+import com.exucodeiro.veterinarioapp.Services.LoginService
 import com.exucodeiro.veterinarioapp.Services.UploadService
 import com.exucodeiro.veterinarioapp.Util.ImageUtils
 import com.squareup.picasso.Picasso
@@ -30,14 +31,6 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
     private var iconeUrl = "http://www.kibbypark.com/wp-content/uploads/2015/08/wellness-icon.png"
     private lateinit var filenameImage: String
     private lateinit var filenameIcone: String
-
-    override fun onFocusChange(p0: View?, p1: Boolean) {
-        (p0 as EditText)
-        if (p0.text.toString().trim() == "" && !p1) {
-            p0.error = "Texto inválido"
-        }
-    }
-
     private var profissional: Profissional? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,26 +45,42 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
         inputDescricao.onFocusChangeListener = this
 
         buttonProximo.setOnClickListener {
-            if (!validate())
-                return@setOnClickListener
+            async {
+                if (profissional?.profissionalId == 0) {
+                    val loginService = LoginService()
+                    if (!loginService.verificaUsuario(inputUsername.text.toString())) {
+                        uiThread {
+                            inputUsername.requestFocus()
+                            inputUsername.error = "Nome de usuário indisponível"
+                        }
+                        return@async
+                    }
+                }
+                var valid = false
+                uiThread {
+                    valid = !validate()
+                }
+                if (!valid)
+                    return@async
 
-            val intCadEnd = Intent(this, CadastroEnderecoActivity::class.java)
-            val profissional = Profissional(0,
-                    inputNome.text.toString(),
-                    inputSobrenome.text.toString(),
-                    inputUsername.text.toString(),
-                    inputPass.text.toString(),
-                    inputDescricao.text.toString(),
-                    imageUrl,
-                    iconeUrl,
-                    inputCRV.text.toString(),
-                    0,
-                    null,
-                    ArrayList(),
-                    ArrayList(),
-                    false)
-            intCadEnd.putExtra("profissional", profissional)
-            startActivity(intCadEnd)
+                val intCadEnd = Intent(this@CadastroProfissionalActivity, CadastroEnderecoActivity::class.java)
+                val profissional = Profissional(0,
+                        inputNome.text.toString(),
+                        inputSobrenome.text.toString(),
+                        inputUsername.text.toString(),
+                        inputPass.text.toString(),
+                        inputDescricao.text.toString(),
+                        imageUrl,
+                        iconeUrl,
+                        inputCRV.text.toString(),
+                        0,
+                        null,
+                        ArrayList(),
+                        ArrayList(),
+                        false)
+                intCadEnd.putExtra("profissional", profissional)
+                uiThread { startActivity(intCadEnd) }
+            }
         }
 
         imageBackground.setOnClickListener {
@@ -103,24 +112,36 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
         loadData()
     }
 
+    override fun onFocusChange(p0: View?, p1: Boolean) {
+        (p0 as EditText)
+        if (p0.text.toString().trim() == "" && !p1) {
+            p0.error = "Texto inválido"
+        }
+    }
+
     private fun validate() : Boolean {
         if (inputUsername.text.toString().trim() == "") {
             inputUsername.requestFocus()
+            inputUsername.error = "Nome de usuário inválido"
             return false
         }
         if (inputPass.text.toString().trim() == "") {
+            inputPass.error = "Senha inválida"
             inputPass.requestFocus()
             return false
         }
         if (inputNome.text.toString().trim() == "") {
+            inputNome.error = "Informe seu nome"
             inputNome.requestFocus()
             return false
         }
         if (inputSobrenome.text.toString().trim() == "") {
+            inputSobrenome.error = "Informe seu sobrenome"
             inputSobrenome.requestFocus()
             return false
         }
         if (inputDescricao.text.toString().trim() == "") {
+            inputDescricao.error = "Descreva seu negócio"
             inputDescricao.requestFocus()
             return false
         }
@@ -135,6 +156,10 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
             inputSobrenome.setText(profissional?.sobrenome)
             inputCRV.setText(profissional?.crv)
             inputDescricao.setText(profissional?.descricao)
+            if (profissional?.profissionalId != 0)
+                inputUsername.isEnabled = false
+            inputUsername.setText(profissional?.nomeUsuario)
+            inputPass.setText(profissional?.senha)
 
             imageIcone.loadUrl(profissional?.icone)
             imageBackground.loadUrl(profissional?.imagem)

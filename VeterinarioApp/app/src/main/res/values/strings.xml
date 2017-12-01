@@ -29,6 +29,12 @@
     <string name="descricao">Descrição</string>
     <string name="data">Data</string>
     <string name="login">Entrar</string>
+    <string name="nome">Nome</string>
+    <string name="proximo">Próximo</string>
+    <string name="concluir">Concluir</string>
+    <string name="username">Nome de usuário</string>
+    <string name="pass">Senha</string>
+    <string name="sobrenome">Sobrenome</string>
     <string name="equipe">Exu Codeiro Team</string>
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -59,6 +59,7 @@
 
                 <EditText
                     android:id="@+id/inputTexto"
+                    android:maxLength="30"
                     android:layout_marginBottom="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -77,7 +78,7 @@
 
         <Button
             android:id="@+id/buttonProximo"
-            android:text="Próximo"
+            android:text="@string/concluir"
             android:layout_margin="8dp"
             android:background="#0000"
             android:layout_weight="0.05"

@@ -40,6 +40,7 @@
 
                     <EditText
                         android:id="@+id/inputNome"
+                        android:maxLength="50"
                         android:layout_marginBottom="16dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
