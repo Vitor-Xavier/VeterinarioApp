@@ -14,7 +14,7 @@ import com.github.kittinunf.fuel.httpPut
 class ProfissionalService {
 
     init {
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
+        FuelManager.instance.basePath = BaseService.BASE_URL
         FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
     }
 
@@ -49,6 +49,15 @@ class ProfissionalService {
         val (data, error) = result
 
         return if (error == null) mapper.readValue(data ?: "") else null
+    }
+
+    fun atualizaProfissional(profissional: Profissional) : Boolean {
+        val mapper = jacksonObjectMapper()
+
+        val (_, _, result) = "Profissional".httpPut().body(mapper.writeValueAsString(profissional)).responseString()
+        val (_, error) = result
+
+        return (error == null)
     }
 
     fun inativaProfissional(profissionalId: Int) : Boolean {

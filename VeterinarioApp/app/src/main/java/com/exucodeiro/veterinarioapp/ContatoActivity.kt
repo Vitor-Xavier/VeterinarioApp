@@ -37,6 +37,12 @@ class ContatoActivity : AppCompatActivity() {
 
         listContatos.setOnCreateContextMenuListener(this)
 
+        imageIcone.setOnClickListener {
+            val intentStart = Intent(this@ContatoActivity, MainActivity::class.java)
+            intentStart.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intentStart)
+        }
+
         buttonAdicionar.setOnClickListener {
             val intentContato = Intent(this, CadastroContatoActivity::class.java)
             if (profissional != null)

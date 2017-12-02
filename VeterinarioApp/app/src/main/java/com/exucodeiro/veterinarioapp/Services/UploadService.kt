@@ -13,7 +13,7 @@ import java.io.FileInputStream
 class UploadService {
 
     init {
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
+        FuelManager.instance.basePath = BaseService.BASE_URL
         FuelManager.instance.baseHeaders = mapOf("Accept-Charset" to "UTF-8")
         FuelManager.instance.baseHeaders = mapOf("Connection" to "Keep-Alive")
         FuelManager.instance.baseHeaders = mapOf("Cache-Control" to "no-cache")

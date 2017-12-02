@@ -42,7 +42,7 @@ class ProfissionalAddressFragment : Fragment(), OnMapReadyCallback {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        textEndereco.text = profissional?.endereco.toString()
+        textEndereco.text = profissional?.endereco?.toString2()
 
         val mapFragment = childFragmentManager
                 .findFragmentById(R.id.map_pro) as SupportMapFragment

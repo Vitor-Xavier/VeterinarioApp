@@ -44,7 +44,7 @@ class ProfissionalDetailFragment : Fragment() {
             TextUtils.join(", ", profissional?.servicos) else "Sem serviços registrados"
 
         val loginSetting = LoginSettings(context)
-        if (loginSetting.login.tipo == "Profissional")
+        if (loginSetting.login.tipo == "Profissional" || loginSetting.login.id == 0)
             fabConsulta.visibility = View.GONE
     }
 

@@ -17,4 +17,8 @@ data class Endereco (val enderecoId: Int,
         return "$logradouro, $numero - $bairro\n$cidade - $estado"
     }
 
+    fun toString2(): String {
+        return "$logradouro, $numero - $bairro\n$complemento\n$cidade - $estado"
+    }
+
 }

@@ -18,6 +18,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.exucodeiro.veterinarioapp.Models.Profissional
 import com.exucodeiro.veterinarioapp.Services.LoginService
+import com.exucodeiro.veterinarioapp.Services.ProfissionalService
 import com.exucodeiro.veterinarioapp.Services.UploadService
 import com.exucodeiro.veterinarioapp.Util.ImageUtils
 import com.squareup.picasso.Picasso
@@ -56,30 +57,42 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
                         return@async
                     }
                 }
-                var valid = false
+
                 uiThread {
-                    valid = validate()
+                    if (!validate())
+                        return@uiThread
+
+                    loadProfissional()
+
+                    val intentEndereco = Intent(this@CadastroProfissionalActivity, CadastroEnderecoActivity::class.java)
+                    intentEndereco.putExtra("profissional", profissional)
+                    startActivity(intentEndereco)
                 }
-                if (!valid)
+            }
+        }
+
+        buttonConcluir.setOnClickListener {
+            if (!validate())
+                return@setOnClickListener
+
+            async {
+                if (profissional?.profissionalId == 0)
                     return@async
 
-                val intCadEnd = Intent(this@CadastroProfissionalActivity, CadastroEnderecoActivity::class.java)
-                val profissional = Profissional(0,
-                        inputNome.text.toString(),
-                        inputSobrenome.text.toString(),
-                        inputUsername.text.toString(),
-                        inputPass.text.toString(),
-                        inputDescricao.text.toString(),
-                        imageUrl,
-                        iconeUrl,
-                        inputCRV.text.toString(),
-                        0,
-                        null,
-                        ArrayList(),
-                        ArrayList(),
-                        false)
-                intCadEnd.putExtra("profissional", profissional)
-                uiThread { startActivity(intCadEnd) }
+                loadProfissional()
+                val profissionalService = ProfissionalService()
+                if (profissionalService.atualizaProfissional(profissional as Profissional) == null) {
+                    uiThread {
+                        toast("Atualização não realizada")
+                    }
+                } else {
+                    uiThread {
+                        val intentMain = Intent(this@CadastroProfissionalActivity, MainActivity::class.java)
+                        intentMain.putExtra("update", true)
+                        intentMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intentMain)
+                    }
+                }
             }
         }
 
@@ -162,9 +175,30 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
             inputPass.setText(profissional?.senha)
 
             imageIcone.loadUrl(profissional?.icone)
+            iconeUrl = profissional?.icone ?: iconeUrl
+            imageUrl = profissional?.imagem ?: imageUrl
             imageBackground.loadUrl(profissional?.imagem)
+
+            buttonConcluir.visibility = View.VISIBLE
         }
         getImagePrefix()
+    }
+
+    fun loadProfissional() {
+        profissional = Profissional(profissional?.profissionalId ?: 0,
+                inputNome.text.toString(),
+                inputSobrenome.text.toString(),
+                inputUsername.text.toString(),
+                inputPass.text.toString(),
+                inputDescricao.text.toString(),
+                imageUrl,
+                iconeUrl,
+                inputCRV.text.toString(),
+                profissional?.enderecoId ?: 0,
+                profissional?.endereco,
+                profissional?.contatos ?: ArrayList(),
+                profissional?.servicos ?: ArrayList(),
+                profissional?.online ?: false)
     }
 
     fun ImageView.loadUrl(url: String?) {
@@ -252,18 +286,18 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
     }
 
     private fun getImagePrefix() {
-        if (profissional?.profissionalId != 0) {
-            val indice = imageUrl.lastIndexOf('/') + 1
-            val indiceFinal = imageUrl.lastIndexOf('.')
-            filenameImage = imageUrl.substring(indice, indiceFinal)
-
-            val indiceIcone = iconeUrl.lastIndexOf('/') + 1
-            val indiceFinalIcone = iconeUrl.lastIndexOf('.')
-            filenameIcone = iconeUrl.substring(indiceIcone, indiceFinalIcone)
-        } else {
+//        if (profissional?.profissionalId != 0) {
+//            val indice = imageUrl.lastIndexOf('/') + 1
+//            val indiceFinal = imageUrl.lastIndexOf('.')
+//            filenameImage = imageUrl.substring(indice, indiceFinal)
+//
+//            val indiceIcone = iconeUrl.lastIndexOf('/') + 1
+//            val indiceFinalIcone = iconeUrl.lastIndexOf('.')
+//            filenameIcone = iconeUrl.substring(indiceIcone, indiceFinalIcone)
+//        } else {
             filenameImage = java.util.UUID.randomUUID().toString()
             filenameIcone = java.util.UUID.randomUUID().toString()
-        }
+        //}
 
     }
 

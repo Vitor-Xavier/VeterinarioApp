@@ -9,7 +9,7 @@ import com.github.kittinunf.fuel.core.FuelManager
 class TipoAnimalService {
 
     init {
-        FuelManager.instance.basePath = "http://veterinario-app.azurewebsites.net/"
+        FuelManager.instance.basePath = BaseService.BASE_URL
         FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
     }
 

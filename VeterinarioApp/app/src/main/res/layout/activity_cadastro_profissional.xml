@@ -54,6 +54,7 @@
                     <EditText
                         android:id="@+id/inputUsername"
                         android:maxLength="20"
+                        android:inputType="textVisiblePassword"
                         android:layout_marginBottom="16dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -145,16 +146,35 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/buttonProximo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:layout_margin="8dp"
+            <LinearLayout
                 android:layout_weight="0.05"
-                android:background="#0000"
-                android:text="@string/proximo"
-                android:textColor="@color/colorPrimary" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/buttonConcluir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_margin="8dp"
+                    android:visibility="gone"
+                    android:layout_weight="0.5"
+                    android:background="#0000"
+                    android:text="@string/concluir"
+                    android:textColor="@color/colorPrimary" />
+
+                <Button
+                    android:id="@+id/buttonProximo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:background="#0000"
+                    android:text="@string/proximo"
+                    android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

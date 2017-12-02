@@ -19,7 +19,6 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageIcone"
             android:layout_margin="8dp"
-            android:adjustViewBounds="true"
             android:layout_gravity="center"
             android:layout_width="100dp"
             android:layout_height="100dp" />

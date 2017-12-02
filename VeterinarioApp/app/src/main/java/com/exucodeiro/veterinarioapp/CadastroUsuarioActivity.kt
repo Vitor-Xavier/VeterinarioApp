@@ -40,6 +40,9 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnFocusChangeListener 
         title = getString(R.string.usuario)
 
         buttonProximo.setOnClickListener {
+            if (!validate())
+                return@setOnClickListener
+
             async {
                 if (usuario?.usuarioId == 0) {
                     val loginService = LoginService()
@@ -51,27 +54,28 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnFocusChangeListener 
                         return@async
                     }
                 }
-                var valid = false
-                uiThread {
-                    valid = validate()
-                }
-                if (!valid)
-                    return@async
 
                 val usuarioService = UsuarioService()
                 if (usuario == null || usuario?.usuarioId == 0) {
                     loadUsuario()
                     usuarioService.adicionaUsuario(usuario as Usuario)
-                } else
+                } else {
+                    loadUsuario()
                     usuarioService.atualizaUsuario(usuario as Usuario)
+                }
 
-                val intentEndereco = Intent(this@CadastroUsuarioActivity, CadastroEnderecoActivity::class.java)
-                intentEndereco.putExtra("usuario", usuario)
-                startActivity(intentEndereco)
+                uiThread {
+                    val intentEndereco = Intent(this@CadastroUsuarioActivity, CadastroEnderecoActivity::class.java)
+                    intentEndereco.putExtra("usuario", usuario)
+                    startActivity(intentEndereco)
+                }
             }
         }
 
         buttonConcluir.setOnClickListener {
+            if (!validate())
+                return@setOnClickListener
+
             async {
                 if (usuario?.usuarioId == 0) {
                     val loginService = LoginService()
@@ -83,14 +87,6 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnFocusChangeListener 
                         return@async
                     }
                 }
-                var valid = false
-                uiThread {
-                    valid = validate()
-                    toast(if (valid) "true" else "false")
-                }
-                if (!valid)
-                    return@async
-
 
                 val usuarioService = UsuarioService()
                 if(usuario == null || usuario?.usuarioId == 0) {
@@ -106,12 +102,13 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnFocusChangeListener 
                     usuarioService.atualizaUsuario(usuario as Usuario)
                 }
 
-                val intCadUsr = Intent(this@CadastroUsuarioActivity, MainActivity::class.java)
-                intCadUsr.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                uiThread {
-                    startActivity(intCadUsr)
-                }
 
+                uiThread {
+                    val intentMain = Intent(this@CadastroUsuarioActivity, MainActivity::class.java)
+                    intentMain.putExtra("update", true)
+                    intentMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intentMain)
+                }
             }
         }
 
@@ -183,8 +180,8 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnFocusChangeListener 
                 inputUsername.text.toString(),
                 inputPass.text.toString(),
                 imageUrl,
-                null,
-                ArrayList())
+                usuario?.endereco,
+                usuario?.contatos ?: ArrayList())
     }
 
     fun ImageView.loadUrl(url: String?) {
@@ -217,7 +214,7 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnFocusChangeListener 
                     async {
                         val uploadService = UploadService()
 
-                        imageUrl = uploadService.enviarImagem(baseContext, uri.toString(), "imageUsuario") ?: imageUrl
+                        imageUrl = uploadService.enviarImagem(baseContext, uri.toString(), java.util.UUID.randomUUID().toString()) ?: imageUrl
                     }
                 }
             }

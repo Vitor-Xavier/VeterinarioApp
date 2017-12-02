@@ -45,7 +45,7 @@ class CadastroEnderecoActivity : AppCompatActivity(), View.OnFocusChangeListener
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager?
 
         try {
-            locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 200L, 1000f, locationListener)
+            locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 300L, 1000f, locationListener)
         } catch(ex: SecurityException) { }
 
         buttonLatLng.setOnClickListener {
@@ -56,10 +56,6 @@ class CadastroEnderecoActivity : AppCompatActivity(), View.OnFocusChangeListener
             if (!validate())
                 return@setOnClickListener
 
-            loadEndereco()
-            if (endereco?.latitude == 0.0 || endereco?.longitude == 0.0)
-                getLatLng()
-
             salvarEndereco(false)
         }
 
@@ -67,16 +63,20 @@ class CadastroEnderecoActivity : AppCompatActivity(), View.OnFocusChangeListener
             if (!validate())
                 return@setOnClickListener
 
-            loadEndereco()
-            if (endereco?.latitude == 0.0 || endereco?.longitude == 0.0)
-                getLatLng()
-
             salvarEndereco(true)
         }
     }
 
     private fun salvarEndereco(finalizar: Boolean) {
         async {
+            if (endereco == null)
+                loadEndereco()
+
+            if (endereco?.latitude == 0.0 || endereco?.longitude == 0.0) {
+                val enderecoService = EnderecoService()
+                endereco = enderecoService.getLatLng(endereco as Endereco)
+            }
+
             if (profissional != null) {
                 if (profissional?.profissionalId == 0) {
                     val profissionalService = ProfissionalService()
@@ -110,6 +110,7 @@ class CadastroEnderecoActivity : AppCompatActivity(), View.OnFocusChangeListener
                     startActivity(intentMain)
                 } else {
                     val intentContato = Intent(this@CadastroEnderecoActivity, ContatoActivity::class.java)
+                    intentContato.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     if (usuario != null)
                         intentContato.putExtra("usuario", usuario)
                     if (profissional != null)
@@ -224,7 +225,7 @@ class CadastroEnderecoActivity : AppCompatActivity(), View.OnFocusChangeListener
         imageIcone.loadUrl(usuario?.imagem)
 
         inputLogradouro.setText(usuario?.endereco?.logradouro)
-        inputNumero.setText("${usuario?.endereco?.numero}")
+        inputNumero.setText(usuario?.endereco?.numero.toString())
         inputComplemento.setText(usuario?.endereco?.complemento)
         inputBairro.setText(usuario?.endereco?.bairro)
         inputCEP.setText(usuario?.endereco?.cep)

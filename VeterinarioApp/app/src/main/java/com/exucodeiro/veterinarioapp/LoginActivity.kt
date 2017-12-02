@@ -38,10 +38,11 @@ class LoginActivity : AppCompatActivity() {
                         intLg.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intLg)
                     }
-                } else
+                } else {
                     uiThread {
                         toast("Não foi possível realizar o login.")
                     }
+                }
             }
         }
 

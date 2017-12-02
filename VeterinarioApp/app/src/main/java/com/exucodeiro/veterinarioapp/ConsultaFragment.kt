@@ -22,7 +22,6 @@ class ConsultaFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         adapter = ConsultaAdapter(consultas, activity)
-        loadData()
 
         return inflater!!.inflate(R.layout.fragment_consulta, container, false)
     }
@@ -39,6 +38,11 @@ class ConsultaFragment : Fragment() {
             it.putExtra("consulta", consulta)
             startActivity(it)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadData()
     }
 
     fun loadData() {

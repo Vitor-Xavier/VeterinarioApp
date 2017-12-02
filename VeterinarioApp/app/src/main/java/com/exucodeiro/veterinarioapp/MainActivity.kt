@@ -124,6 +124,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return super.onContextItemSelected(item)
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (intent.getBooleanExtra("update", false))
+            loadData()
+    }
+
     private fun loadData() {
         val settings = LoginSettings(this)
         if (settings.login.id == 0) {
