@@ -102,7 +102,7 @@ class CadastroConsultaActivity : AppCompatActivity(), View.OnFocusChangeListener
         async {
             val animalService = AnimalService()
             val loginSettings = LoginSettings(this@CadastroConsultaActivity)
-            animais.addAll(animalService.getAnimais(loginSettings?.login?.id))
+            animais.addAll(animalService.getAnimais(loginSettings.login.id))
 
             uiThread {
                 adapter.notifyDataSetChanged()

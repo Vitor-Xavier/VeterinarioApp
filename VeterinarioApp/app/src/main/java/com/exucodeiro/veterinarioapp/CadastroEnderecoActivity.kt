@@ -94,9 +94,9 @@ class CadastroEnderecoActivity : AppCompatActivity(), View.OnFocusChangeListener
             } else {
                 val enderecoService = EnderecoService()
                 if (usuario?.usuarioId == 0) {
-                    val enderecoService = EnderecoService()
+                    val endService = EnderecoService()
                     usuario?.endereco = endereco
-                    enderecoService.atualizaEnderecoUsuario(usuario?.usuarioId ?: 0, endereco as Endereco)
+                    endService.atualizaEnderecoUsuario(usuario?.usuarioId ?: 0, endereco as Endereco)
                 } else {
                     usuario?.endereco = endereco
                     enderecoService.atualizaEnderecoUsuario(usuario?.usuarioId ?: 0, endereco as Endereco)
