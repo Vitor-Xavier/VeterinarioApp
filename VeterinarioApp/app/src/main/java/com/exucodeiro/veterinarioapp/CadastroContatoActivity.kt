@@ -74,7 +74,7 @@ class CadastroContatoActivity : AppCompatActivity(), View.OnFocusChangeListener 
             inputTexto.error = "Informe o contato"
             return false
         }
-        if (spinnerTipoContato.selectedItemPosition <= 0) {
+        if (spinnerTipoContato.selectedItemPosition < 0) {
             spinnerTipoContato.requestFocus()
             return false
         }

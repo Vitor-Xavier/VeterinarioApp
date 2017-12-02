@@ -16,8 +16,10 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import com.exucodeiro.veterinarioapp.Models.Login
 import com.exucodeiro.veterinarioapp.Models.Usuario
 import com.exucodeiro.veterinarioapp.Services.LoginService
+import com.exucodeiro.veterinarioapp.Services.LoginSettings
 import com.exucodeiro.veterinarioapp.Services.UploadService
 import com.exucodeiro.veterinarioapp.Services.UsuarioService
 import com.exucodeiro.veterinarioapp.Util.ImageUtils
@@ -51,7 +53,7 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnFocusChangeListener 
                 }
                 var valid = false
                 uiThread {
-                    valid = !validate()
+                    valid = validate()
                 }
                 if (!valid)
                     return@async
@@ -94,6 +96,11 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnFocusChangeListener 
                 if(usuario == null || usuario?.usuarioId == 0) {
                     loadUsuario()
                     usuario = usuarioService.adicionaUsuario(usuario as Usuario)
+                    if (usuario != null) {
+                        val loginSettings = LoginSettings(baseContext)
+                        loginSettings.login = Login(usuario?.usuarioId ?: 0, usuario?.nomeUsuario ?: "", usuario?.senha ?: "", "Usuario")
+                    }
+
                 } else {
                     loadUsuario()
                     usuarioService.atualizaUsuario(usuario as Usuario)
@@ -101,7 +108,10 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnFocusChangeListener 
 
                 val intCadUsr = Intent(this@CadastroUsuarioActivity, MainActivity::class.java)
                 intCadUsr.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intCadUsr)
+                uiThread {
+                    startActivity(intCadUsr)
+                }
+
             }
         }
 

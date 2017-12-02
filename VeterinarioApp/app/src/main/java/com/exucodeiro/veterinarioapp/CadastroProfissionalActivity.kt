@@ -58,7 +58,7 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
                 }
                 var valid = false
                 uiThread {
-                    valid = !validate()
+                    valid = validate()
                 }
                 if (!valid)
                     return@async

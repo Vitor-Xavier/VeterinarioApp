@@ -101,7 +101,8 @@ class CadastroConsultaActivity : AppCompatActivity(), View.OnFocusChangeListener
     private fun loadData() {
         async {
             val animalService = AnimalService()
-            animais.addAll(animalService.getAnimais(settings?.login?.id ?: 1))
+            val loginSettings = LoginSettings(this@CadastroConsultaActivity)
+            animais.addAll(animalService.getAnimais(loginSettings?.login?.id))
 
             uiThread {
                 adapter.notifyDataSetChanged()
@@ -141,7 +142,7 @@ class CadastroConsultaActivity : AppCompatActivity(), View.OnFocusChangeListener
                 consultaService.alteraConsulta(consulta)
             } else {
                 val local = Locale("pt", "BR")
-                val df = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", local)
+                val df = SimpleDateFormat("dd/MM/yyyy HH:mm", local)
                 val date = df.parse("${editDate.text.toString()} ${editHora.text.toString()}")
 
                 val animal = adapter.getItem(spinnerAnimal.selectedItemPosition) as Animal
@@ -149,6 +150,10 @@ class CadastroConsultaActivity : AppCompatActivity(), View.OnFocusChangeListener
                 consulta = Consulta(0, date, editDescricao.text.toString(), animal.animalId, animal, Consulta.AGUARDANDO, profissional?.profissionalId ?: 0, profissional as Profissional)
 
                 consultaService.adicionaConsulta(consulta as Consulta)
+
+                uiThread {
+                    finish()
+                }
             }
         }
     }

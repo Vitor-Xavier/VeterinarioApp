@@ -11,9 +11,11 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import com.exucodeiro.veterinarioapp.Models.Endereco
+import com.exucodeiro.veterinarioapp.Models.Login
 import com.exucodeiro.veterinarioapp.Models.Profissional
 import com.exucodeiro.veterinarioapp.Models.Usuario
 import com.exucodeiro.veterinarioapp.Services.EnderecoService
+import com.exucodeiro.veterinarioapp.Services.LoginSettings
 import com.exucodeiro.veterinarioapp.Services.ProfissionalService
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cadastro_endereco.*
@@ -80,6 +82,10 @@ class CadastroEnderecoActivity : AppCompatActivity(), View.OnFocusChangeListener
                     val profissionalService = ProfissionalService()
                     profissional?.endereco = endereco
                     profissional = profissionalService.postProfissional(profissional as Profissional)
+                    if (profissional != null) {
+                        val loginSettings = LoginSettings(baseContext)
+                        loginSettings.login = Login(profissional?.profissionalId ?: 0, profissional?.nomeUsuario ?: "", profissional?.senha ?: "", "Profissional")
+                    }
                 } else {
                     val enderecoService = EnderecoService()
                     enderecoService.atualizaEnderecoProfissional(profissional?.profissionalId ?: 0, endereco as Endereco)
