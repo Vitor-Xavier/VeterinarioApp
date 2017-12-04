@@ -90,6 +90,14 @@ class ContatoActivity : AppCompatActivity() {
         return super.onContextItemSelected(item)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intentStart = Intent(this,  MainActivity::class.java)
+        intentStart.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        intentStart.putExtra("update", true)
+        startActivity(intentStart)
+    }
+
     private fun inativaContato(contatoId: Int) {
         async {
             val contatoService = ContatoService()
