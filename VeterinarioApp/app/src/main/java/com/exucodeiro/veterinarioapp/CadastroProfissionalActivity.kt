@@ -46,6 +46,9 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
         inputDescricao.onFocusChangeListener = this
 
         buttonProximo.setOnClickListener {
+            if (!validate())
+                return@setOnClickListener
+
             async {
                 if (profissional?.profissionalId == 0) {
                     val loginService = LoginService()
@@ -56,12 +59,18 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
                         }
                         return@async
                     }
+                } else {
+                    loadProfissional()
+
+                    val profissionalService = ProfissionalService()
+                    if (!profissionalService.atualizaProfissional(profissional as Profissional)) {
+                        uiThread {
+                            toast("Atualização não realizada")
+                        }
+                    }
                 }
 
                 uiThread {
-                    if (!validate())
-                        return@uiThread
-
                     loadProfissional()
 
                     val intentEndereco = Intent(this@CadastroProfissionalActivity, CadastroEnderecoActivity::class.java)
@@ -81,7 +90,7 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
 
                 loadProfissional()
                 val profissionalService = ProfissionalService()
-                if (profissionalService.atualizaProfissional(profissional as Profissional) == null) {
+                if (!profissionalService.atualizaProfissional(profissional as Profissional)) {
                     uiThread {
                         toast("Atualização não realizada")
                     }
@@ -221,7 +230,7 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
             when (requestCode) {
                 REQUEST_SELECT_IMAGE_IN_ALBUM -> {
                     if (IMAGE_BACKGROUND == 0)
-                        performCrop(Uri.parse(data?.data?.toString()), 128, 128, 1, 1)
+                        performCrop(Uri.parse(data?.data?.toString()), 256, 256, 1, 1)
                     else
                         performCrop(Uri.parse(data?.data?.toString()), 270, 480, 16, 9)
                 }
@@ -237,12 +246,12 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
                             uiThread {
                                 imageBackground.setImageBitmap(selectedBitmap)
                             }
-                            imageUrl = uploadService.enviarImagem(baseContext, uri.toString(), filenameImage) ?: imageUrl
+                            imageUrl = uploadService.enviarImagem(baseContext, uri.toString(), java.util.UUID.randomUUID().toString()) ?: imageUrl
                         } else {
                             uiThread {
                                 imageIcone.setImageBitmap(selectedBitmap)
                             }
-                            iconeUrl = uploadService.enviarImagem(baseContext, uri.toString(), filenameIcone) ?: iconeUrl
+                            iconeUrl = uploadService.enviarImagem(baseContext, uri.toString(), java.util.UUID.randomUUID().toString()) ?: iconeUrl
                         }
 
                     }

@@ -58,7 +58,11 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnFocusChangeListener 
                 val usuarioService = UsuarioService()
                 if (usuario == null || usuario?.usuarioId == 0) {
                     loadUsuario()
-                    usuarioService.adicionaUsuario(usuario as Usuario)
+                    usuario = usuarioService.adicionaUsuario(usuario as Usuario)
+                    if (usuario != null) {
+                        val loginSettings = LoginSettings(baseContext)
+                        loginSettings.login = Login(usuario?.usuarioId ?: 0, usuario?.nomeUsuario ?: "", usuario?.senha ?: "", "Usuario")
+                    }
                 } else {
                     loadUsuario()
                     usuarioService.atualizaUsuario(usuario as Usuario)
@@ -168,6 +172,7 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnFocusChangeListener 
             inputUsername.setText(usuario?.nomeUsuario)
             inputPass.setText(usuario?.senha)
 
+            imageUrl = usuario?.imagem ?: ""
             imageIcone.loadUrl(usuario?.imagem ?: "")
         } else
             loadUsuario()

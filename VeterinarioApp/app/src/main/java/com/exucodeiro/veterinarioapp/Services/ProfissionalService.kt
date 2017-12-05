@@ -53,6 +53,7 @@ class ProfissionalService {
 
     fun atualizaProfissional(profissional: Profissional) : Boolean {
         val mapper = jacksonObjectMapper()
+        val str = mapper.writeValueAsString(profissional)
 
         val (_, _, result) = "Profissional".httpPut().body(mapper.writeValueAsString(profissional)).responseString()
         val (_, error) = result

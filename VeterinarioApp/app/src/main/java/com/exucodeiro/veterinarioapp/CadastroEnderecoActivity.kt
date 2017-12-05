@@ -87,20 +87,16 @@ class CadastroEnderecoActivity : AppCompatActivity(), View.OnFocusChangeListener
                         loginSettings.login = Login(profissional?.profissionalId ?: 0, profissional?.nomeUsuario ?: "", profissional?.senha ?: "", "Profissional")
                     }
                 } else {
+                    loadEndereco()
                     val enderecoService = EnderecoService()
                     enderecoService.atualizaEnderecoProfissional(profissional?.profissionalId ?: 0, endereco as Endereco)
                 }
 
             } else {
                 val enderecoService = EnderecoService()
-                if (usuario?.usuarioId == 0) {
-                    val endService = EnderecoService()
-                    usuario?.endereco = endereco
-                    endService.atualizaEnderecoUsuario(usuario?.usuarioId ?: 0, endereco as Endereco)
-                } else {
-                    usuario?.endereco = endereco
-                    enderecoService.atualizaEnderecoUsuario(usuario?.usuarioId ?: 0, endereco as Endereco)
-                }
+                loadEndereco()
+                usuario?.endereco = endereco
+                enderecoService.atualizaEnderecoUsuario(usuario?.usuarioId ?: 0, endereco as Endereco)
             }
 
             uiThread {
