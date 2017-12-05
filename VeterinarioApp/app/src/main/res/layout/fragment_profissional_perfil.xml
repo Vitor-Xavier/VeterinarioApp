@@ -26,6 +26,7 @@
                 android:layout_height="wrap_content" />
 
             <LinearLayout
+                android:orientation="horizontal"
                 android:id="@+id/tst"
                 android:layout_marginTop="-110dp"
                 android:background="#80000000"
@@ -39,20 +40,27 @@
                     android:layout_width="92dp"
                     android:layout_height="92dp" />
 
-                <TextView
-                    android:id="@+id/textNome"
-                    android:layout_margin="10dp"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/textOnline"
-                    android:layout_margin="6dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/textNome"
+                        android:layout_margin="10dp"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/textOnline"
+                        android:layout_margin="6dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

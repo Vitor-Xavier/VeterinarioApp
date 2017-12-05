@@ -47,6 +47,14 @@ class ServicoActivity : AppCompatActivity() {
         loadProfissional()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intentStart = Intent(this,  MainActivity::class.java)
+        intentStart.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        intentStart.putExtra("update", true)
+        startActivity(intentStart)
+    }
+
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         menu?.add(Menu.NONE, 1, Menu.NONE, "Excluir")
         super.onCreateContextMenu(menu, v, menuInfo)

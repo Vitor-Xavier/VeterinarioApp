@@ -51,6 +51,7 @@ class ConsultaFragment : Fragment() {
 
         val consultaService = ConsultaService()
         async {
+            consultas.clear()
             if(login.tipo == "Profissional")
                 consultas.addAll(consultaService.getConsultasProfissional(login.id))
             else

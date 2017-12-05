@@ -199,7 +199,7 @@ class CadastroAnimalActivity : AppCompatActivity(), View.OnFocusChangeListener {
 
                     val uploadService = UploadService()
                     async {
-                        imageUrl = uploadService.enviarImagem(baseContext, uri.toString(), filename) ?: imageUrl //data?.data?.toString() ?: ""
+                        imageUrl = uploadService.enviarImagem(baseContext, uri.toString(), java.util.UUID.randomUUID().toString()) ?: imageUrl //data?.data?.toString() ?: ""
                     }
                 }
             }

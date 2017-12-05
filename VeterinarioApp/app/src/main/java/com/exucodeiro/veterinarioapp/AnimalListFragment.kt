@@ -24,7 +24,7 @@ class AnimalListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         if (arguments != null)
-            usuario = arguments.getSerializable("usuario") as Usuario
+            usuario = arguments.getSerializable(ARG_USUARIO) as Usuario?
 
         adapter = AnimalAdaper(animais, activity)
 
