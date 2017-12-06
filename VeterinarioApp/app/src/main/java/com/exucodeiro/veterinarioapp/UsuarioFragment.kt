@@ -59,8 +59,6 @@ class UsuarioFragment : Fragment() {
                 //tabsUsuario.getTabAt(0)?.setIcon(R.mipmap.ic_assignment_black_24dp)
                 //tabsUsuario.getTabAt(1)?.setIcon(R.mipmap.ic_pets_black_24dp)
                 tabsUsuario.getTabAt(1)?.customView = tab2
-
-                imageBack.loadUrl(R.mipmap.usuario_background)
             }
         }
 

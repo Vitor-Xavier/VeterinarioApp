@@ -21,6 +21,7 @@
             <ImageView
                 android:background="#FFF"
                 android:id="@+id/imageBack"
+                android:src="@mipmap/usuario_background"
                 android:adjustViewBounds="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

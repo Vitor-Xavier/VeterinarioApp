@@ -63,11 +63,7 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
                     loadProfissional()
 
                     val profissionalService = ProfissionalService()
-                    if (!profissionalService.atualizaProfissional(profissional as Profissional)) {
-                        uiThread {
-                            toast("Atualização não realizada")
-                        }
-                    }
+                    !profissionalService.atualizaProfissional(profissional as Profissional)
                 }
 
                 uiThread {
