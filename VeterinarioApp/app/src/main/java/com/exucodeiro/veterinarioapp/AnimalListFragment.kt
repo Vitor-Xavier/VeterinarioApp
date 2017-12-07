@@ -53,7 +53,6 @@ class AnimalListFragment : Fragment() {
         menu?.clear()
         menu?.add(Menu.NONE, 1, Menu.NONE, "Editar")
         menu?.add(Menu.NONE, 2, Menu.NONE, "Excluir")
-        super.onCreateContextMenu(menu, v, menuInfo)
     }
 
     override fun onContextItemSelected(item: MenuItem?): Boolean {
