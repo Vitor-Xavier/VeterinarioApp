@@ -56,6 +56,7 @@ class ServicoActivity : AppCompatActivity() {
     }
 
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+        menu?.clear()
         menu?.add(Menu.NONE, 1, Menu.NONE, "Excluir")
         super.onCreateContextMenu(menu, v, menuInfo)
     }

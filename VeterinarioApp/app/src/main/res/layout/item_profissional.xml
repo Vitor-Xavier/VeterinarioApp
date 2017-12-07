@@ -40,7 +40,7 @@
                     android:id="@+id/imageAtivo"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_width="10dp"
                     android:layout_height="10dp" />
 

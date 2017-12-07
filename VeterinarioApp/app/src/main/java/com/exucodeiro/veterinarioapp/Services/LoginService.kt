@@ -19,7 +19,7 @@ class LoginService {
 
         val mapper = jacksonObjectMapper()
         when (error == null) {
-            true -> return mapper.readValue(data ?: "")
+            true -> return try { mapper.readValue(data ?: "") } catch (e: Exception) { null }
             false -> return null
         }
     }
@@ -30,7 +30,7 @@ class LoginService {
 
         val mapper = jacksonObjectMapper()
         when (error == null) {
-            true -> return mapper.readValue(data ?: "")
+            true -> return return try { mapper.readValue(data ?: "") } catch (e: Exception) { false }
             false -> return false
         }
     }

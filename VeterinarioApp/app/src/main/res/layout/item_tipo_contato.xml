@@ -11,8 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageIcone"
+        <ImageView
+            android:id="@+id/imageIcon"
+            android:contentDescription="Icone"
+            android:adjustViewBounds="true"
             android:layout_gravity="center_vertical"
             android:layout_width="32dp"
             android:layout_height="32dp" />
@@ -25,7 +27,5 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-
-
 
 </LinearLayout>

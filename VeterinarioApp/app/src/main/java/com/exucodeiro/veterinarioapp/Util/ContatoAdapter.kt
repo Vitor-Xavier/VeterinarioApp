@@ -10,7 +10,7 @@ import com.exucodeiro.veterinarioapp.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_contato.view.*
 
-data class ContatoAdapter(private var contatos:List<Contato>, var activity: Activity) : BaseAdapter() {
+data class ContatoAdapter(private var contatos: List<Contato>, var activity: Activity) : BaseAdapter() {
 
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
         val view: View = View.inflate(activity, R.layout.item_contato,null)

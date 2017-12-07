@@ -66,6 +66,7 @@
             android:id="@+id/buttonEditar"
             android:src="@mipmap/ic_create_white_24dp"
             android:background="#00000000"
+            android:visibility="gone"
             android:layout_weight="0.9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

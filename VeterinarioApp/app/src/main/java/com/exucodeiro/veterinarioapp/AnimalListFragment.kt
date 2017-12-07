@@ -50,6 +50,7 @@ class AnimalListFragment : Fragment() {
     }
 
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+        menu?.clear()
         menu?.add(Menu.NONE, 1, Menu.NONE, "Editar")
         menu?.add(Menu.NONE, 2, Menu.NONE, "Excluir")
         super.onCreateContextMenu(menu, v, menuInfo)

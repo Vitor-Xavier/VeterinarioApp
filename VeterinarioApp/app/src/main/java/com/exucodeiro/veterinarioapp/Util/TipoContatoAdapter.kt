@@ -16,7 +16,7 @@ class TipoContatoAdapter(private var tipos: List<TipoContato>, var activity: Act
         val view: View = View.inflate(activity, R.layout.item_tipo_contato,null)
 
         view.textTipo.text = tipos[p0].nome
-        view.imageIcone.loadUrl(tipos[p0].icone)
+        view.imageIcon.loadUrl(tipos[p0].icone)
 
         return view
     }

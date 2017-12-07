@@ -2,14 +2,15 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:padding="10dp"
+    android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/imageIcone"
-        android:layout_height="64dp"
-        android:layout_width="64dp"/>
+        android:adjustViewBounds="true"
+        android:layout_height="58dp"
+        android:layout_width="58dp" />
 
     <LinearLayout
         android:gravity="center"
