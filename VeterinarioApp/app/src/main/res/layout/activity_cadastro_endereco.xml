@@ -87,6 +87,8 @@
 
                         <EditText
                             android:id="@+id/inputLogradouro"
+                            android:inputType="text"
+                            android:maxLines="1"
                             android:maxLength="80"
                             android:layout_marginBottom="16dp"
                             android:layout_width="match_parent"
@@ -101,6 +103,7 @@
 
                         <EditText
                             android:id="@+id/inputNumero"
+                            android:maxLines="1"
                             android:maxLength="8"
                             android:layout_marginBottom="16dp"
                             android:inputType="number"
@@ -116,6 +119,8 @@
 
                         <EditText
                             android:id="@+id/inputComplemento"
+                            android:inputType="text"
+                            android:maxLines="1"
                             android:maxLength="80"
                             android:layout_marginBottom="16dp"
                             android:layout_width="match_parent"
@@ -130,6 +135,8 @@
 
                         <EditText
                             android:id="@+id/inputBairro"
+                            android:inputType="text"
+                            android:maxLines="1"
                             android:maxLength="40"
                             android:layout_marginBottom="16dp"
                             android:layout_width="match_parent"
@@ -144,6 +151,8 @@
 
                         <EditText
                             android:id="@+id/inputCEP"
+                            android:inputType="text"
+                            android:maxLines="1"
                             android:maxLength="20"
                             android:layout_marginBottom="16dp"
                             android:layout_width="match_parent"
@@ -158,6 +167,8 @@
 
                         <EditText
                             android:id="@+id/inputCidade"
+                            android:inputType="text"
+                            android:maxLines="1"
                             android:maxLength="60"
                             android:layout_marginBottom="16dp"
                             android:layout_width="match_parent"
@@ -172,6 +183,8 @@
 
                         <EditText
                             android:id="@+id/inputEstado"
+                            android:inputType="text"
+                            android:maxLines="1"
                             android:maxLength="60"
                             android:layout_marginBottom="16dp"
                             android:layout_width="match_parent"

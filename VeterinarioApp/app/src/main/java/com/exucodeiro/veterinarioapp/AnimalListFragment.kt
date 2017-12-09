@@ -51,29 +51,30 @@ class AnimalListFragment : Fragment() {
 
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         menu?.clear()
-        menu?.add(Menu.NONE, 1, Menu.NONE, "Editar")
-        menu?.add(Menu.NONE, 2, Menu.NONE, "Excluir")
+        menu?.add(Menu.NONE, 20, Menu.NONE, "Editar")
+        menu?.add(Menu.NONE, 21, Menu.NONE, "Excluir")
     }
 
     override fun onContextItemSelected(item: MenuItem?): Boolean {
         if (item?.menuInfo == null)
             return false
-        var t = item?.menuInfo as AdapterView.AdapterContextMenuInfo
 
+        var t = item?.menuInfo as AdapterView.AdapterContextMenuInfo
         val animal = adapter.getItem(t.position) as Animal
 
         when (item.itemId) {
-            1 -> {
-                val it = Intent(context, CadastroAnimalActivity::class.java)
+            20 -> {
+                val it = Intent(context.applicationContext, CadastroAnimalActivity::class.java)
                 it.putExtra("animal", animal)
                 startActivity(it)
+                return true
             }
-            2 -> {
+            21 -> {
                 inativaAnimal(usuario?.usuarioId ?: 0, animal.animalId)
+                return true
             }
         }
-
-        return super.onContextItemSelected(item)
+        return false
     }
 
     private fun inativaAnimal(usuarioId: Int, animalId: Int) {

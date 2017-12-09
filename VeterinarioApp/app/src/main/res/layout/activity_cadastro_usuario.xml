@@ -51,6 +51,7 @@
 
                             <EditText
                                 android:id="@+id/inputUsername"
+                                android:maxLines="1"
                                 android:inputType="textVisiblePassword"
                                 android:maxLength="20"
                                 android:layout_marginBottom="16dp"
@@ -66,6 +67,7 @@
 
                             <EditText
                                 android:id="@+id/inputPass"
+                                android:maxLines="1"
                                 android:maxLength="15"
                                 android:layout_marginBottom="16dp"
                                 android:layout_width="match_parent"
@@ -81,6 +83,8 @@
 
                             <EditText
                                 android:id="@+id/inputNome"
+                                android:inputType="text"
+                                android:maxLines="1"
                                 android:maxLength="30"
                                 android:layout_marginBottom="16dp"
                                 android:layout_width="match_parent"
@@ -95,6 +99,8 @@
 
                             <EditText
                                 android:id="@+id/inputSobrenome"
+                                android:inputType="text"
+                                android:maxLines="1"
                                 android:maxLength="30"
                                 android:layout_marginBottom="16dp"
                                 android:layout_width="match_parent"

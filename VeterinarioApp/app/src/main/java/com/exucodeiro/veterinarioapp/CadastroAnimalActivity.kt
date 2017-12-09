@@ -234,7 +234,6 @@ class CadastroAnimalActivity : AppCompatActivity(), View.OnFocusChangeListener {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            toast("Permission: "+permissions[0]+ "was "+grantResults[0])
             selectImageInAlbum()
         }
     }
