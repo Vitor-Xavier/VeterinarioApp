@@ -203,7 +203,8 @@ class CadastroEnderecoActivity : AppCompatActivity(), View.OnFocusChangeListener
         imageIcone.loadUrl(profissional?.icone)
 
         inputLogradouro.setText(profissional?.endereco?.logradouro)
-        inputNumero.setText("${profissional?.endereco?.numero}")
+        if (profissional?.endereco != null)
+            inputNumero.setText("${profissional?.endereco?.numero}")
         inputComplemento.setText(profissional?.endereco?.complemento)
         inputBairro.setText(profissional?.endereco?.bairro)
         inputCEP.setText(profissional?.endereco?.cep)
@@ -221,7 +222,8 @@ class CadastroEnderecoActivity : AppCompatActivity(), View.OnFocusChangeListener
         imageIcone.loadUrl(usuario?.imagem)
 
         inputLogradouro.setText(usuario?.endereco?.logradouro)
-        inputNumero.setText(usuario?.endereco?.numero.toString())
+        if (usuario?.endereco != null)
+            inputNumero.setText(usuario?.endereco?.numero.toString())
         inputComplemento.setText(usuario?.endereco?.complemento)
         inputBairro.setText(usuario?.endereco?.bairro)
         inputCEP.setText(usuario?.endereco?.cep)

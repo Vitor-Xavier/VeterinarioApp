@@ -50,9 +50,9 @@ class CadastroProfissionalActivity : AppCompatActivity(), View.OnFocusChangeList
                 return@setOnClickListener
 
             async {
-                if (profissional?.profissionalId == 0) {
+                if (profissional == null || profissional?.profissionalId == 0) {
                     val loginService = LoginService()
-                    if (!loginService.verificaUsuario(inputUsername.text.toString())) {
+                    if (!loginService.verificaUsuario(inputUsername.text.toString().trim())) {
                         uiThread {
                             inputUsername.requestFocus()
                             inputUsername.error = "Nome de usuário indisponível"
